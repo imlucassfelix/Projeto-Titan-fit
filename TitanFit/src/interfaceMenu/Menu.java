@@ -51,6 +51,6 @@ public class Menu {
                     System.out.println("Opção inválida, tente novamente.");
             }
             System.out.println();
-        } while (opcao != 4);
+        } while (opcao != 6);
 	}
 }
