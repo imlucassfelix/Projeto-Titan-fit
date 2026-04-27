@@ -11,7 +11,7 @@ public class Menu {
 
 	public void exibirMenu() {
 		int opcao;
-		//ainda estou pensando sobre menu, apenas preparei o ambiente
+		//principal
 		do {
             System.out.println("========================================");
             System.out.println("***        TITANFIT - HOME           ***");
@@ -30,19 +30,19 @@ public class Menu {
 
             switch (opcao) {
                 case 1:
-                     new AlunoMenu().exibirMenu();
+                     new AlunoMenu(sc).exibirMenu();
                     break;
                 case 2:
-                	new InstrutorMenu().exibirMenu();
+                	new InstrutorMenu(sc).exibirMenu();
                     break;
                 case 3:
-                	new PlanoMenu().exibirMenu();
+                	new PlanoMenu(sc).exibirMenu();
                     break;
                 case 4:
-                	new AulaMenu().exibirMenu();
+                	new AulaMenu(sc).exibirMenu();
                     break;
                 case 5:
-                	new EquipamentosMenu().exibirMenu();
+                	new EquipamentosMenu(sc).exibirMenu();
                     break;
                 case 0:
                     System.out.println("Encerrando o sistema...");
@@ -51,6 +51,6 @@ public class Menu {
                     System.out.println("Opção inválida, tente novamente.");
             }
             System.out.println();
-        } while (opcao != 4);
+        } while (opcao != 0);
 	}
 }
