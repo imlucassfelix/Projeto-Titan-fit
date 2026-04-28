@@ -12,6 +12,7 @@ public class PlanoMenu {
 	public void exibirMenu() {
         int opcao;
         do {
+            System.out.println("");
             System.out.println("========================================");
             System.out.println("***      TITANFIT - PLANOS           ***");
             System.out.println("========================================");
@@ -21,7 +22,8 @@ public class PlanoMenu {
             System.out.println("[4] - Remover Plano");
             System.out.println("[0] - Voltar");
             System.out.println("========================================");
-            System.out.print("Escolha uma opção: ");
+            System.out.print("Escolha uma opção: \n");
+            System.out.println("========================================");
             
             opcao = sc.nextInt();
             
