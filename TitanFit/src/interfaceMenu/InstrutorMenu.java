@@ -12,16 +12,18 @@ public class InstrutorMenu {
 	public void exibirMenu() {
         int opcao;
         do {
+            System.out.println("");
             System.out.println("========================================");
             System.out.println("***     TITANFIT - INSTRUTOR         ***");
             System.out.println("========================================");
-            System.out.println("[1] - Cadastrar Instrutor");
-            System.out.println("[2] - Listar Instrutores");
-            System.out.println("[3] - Atualizar Instrutor");
-            System.out.println("[4] - Remover Instrutor");
-            System.out.println("[0] - Voltar");
+            System.out.println("[1] - Cadastrar Instrutor            ***");
+            System.out.println("[2] - Listar Instrutores             ***");
+            System.out.println("[3] - Atualizar Instrutor            ***");
+            System.out.println("[4] - Remover Instrutor              ***");
+            System.out.println("[0] - Voltar                         ***");
             System.out.println("========================================");
-            System.out.print("Escolha uma opção: ");
+            System.out.print("Escolha uma opção: \n");
+            System.out.println("========================================");
             
             opcao = sc.nextInt();
             

@@ -12,16 +12,18 @@ public class EquipamentosMenu {
 	public void exibirMenu() {
         int opcao;
         do {
+            System.out.println("");
             System.out.println("========================================");
             System.out.println("***    TITANFIT - EQUIPAMENTOS       ***");
             System.out.println("========================================");
-            System.out.println("[1] - Cadastrar Equipamento");
-            System.out.println("[2] - Listar Equipamentos");
-            System.out.println("[3] - Atualizar Equipamento");
-            System.out.println("[4] - Remover Equipamento");
-            System.out.println("[0] - Voltar");
+            System.out.println("[1] - Cadastrar Equipamento          ***");
+            System.out.println("[2] - Listar Equipamentos            ***");
+            System.out.println("[3] - Atualizar Equipamento          ***");
+            System.out.println("[4] - Remover Equipamento            ***");
+            System.out.println("[0] - Voltar                         ***");
             System.out.println("========================================");
-            System.out.print("Escolha uma opção: ");
+            System.out.print("Escolha uma opção: \n");
+            System.out.println("========================================");
             
             opcao = sc.nextInt();
             

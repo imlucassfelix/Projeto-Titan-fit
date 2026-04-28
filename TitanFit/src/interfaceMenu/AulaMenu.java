@@ -12,16 +12,18 @@ public class AulaMenu {
 	 public void exibirMenu() {
 	        int opcao;
 	        do {
+	            System.out.println("");
 	            System.out.println("========================================");
 	            System.out.println("***       TITANFIT - AULAS           ***");
 	            System.out.println("========================================");
-	            System.out.println("[1] - Cadastrar Aula");
-	            System.out.println("[2] - Listar Aulas");
-	            System.out.println("[3] - Gerenciar Frequencia");
-	            System.out.println("[4] - Gerenciar Treinos");
-	            System.out.println("[0] - Voltar");
+	            System.out.println("[1] - Cadastrar Aula                 ***");
+	            System.out.println("[2] - Listar Aulas                   ***");
+	            System.out.println("[3] - Gerenciar Frequencia           ***");
+	            System.out.println("[4] - Gerenciar Treinos              ***");
+	            System.out.println("[0] - Voltar                         ***");
 	            System.out.println("========================================");
-	            System.out.print("Escolha uma opção: ");
+	            System.out.print("Escolha uma opção: \n");
+	            System.out.println("========================================");
 	            
 	            opcao = sc.nextInt();
 	            

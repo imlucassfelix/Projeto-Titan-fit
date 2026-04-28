@@ -2,17 +2,17 @@ package entities;
 
 import java.time.LocalDate;
 
-public class Equipamento {
+public class Equipamentos {
 	private int codMaquina;
 	private String nome;
 	private String modelo;
 	private String estado;
 	private LocalDate dataAquisicao;
 	
-	public Equipamento() {
+	public Equipamentos() {
 	}
 
-	public Equipamento(int codMaquina, String nome, String modelo, String estado, LocalDate dataAquisicao) {
+	public Equipamentos(int codMaquina, String nome, String modelo, String estado, LocalDate dataAquisicao) {
 		this.codMaquina = codMaquina;
 		this.nome = nome;
 		this.modelo = modelo;
