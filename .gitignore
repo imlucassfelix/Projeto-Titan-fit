@@ -2,3 +2,4 @@ TitanFit/.classpath
 TitanFit/.project
 TitanFit/.settings/org.eclipse.core.resources.prefs
 *.class
+/bin/
