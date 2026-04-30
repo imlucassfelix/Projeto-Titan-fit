@@ -19,7 +19,8 @@ public class AlunoMenu {
             System.out.println("[1] - Cadastrar Aluno                ***");
             System.out.println("[2] - Listar Alunos                  ***");
             System.out.println("[3] - Atualizar Aluno                ***");
-            System.out.println("[4] - Remover Aluno                  ***");
+            System.out.println("[4] - Gerenciar Frequencia           ***");
+            System.out.println("[5] - Remover Aluno                  ***");
             System.out.println("[0] - Voltar                         ***");
             System.out.println("========================================");
             System.out.print("Escolha uma opção: \n");
@@ -38,6 +39,9 @@ public class AlunoMenu {
                     System.out.println(" Atualizacao em breve");
                     break;
                 case 4:
+                    System.out.println(" aguarde ...");
+                    break;
+                case 5:
                     System.out.println(" Remocao em breve");
                     break;
                 case 0:

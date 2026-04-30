@@ -18,7 +18,7 @@ public class EquipamentosMenu {
             System.out.println("========================================");
             System.out.println("[1] - Cadastrar Equipamento          ***");
             System.out.println("[2] - Listar Equipamentos            ***");
-            System.out.println("[3] - Atualizar Equipamento          ***");
+            System.out.println("[3] - Gerenciar Equipamento          ***");
             System.out.println("[4] - Remover Equipamento            ***");
             System.out.println("[0] - Voltar                         ***");
             System.out.println("========================================");

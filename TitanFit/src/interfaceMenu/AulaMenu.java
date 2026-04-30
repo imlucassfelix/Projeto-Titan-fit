@@ -18,8 +18,8 @@ public class AulaMenu {
 	            System.out.println("========================================");
 	            System.out.println("[1] - Cadastrar Aula                 ***");
 	            System.out.println("[2] - Listar Aulas                   ***");
-	            System.out.println("[3] - Gerenciar Frequencia           ***");
-	            System.out.println("[4] - Gerenciar Treinos              ***");
+	            System.out.println("[3] - Editar Aula/Treinos            ***");
+	            System.out.println("[4] - Excluir Aula/Treinos           ***");
 	            System.out.println("[0] - Voltar                         ***");
 	            System.out.println("========================================");
 	            System.out.print("Escolha uma opção: \n");

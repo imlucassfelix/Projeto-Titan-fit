@@ -18,7 +18,7 @@ public class PlanoMenu {
             System.out.println("========================================");
             System.out.println("[1] - Cadastrar Plano");
             System.out.println("[2] - Listar Planos");
-            System.out.println("[3] - Atualizar Plano");
+            System.out.println("[3] - Alterar Plano");
             System.out.println("[4] - Remover Plano");
             System.out.println("[0] - Voltar");
             System.out.println("========================================");
