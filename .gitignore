@@ -6,3 +6,5 @@ TitanFit/.settings/org.eclipse.core.resources.prefs
 .gitattributes
 .project
 .classpath
+*.xml
+.idea/
