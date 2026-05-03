@@ -8,13 +8,13 @@ public class Validador {
      * Valida se o CPF tem exatamente 11 digitos numericos. String com o CPF digitado  retorna true se valido, false caso contrario
      */
 
-    public static boolean validarCpf(String cpf) {
+    public static boolean validarCpf(String cpfAluno) {
         if
-        (cpf == null) return false;
+        (cpfAluno == null) return false;
 
-        cpf = cpf.replaceAll("[^0-9]", "");
+        cpfAluno = cpfAluno.replaceAll("[^0-9]", "");
         // remove pontos e tracos
-        return cpf.length() == 11;
+        return cpfAluno.length() == 11;
     }
 
     /**
@@ -32,9 +32,9 @@ public class Validador {
      digitada retorna true se valido, false caso contrario
      */
 
-    public static boolean validarData(String data) {
+    public static boolean validarData(String dataNascimento) {
         try { DateTimeFormatter fmt =
-            DateTimeFormatter.ofPattern("dd/MM/yyyy"); LocalDate.parse(data, fmt); return true;
+            DateTimeFormatter.ofPattern("dd/MM/yyyy"); LocalDate.parse(dataNascimento, fmt); return true;
         }
     catch (DateTimeParseException e) {
             return false;
@@ -49,6 +49,30 @@ public class Validador {
     public static boolean campoObrigatorio(String valor) {
         return
             valor != null && !valor.trim().isEmpty();
+    }
+
+    /**
+     * Valida se o telefone tem um formato correto (10 ou 11 dígitos). Retorna true se válido, false caso contrário.
+     */
+    public static boolean validarTelefone(String telefoneAluno) {
+        if (telefoneAluno == null) return false;
+
+        // Remove tudo que não for dígito
+        String telAluno = telefoneAluno.replaceAll("[^0-9]", "");
+
+        // Telefone com DDD (10) ou Celular com nono dígito e DDD (11)
+        return telefoneAluno.length() == 10 || telefoneAluno.length() == 11;
+    }
+
+    /**
+     * Valida se o formato do e-mail é válido. Retorna true se for um e-mail válido, false caso contrário.
+     */
+    public static boolean validarEmail(String email) {
+        if (email == null) return false;
+
+        // Regex simples para verificar formato de e-mail
+        String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
+        return email.matches(emailRegex);
     }
 }
 

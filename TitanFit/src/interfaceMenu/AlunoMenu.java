@@ -1,5 +1,6 @@
 package interfaceMenu;
 
+import util.Validador;
 import entities.Aluno;
 import repositoyDB.AlunoDB;
 import java.time.LocalDate;
@@ -35,20 +36,52 @@ public class AlunoMenu {
             switch (opcao) {
                 case 1:
                     sc.nextLine();
+
                     System.out.println(" CADASTRO DE ALUNOS");
                     System.out.println(" Digite o nome do aluno: ");
                     String nomeAluno = sc.nextLine();
+                    if
+                    (!Validador.campoObrigatorio(nomeAluno)) {
+                        System.out.println("Nome nao pode ser vazio!");
+                        break;
+                    }
+
                     System.out.println(" Digite o CPF do aluno (11 dígitos): ");
                     String cpfAluno = sc.nextLine();
+                    if (!Validador.validarCpf(cpfAluno)) {
+                        System.out.println("CPF invalido! Digite 11 digitos numericos.");
+                        break;
+                    }
+
                     System.out.println(" Sexo (M/F/I): ");
                     String sexo = sc.nextLine();
+                    if (!Validador.validarSexo(sexo)) {
+                        System.out.println("Sexo invalido! Digite M, F ou I.");
+                        break;
+                    }
+
                     System.out.println(" Data de nascimento (dd/mm/aaaa): ");
                     String dataNascStr = sc.nextLine();
+                    if (!Validador.validarData(dataNascStr)) {
+                        System.out.println("Data invalida! Use o formato dd/mm/aaaa.");
+                        break;
+                    }
                     LocalDate dataNascimentoAluno = LocalDate.parse(dataNascStr, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+
                     System.out.println(" Telefone: ");
                     String telefoneAluno = sc.nextLine();
+                    if (!Validador.validarTelefone(telefoneAluno)) {
+                        System.out.println("Telefone invalido! Digite 11 digitos numericos.");
+                        break;
+                    }
+
                     System.out.println(" Digite um endereço de e-mail: ");
                     String emailAluno = sc.nextLine();
+                    if (!Validador.validarEmail(emailAluno)) {
+                        System.out.println("Email invalido! Digite um email valido. ");
+                        break;
+                    }
+
                     LocalDate dataMatricula = LocalDate.now();
 
                     Aluno novoAluno = new Aluno(cpfAluno, telefoneAluno, nomeAluno, emailAluno, dataNascimentoAluno, dataMatricula, sexo);
