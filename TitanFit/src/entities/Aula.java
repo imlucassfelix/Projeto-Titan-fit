@@ -2,14 +2,22 @@ package entities;
 
 public class Aula {
 	private int codAula;
+	private String nomeAula;
+	private String descricaoAula;
+	private int capacidadeMaxima;
+	private String cpfAluno;
 	private String modalidade;
 	private String horario;
 	
 	public Aula() {
 	}
 
-	public Aula(int codAula, String modalidade, String horario) {
+	public Aula(int codAula, String nomeAula, String descricaoAula, int capacidadeMaxima, String cpfAluno, String modalidade, String horario) {
 		this.codAula = codAula;
+		this.nomeAula = nomeAula;
+		this.descricaoAula = descricaoAula;
+		this.capacidadeMaxima = capacidadeMaxima;
+		this.cpfAluno = cpfAluno;
 		this.modalidade = modalidade;
 		this.horario = horario;
 	}
@@ -20,6 +28,38 @@ public class Aula {
 
 	public void setCodAula(int codAula) {
 		this.codAula = codAula;
+	}
+
+	public String getNomeAula() {
+		return nomeAula;
+	}
+
+	public void setNomeAula(String nomeAula) {
+		this.nomeAula = nomeAula;
+	}
+
+	public String getDescricaoAula() {
+		return descricaoAula;
+	}
+
+	public void setDescricaoAula(String descricaoAula) {
+		this.descricaoAula = descricaoAula;
+	}
+
+	public int getCapacidadeMaxima() {
+		return capacidadeMaxima;
+	}
+
+	public void setCapacidadeMaxima(int capacidadeMaxima) {
+		this.capacidadeMaxima = capacidadeMaxima;
+	}
+
+	public String getCpfAluno() {
+		return cpfAluno;
+	}
+
+	public void setCpfAluno(String cpfAluno) {
+		this.cpfAluno = cpfAluno;
 	}
 
 	public String getModalidade() {
@@ -40,8 +80,14 @@ public class Aula {
 
 	@Override
 	public String toString() {
-		return "Aula [codAula=" + codAula + ", modalidade=" + modalidade + ", horario=" + horario + "]";
+		return "Aula{" +
+				"codAula=" + codAula +
+				", nomeAula='" + nomeAula + '\'' +
+				", descricaoAula='" + descricaoAula + '\'' +
+				", capacidadeMaxima=" + capacidadeMaxima +
+				", cpfAluno='" + cpfAluno + '\'' +
+				", modalidade='" + modalidade + '\'' +
+				", horario='" + horario + '\'' +
+				'}';
 	}
-	
-	
 }

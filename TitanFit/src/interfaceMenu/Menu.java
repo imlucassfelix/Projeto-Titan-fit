@@ -27,7 +27,7 @@ public class Menu {
             System.out.print("Escolha uma opção: \n");
             System.out.println("========================================");
 
-			opcao = sc.nextInt();
+            opcao = sc.nextInt();  sc.nextLine();
 
             switch (opcao) {
                 case 1:

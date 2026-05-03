@@ -1,5 +1,9 @@
 package interfaceMenu;
 
+import entities.Aluno;
+import repositoyDB.AlunoDB;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 public class AlunoMenu {
@@ -26,12 +30,34 @@ public class AlunoMenu {
             System.out.print("Escolha uma opção: \n");
             System.out.println("========================================");
             
-            opcao = sc.nextInt();
-            
+            opcao = sc.nextInt(); sc.nextLine();
+
             switch (opcao) {
                 case 1:
-                    System.out.println(" Cadastro em breve");
+                    sc.nextLine();
+                    System.out.println(" CADASTRO DE ALUNOS");
+                    System.out.println(" Digite o nome do aluno: ");
+                    String nomeAluno = sc.nextLine();
+                    System.out.println(" Digite o CPF do aluno (11 dígitos): ");
+                    String cpfAluno = sc.nextLine();
+                    System.out.println(" Sexo (M/F/I): ");
+                    String sexo = sc.nextLine();
+                    System.out.println(" Data de nascimento (dd/mm/aaaa): ");
+                    String dataNascStr = sc.nextLine();
+                    LocalDate dataNascimentoAluno = LocalDate.parse(dataNascStr, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+                    System.out.println(" Telefone: ");
+                    String telefoneAluno = sc.nextLine();
+                    System.out.println(" Digite um endereço de e-mail: ");
+                    String emailAluno = sc.nextLine();
+                    LocalDate dataMatricula = LocalDate.now();
+
+                    Aluno novoAluno = new Aluno(cpfAluno, telefoneAluno, nomeAluno, emailAluno, dataNascimentoAluno, dataMatricula, sexo);
+
+                    System.out.println("Aluno criado: " + novoAluno);
+                    AlunoDB alunoDB = new AlunoDB();
+                    alunoDB.inserir(novoAluno);
                     break;
+
                 case 2:
                     System.out.println(" Listagem em breve");
                     break;

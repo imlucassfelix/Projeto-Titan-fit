@@ -4,7 +4,6 @@ import java.util.List;
 
 public class AlunoDB {
 	public void inserir(Aluno aluno) {
-		
 	}
 	
 	public Aluno buscarPorId(String cpfAluno) {

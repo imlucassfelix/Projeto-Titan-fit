@@ -25,9 +25,9 @@ public class AulaMenu {
 	            System.out.print("Escolha uma opção: \n");
 	            System.out.println("========================================");
 	            
-	            opcao = sc.nextInt();
-	            
-	            switch (opcao) {
+	            opcao = sc.nextInt(); sc.nextLine();
+
+				switch (opcao) {
 	                case 1:
 	                    System.out.println(" Cadastro em breve");
 	                    break;

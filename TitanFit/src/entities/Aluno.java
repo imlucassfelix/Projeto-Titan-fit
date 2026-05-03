@@ -4,6 +4,8 @@ import java.time.LocalDate;
 
 public class Aluno {
 	private String cpfAluno;
+	private String telefoneAluno;
+	private LocalDate dataMatricula;
 	private String nomeAluno;
 	private String emailAluno;
 	private LocalDate dataNascimento;
@@ -12,11 +14,13 @@ public class Aluno {
 	public Aluno() {
 	}
 
-	public Aluno(String cpfAluno, String nomeAluno, String emailAluno, LocalDate dataNascimento, String sexo) {
+	public Aluno(String cpfAluno, String telefoneAluno, String nomeAluno, String emailAluno, LocalDate dataMatricula, LocalDate dataNascimento, String sexo) {
 		this.cpfAluno = cpfAluno;
 		this.nomeAluno = nomeAluno;
+		this.telefoneAluno = telefoneAluno;
 		this.emailAluno = emailAluno;
 		this.dataNascimento = dataNascimento;
+		this.dataMatricula = dataMatricula;
 		this.sexo = sexo;
 	}
 
@@ -26,6 +30,22 @@ public class Aluno {
 
 	public void setCpfAluno(String cpfAluno) {
 		this.cpfAluno = cpfAluno;
+	}
+
+	public String getTelefoneAluno() {
+		return telefoneAluno;
+	}
+
+	public void setTelefoneAluno(String telefoneAluno) {
+		this.telefoneAluno = telefoneAluno;
+	}
+
+	public LocalDate getDataMatricula() {
+		return dataMatricula;
+	}
+
+	public void setDataMatricula(LocalDate dataMatricula) {
+		this.dataMatricula = dataMatricula;
 	}
 
 	public String getNomeAluno() {
@@ -59,13 +79,17 @@ public class Aluno {
 	public void setSexo(String sexo) {
 		this.sexo = sexo;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "Aluno [cpfAluno=" + cpfAluno + ", nomeAluno=" + nomeAluno + ", emailAluno=" + emailAluno
-				+ ", dataNascimento=" + dataNascimento + ", sexo=" + sexo + "]";
+		return "Aluno{" +
+				"cpfAluno='" + cpfAluno + '\'' +
+				", telefoneAluno=" + telefoneAluno +
+				", dataMatricula=" + dataMatricula +
+				", nomeAluno='" + nomeAluno + '\'' +
+				", emailAluno='" + emailAluno + '\'' +
+				", dataNascimento=" + dataNascimento +
+				", sexo='" + sexo + '\'' +
+				'}';
 	}
-	
-	
-
 }
