@@ -8,3 +8,4 @@ TitanFit/.settings/org.eclipse.core.resources.prefs
 .classpath
 *.xml
 .idea/
+*.iml
