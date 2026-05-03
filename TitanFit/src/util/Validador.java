@@ -1,0 +1,56 @@
+package util;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
+public class Validador {
+    /**
+     * Valida se o CPF tem exatamente 11 digitos numericos. String com o CPF digitado  retorna true se valido, false caso contrario
+     */
+
+    public static boolean validarCpf(String cpf) {
+        if
+        (cpf == null) return false;
+
+        cpf = cpf.replaceAll("[^0-9]", "");
+        // remove pontos e tracos
+        return cpf.length() == 11;
+    }
+
+    /**
+     * * Valida se o sexo for M, F ou I. retorna true se valido, false caso contrario
+     */
+
+    public static boolean validarSexo(String sexo) {
+        if (sexo == null) return false;
+        return
+                sexo.equalsIgnoreCase("M") || sexo.equalsIgnoreCase("F") || sexo.equalsIgnoreCase("I");
+    }
+
+    /**
+     * Valida se a data esta no formato dd/MM/yyyy. String com a data
+     digitada retorna true se valido, false caso contrario
+     */
+
+    public static boolean validarData(String data) {
+        try { DateTimeFormatter fmt =
+            DateTimeFormatter.ofPattern("dd/MM/yyyy"); LocalDate.parse(data, fmt); return true;
+        }
+    catch (DateTimeParseException e) {
+            return false;
+        }
+    }
+
+    /**
+     * Valida se um campo obrigatorio nao esta vazio. String com o valor digitado retorna true se preenchido,
+     false se vazio
+     */
+
+    public static boolean campoObrigatorio(String valor) {
+        return
+            valor != null && !valor.trim().isEmpty();
+    }
+}
+
+
+
