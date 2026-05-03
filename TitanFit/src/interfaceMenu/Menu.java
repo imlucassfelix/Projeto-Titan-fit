@@ -28,8 +28,10 @@ public class Menu {
             System.out.println("========================================");
 
             opcao = sc.nextInt();  sc.nextLine();
+            sc.nextLine();
 
             switch (opcao) {
+
                 case 1:
                      new AlunoMenu(sc).exibirMenu();
                     break;

@@ -1,5 +1,8 @@
 package interfaceMenu;
 
+import entities.Aula;
+import util.Validador;
+
 import java.util.Scanner;
 
 public class AulaMenu {
@@ -12,7 +15,7 @@ public class AulaMenu {
 	 public void exibirMenu() {
 	        int opcao;
 	        do {
-	            System.out.println("");
+				System.out.println("");
 	            System.out.println("========================================");
 	            System.out.println("***       TITANFIT - AULAS           ***");
 	            System.out.println("========================================");
@@ -29,8 +32,44 @@ public class AulaMenu {
 
 				switch (opcao) {
 	                case 1:
-	                    System.out.println(" Cadastro em breve");
+						System.out.println("*** CADASTRAR AULA ***");
+						System.out.print("Código da Aula: ");
+						int codAula = sc.nextInt(); sc.nextLine();
+
+						System.out.print("Digite nome da aula: ");
+						String nomeAula = sc.nextLine();
+						if (!Validador.campoObrigatorio(nomeAula)) {
+							System.out.println("Erro: O nome da aula é obrigatório!");
+							break;
+						}
+
+						System.out.print("Modalidade: ");
+						String modalidade = sc.nextLine();
+						if (!Validador.campoObrigatorio(modalidade)) {
+							System.out.println("Erro: O nome da aula é obrigatório!");
+							break;
+						}
+
+						System.out.print("Descrição da Aula: ");
+						String descricaoAula = sc.nextLine();
+						if (!Validador.campoObrigatorio(descricaoAula)) {
+							System.out.println("Erro: O nome da aula é obrigatório!");
+							break;
+						}
+
+						System.out.print("Capacidade Máxima: ");
+						int capacidadeMaxima = sc.nextInt(); sc.nextLine();
+						capacidadeMaxima = sc.nextInt();
+						sc.nextLine(); // Limpa o buffer
+						if (!Validador.validarCapacidade(capacidadeMaxima)) {
+							System.out.println("Erro: A capacidade deve estar entre 1 e 50.");
+							break;
+						}
+
+						Aula novaAula = new Aula(codAula, nomeAula, capacidadeMaxima, descricaoAula);
+						System.out.println("Aula cadastrada com sucesso!");
 	                    break;
+
 	                case 2:
 	                    System.out.println(" Listagem em breve");
 	                    break;

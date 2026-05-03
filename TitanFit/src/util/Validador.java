@@ -8,13 +8,13 @@ public class Validador {
      * Valida se o CPF tem exatamente 11 digitos numericos. String com o CPF digitado  retorna true se valido, false caso contrario
      */
 
-    public static boolean validarCpf(String cpfAluno) {
+    public static boolean validarCpf(String cpf) {
         if
-        (cpfAluno == null) return false;
+        (cpf == null) return false;
 
-        cpfAluno = cpfAluno.replaceAll("[^0-9]", "");
+        cpf = cpf.replaceAll("[^0-9]", "");
         // remove pontos e tracos
-        return cpfAluno.length() == 11;
+        return cpf.length() == 11;
     }
 
     /**
@@ -32,9 +32,9 @@ public class Validador {
      digitada retorna true se valido, false caso contrario
      */
 
-    public static boolean validarData(String dataNascimento) {
+    public static boolean validarData(String data) {
         try { DateTimeFormatter fmt =
-            DateTimeFormatter.ofPattern("dd/MM/yyyy"); LocalDate.parse(dataNascimento, fmt); return true;
+            DateTimeFormatter.ofPattern("dd/MM/yyyy"); LocalDate.parse(data, fmt); return true;
         }
     catch (DateTimeParseException e) {
             return false;
@@ -73,6 +73,13 @@ public class Validador {
         // Regex simples para verificar formato de e-mail
         String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
         return email.matches(emailRegex);
+    }
+
+    public static boolean validarCapacidade(int capacidade) {
+        final int MINIMO = 1;
+        final int MAXIMO = 50;
+
+        return capacidade >= MINIMO && capacidade <= MAXIMO;
     }
 }
 

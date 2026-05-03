@@ -1,26 +1,23 @@
 package entities;
 
 public class Aula {
-	private int codAula;
+	private int codAula;           // Identificador único da aula
 	private String nomeAula;
 	private String descricaoAula;
 	private int capacidadeMaxima;
-	private String cpfAluno;
 	private String modalidade;
-	private String horario;
-	
+
 	public Aula() {
 	}
 
-	public Aula(int codAula, String nomeAula, String descricaoAula, int capacidadeMaxima, String cpfAluno, String modalidade, String horario) {
+	public Aula(int codAula, String nomeAula, int capacidadeMaxima, String descricaoAula) {
 		this.codAula = codAula;
 		this.nomeAula = nomeAula;
 		this.descricaoAula = descricaoAula;
 		this.capacidadeMaxima = capacidadeMaxima;
-		this.cpfAluno = cpfAluno;
 		this.modalidade = modalidade;
-		this.horario = horario;
 	}
+
 
 	public int getCodAula() {
 		return codAula;
@@ -54,14 +51,6 @@ public class Aula {
 		this.capacidadeMaxima = capacidadeMaxima;
 	}
 
-	public String getCpfAluno() {
-		return cpfAluno;
-	}
-
-	public void setCpfAluno(String cpfAluno) {
-		this.cpfAluno = cpfAluno;
-	}
-
 	public String getModalidade() {
 		return modalidade;
 	}
@@ -70,13 +59,6 @@ public class Aula {
 		this.modalidade = modalidade;
 	}
 
-	public String getHorario() {
-		return horario;
-	}
-
-	public void setHorario(String horario) {
-		this.horario = horario;
-	}
 
 	@Override
 	public String toString() {
@@ -85,9 +67,7 @@ public class Aula {
 				", nomeAula='" + nomeAula + '\'' +
 				", descricaoAula='" + descricaoAula + '\'' +
 				", capacidadeMaxima=" + capacidadeMaxima +
-				", cpfAluno='" + cpfAluno + '\'' +
 				", modalidade='" + modalidade + '\'' +
-				", horario='" + horario + '\'' +
 				'}';
 	}
 }

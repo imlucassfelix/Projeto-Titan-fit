@@ -1,8 +1,10 @@
 package entities;
 
 public class InscricaoAula {
-    private String cpfAluno;
+    private int codInscricao;
     private int codAula;
+    private String cpfAluno;
+    private String horario;
 
     public InscricaoAula() {
     }
