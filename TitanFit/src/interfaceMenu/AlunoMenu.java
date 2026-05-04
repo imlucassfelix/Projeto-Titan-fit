@@ -35,8 +35,6 @@ public class AlunoMenu {
 
             switch (opcao) {
                 case 1:
-                    sc.nextLine();
-
                     System.out.println("***             CADASTRO DE ALUNOS             ***");
                     System.out.println("***           Digite o nome do aluno:          ***");
                     String nomeAluno = sc.nextLine();

@@ -59,14 +59,19 @@ public class AulaMenu {
 
 						System.out.print("***            Capacidade Máxima:              ***");
 						int capacidadeMaxima = sc.nextInt(); sc.nextLine();
-						capacidadeMaxima = sc.nextInt();
-						sc.nextLine(); // Limpa o buffer
 						if (!Validador.validarCapacidade(capacidadeMaxima)) {
 							System.out.println("*  Erro: A capacidade deve estar entre 1 e 50.   *");
 							break;
 						}
 
-						Aula novaAula = new Aula(codAula, nomeAula, capacidadeMaxima, descricaoAula);
+						System.out.print("***       CPF do Instrutor responsável:        ***");
+						String cpfInstrutor = sc.nextLine();
+						if (!Validador.validarCpf(cpfInstrutor)) {
+							System.out.println("**  CPF inválido! Digite 11 dígitos numéricos.  **");
+							break;
+						}
+
+						Aula novaAula = new Aula(codAula, nomeAula, capacidadeMaxima, descricaoAula, modalidade, cpfInstrutor);
 						System.out.println("***      Aula cadastrada com sucesso!          ***");
 	                    break;
 

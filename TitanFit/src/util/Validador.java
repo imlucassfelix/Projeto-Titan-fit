@@ -61,7 +61,7 @@ public class Validador {
         String telAluno = telefoneAluno.replaceAll("[^0-9]", "");
 
         // Telefone com DDD (10) ou Celular com nono dígito e DDD (11)
-        return telefoneAluno.length() == 10 || telefoneAluno.length() == 11;
+        return telAluno.length() == 10 || telAluno.length() == 11;
     }
 
     /**

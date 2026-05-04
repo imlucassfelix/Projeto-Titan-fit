@@ -6,16 +6,18 @@ public class Aula {
 	private String descricaoAula;
 	private int capacidadeMaxima;
 	private String modalidade;
+	private String cpfInstrutor;
 
 	public Aula() {
 	}
 
-	public Aula(int codAula, String nomeAula, int capacidadeMaxima, String descricaoAula) {
+	public Aula(int codAula, String nomeAula, int capacidadeMaxima, String descricaoAula, String modalidade, String cpfInstrutor) {
 		this.codAula = codAula;
 		this.nomeAula = nomeAula;
 		this.descricaoAula = descricaoAula;
 		this.capacidadeMaxima = capacidadeMaxima;
 		this.modalidade = modalidade;
+		this.cpfInstrutor = cpfInstrutor;
 	}
 
 
@@ -59,6 +61,13 @@ public class Aula {
 		this.modalidade = modalidade;
 	}
 
+	public String getCpfInstrutor() {
+		return cpfInstrutor;
+	}
+
+	public void setCpfInstrutor(String cpfInstrutor) {
+		this.cpfInstrutor = cpfInstrutor;
+	}
 
 	@Override
 	public String toString() {
@@ -68,6 +77,7 @@ public class Aula {
 				", descricaoAula='" + descricaoAula + '\'' +
 				", capacidadeMaxima=" + capacidadeMaxima +
 				", modalidade='" + modalidade + '\'' +
+				", cpfInstrutor='" + cpfInstrutor + '\'' +
 				'}';
 	}
 }
