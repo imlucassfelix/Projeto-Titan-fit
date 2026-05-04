@@ -12,9 +12,7 @@ public class InscricaoMenu {
     private List<InscricaoAula> listaInscricoes = new ArrayList<>();
 
     public InscricaoMenu(Scanner sc) {
-        {
             this.sc = sc;
-        }
     }
 
     public void exibirMenu() {
@@ -64,7 +62,8 @@ public class InscricaoMenu {
                         break;
                     }
 
-                    InscricaoAula novaInscricao = new InscricaoAula(listaInscricoes.size() + 1, codAula, cpfAluno, horario, codInscricao);
+                    // Corrigido:
+                    InscricaoAula novaInscricao = new InscricaoAula(codInscricao, codAula, cpfAluno, horario);
                     listaInscricoes.add(novaInscricao);
                     System.out.println("Inscrição realizada com sucesso!");
                     break;

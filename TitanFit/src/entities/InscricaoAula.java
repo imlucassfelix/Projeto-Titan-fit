@@ -9,7 +9,7 @@ public class InscricaoAula {
     public InscricaoAula() {
     }
 
-    public InscricaoAula(int i, int codInscricao, int codAula, String cpfAluno, String horario) {
+    public InscricaoAula(int codInscricao, int codAula, String cpfAluno, String horario) {
         this.codInscricao = codInscricao;
         this.codAula = codAula;
         this.cpfAluno = cpfAluno;
