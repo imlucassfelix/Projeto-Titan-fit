@@ -34,6 +34,10 @@ public class AulaMenu {
 						System.out.println("***               CADASTRAR AULA               ***");
 						System.out.print("***              Código da Aula:               ***");
 						int codAula = sc.nextInt(); sc.nextLine();
+						if (!Validador.campoObrigatorio(String.valueOf(codAula))) {
+							System.out.println("***        Erro: Código é obrigatório!         ***");
+							break;
+						}
 
 						System.out.print("***            Digite nome da aula:            ***");
 						String nomeAula = sc.nextLine();
@@ -45,7 +49,7 @@ public class AulaMenu {
 						System.out.print("***                Modalidade:                 ***");
 						String modalidade = sc.nextLine();
 						if (!Validador.campoObrigatorio(modalidade)) {
-							System.out.println("**  Erro: O nome da modalidade  é obrigatória!  **");
+							System.out.println("**  Erro: O nome da modalidade  é obrigatório!  **");
 							break;
 						}
 

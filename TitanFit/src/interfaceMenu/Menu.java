@@ -19,9 +19,10 @@ public class Menu {
             System.out.println("==================================================");
             System.out.println("[1] - Gerenciar Alunos                         ***");
             System.out.println("[2] - Gerenciar Instrutores                    ***");
-            System.out.println("[3] - Planos e Matrículas                      ***");
+            System.out.println("[3] - Gerenciamento Plano                      ***");
             System.out.println("[4] - Gestão de Aulas e Treinos                ***");
-            System.out.println("[5] - Inventário de Equipamentos               ***");
+            System.out.println("[5] - Inscrição/Matrículas                     ***");
+            System.out.println("[6] - Inventário de Equipamentos               ***");
             System.out.println("[0] - Sair                                     ***");
             System.out.println("==================================================");
             System.out.print("Escolha uma opção: \n");
@@ -45,6 +46,9 @@ public class Menu {
                 	new AulaMenu(sc).exibirMenu();
                     break;
                 case 5:
+                    new InscricaoMenu(sc).exibirMenu();
+                    break;
+                case 6:
                 	new EquipamentosMenu(sc).exibirMenu();
                     break;
                 case 0:

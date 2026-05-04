@@ -9,8 +9,26 @@ public class InscricaoAula {
     public InscricaoAula() {
     }
 
-    public InscricaoAula(String cpfAluno, int codAula) {
+    public InscricaoAula(int i, int codInscricao, int codAula, String cpfAluno, String horario) {
+        this.codInscricao = codInscricao;
+        this.codAula = codAula;
         this.cpfAluno = cpfAluno;
+        this.horario = horario;
+    }
+
+    public int getCodInscricao() {
+        return codInscricao;
+    }
+
+    public void setCodInscricao(int codInscricao) {
+        this.codInscricao = codInscricao;
+    }
+
+    public int getCodAula() {
+        return codAula;
+    }
+
+    public void setCodAula(int codAula) {
         this.codAula = codAula;
     }
 
@@ -22,19 +40,21 @@ public class InscricaoAula {
         this.cpfAluno = cpfAluno;
     }
 
-    public int getCodAula() {
-        return codAula;
+    public String getHorario() {
+        return horario;
     }
 
-    public void setCodAula(int codAula) {
-        this.codAula = codAula;
+    public void setHorario(String horario) {
+        this.horario = horario;
     }
 
     @Override
     public String toString() {
         return "InscricaoAula{" +
-                "cpfAluno='" + cpfAluno + '\'' +
+                "codInscricao=" + codInscricao +
                 ", codAula=" + codAula +
+                ", cpfAluno='" + cpfAluno + '\'' +
+                ", horario='" + horario + '\'' +
                 '}';
     }
 }

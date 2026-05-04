@@ -2,8 +2,8 @@ package interfaceMenu;
 
 import entities.Plano;
 import repositoyDB.PlanoDB;
-import util.Validador;
 
+import util.Validador;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;

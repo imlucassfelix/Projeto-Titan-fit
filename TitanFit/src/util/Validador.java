@@ -1,4 +1,5 @@
 package util;
+import java.time.LocalTime;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -80,6 +81,20 @@ public class Validador {
         final int MAXIMO = 50;
 
         return capacidade >= MINIMO && capacidade <= MAXIMO;
+    }
+
+    /**
+     * Valida se o horário está no formato HH:mm (ex: 08:30, 23:45). Retorna true se válido, false caso contrário.
+     */
+    public static boolean validarHorario(String horario) {
+        if (horario == null) return false;
+        try {
+            DateTimeFormatter fmt = DateTimeFormatter.ofPattern("HH:mm");
+            LocalTime.parse(horario, fmt);
+            return true;
+        } catch (DateTimeParseException e) {
+            return false;
+        }
     }
 }
 
