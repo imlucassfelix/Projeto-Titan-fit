@@ -2,7 +2,6 @@ package interfaceMenu;
 
 import entities.Aula;
 import util.Validador;
-
 import java.util.Scanner;
 
 public class AulaMenu {
@@ -39,21 +38,21 @@ public class AulaMenu {
 						System.out.print("***            Digite nome da aula:            ***");
 						String nomeAula = sc.nextLine();
 						if (!Validador.campoObrigatorio(nomeAula)) {
-							System.out.println("**     Erro: O nome da aula é obrigatório!      **");
+							System.out.println("**     Erro: O nome da aula é obrigatória!      **");
 							break;
 						}
 
 						System.out.print("***                Modalidade:                 ***");
 						String modalidade = sc.nextLine();
 						if (!Validador.campoObrigatorio(modalidade)) {
-							System.out.println("**     Erro: O nome da aula é obrigatório!      **");
+							System.out.println("**  Erro: O nome da modalidade  é obrigatória!  **");
 							break;
 						}
 
 						System.out.print("***             Descrição da Aula:             ***");
 						String descricaoAula = sc.nextLine();
 						if (!Validador.campoObrigatorio(descricaoAula)) {
-							System.out.println("**     Erro: O nome da aula é obrigatório!      **");
+							System.out.println("**    Erro: descricao da aula é obrigatória!    **");
 							break;
 						}
 

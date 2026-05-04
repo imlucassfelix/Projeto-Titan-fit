@@ -1,17 +1,21 @@
 package entities;
 
+import java.util.List;
+import java.util.ArrayList;
+
 public class Plano {
 	private int codPlano;
 	private String categoria;
 	private double valor;
-	private String beneficios;
+	private List<String> beneficios;
 	private double pagamento;
 	private String codFidelidade;
 	
 	public Plano() {
+		this.beneficios = new ArrayList<>();
 	}
 
-	public Plano(int codPlano, String categoria, double valor, String beneficios, double pagamento,
+	public Plano(int codPlano, String categoria, double valor, List<String> beneficios, double pagamento,
 			String codFidelidade) {
 		this.codPlano = codPlano;
 		this.categoria = categoria;
@@ -22,6 +26,7 @@ public class Plano {
 	}
 
 	public int getCodPlano() {
+
 		return codPlano;
 	}
 
@@ -30,26 +35,31 @@ public class Plano {
 	}
 
 	public String getCategoria() {
+
 		return categoria;
 	}
 
 	public void setCategoria(String categoria) {
+
 		this.categoria = categoria;
 	}
 
 	public double getValor() {
+
 		return valor;
 	}
 
 	public void setValor(double valor) {
+
 		this.valor = valor;
 	}
 
-	public String getBeneficios() {
+	public List<String> getBeneficios() {
+
 		return beneficios;
 	}
 
-	public void setBeneficios(String beneficios) {
+	public void setBeneficios(List<String> beneficios) {
 		this.beneficios = beneficios;
 	}
 
@@ -67,6 +77,10 @@ public class Plano {
 
 	public void setCodFidelidade(String codFidelidade) {
 		this.codFidelidade = codFidelidade;
+	}
+
+	public void adicionarBeneficio(String beneficio) {
+		this.beneficios.add(beneficio);
 	}
 
 	@Override

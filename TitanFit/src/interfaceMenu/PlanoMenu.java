@@ -1,5 +1,11 @@
 package interfaceMenu;
 
+import entities.Plano;
+import repositoyDB.PlanoDB;
+import util.Validador;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class PlanoMenu {
@@ -29,8 +35,51 @@ public class PlanoMenu {
 
             switch (opcao) {
                 case 1:
-                    System.out.println(" Cadastro em breve");
+                    System.out.println("==================================================");
+                    System.out.println("***             CADASTRAR PLANO                ***");
+                    System.out.println("==================================================");
+
+                    System.out.print("***              Código do Plano:              ***");
+                    int codPlano = sc.nextInt(); sc.nextLine();
+
+                    System.out.print("***         Categoria do Plano:                ***");
+                    String categoria = sc.nextLine();
+                    if (!Validador.campoObrigatorio(categoria)) {
+                        System.out.println("**   Erro: A categoria é obrigatória!          **");
+                        break;
+                    }
+
+                    System.out.print("***              Valor do Plano: R$            ***");
+                    double valor = sc.nextDouble(); sc.nextLine();
+
+                    System.out.print("***      Quantos benefícios deseja adicionar?  ***");
+                    int qtdBeneficios = sc.nextInt(); sc.nextLine();
+
+                    List<String> beneficios = new ArrayList<>();
+                    for (int i = 1; i <= qtdBeneficios; i++) {
+                        System.out.print("***                Benefício " + i + ":               ***");
+                        String beneficio = sc.nextLine();
+                        if (Validador.campoObrigatorio(beneficio)) {
+                            beneficios.add(beneficio);
+                        }
+                    }
+
+                    System.out.print("***            Valor de Pagamento: R$          ***");
+                    double pagamento = sc.nextDouble(); sc.nextLine();
+
+                    System.out.print("***           Código de Fidelidade:            ***");
+                    String codFidelidade = sc.nextLine();
+                    if (!Validador.campoObrigatorio(codFidelidade)) {
+                        System.out.println("**  Erro: O código de fidelidade é obrigatório! **");
+                        break;
+                    }
+
+                    Plano novoPlano = new Plano(codPlano, categoria, valor, beneficios, pagamento, codFidelidade);
+                    PlanoDB planoDB = new PlanoDB();
+                    planoDB.inserir(novoPlano);
+                    System.out.println("***       Plano cadastrado com sucesso!        ***");
                     break;
+
                 case 2:
                     System.out.println(" Listagem em breve");
                     break;

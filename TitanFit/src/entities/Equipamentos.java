@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 public class Equipamentos {
 	private int codMaquina;
-	private String nome;
+	private String nomeEquipamento;
 	private String modelo;
 	private String estado;
 	private LocalDate dataAquisicao;
@@ -12,9 +12,9 @@ public class Equipamentos {
 	public Equipamentos() {
 	}
 
-	public Equipamentos(int codMaquina, String nome, String modelo, String estado, LocalDate dataAquisicao) {
+	public Equipamentos(int codMaquina, String nomeEquipamento, String modelo, String estado, LocalDate dataAquisicao) {
 		this.codMaquina = codMaquina;
-		this.nome = nome;
+		this.nomeEquipamento = nomeEquipamento;
 		this.modelo = modelo;
 		this.estado = estado;
 		this.dataAquisicao = dataAquisicao;
@@ -29,11 +29,11 @@ public class Equipamentos {
 	}
 
 	public String getNome() {
-		return nome;
+		return nomeEquipamento;
 	}
 
 	public void setNome(String nome) {
-		this.nome = nome;
+		this.nomeEquipamento = nome;
 	}
 
 	public String getModelo() {
@@ -62,7 +62,7 @@ public class Equipamentos {
 
 	@Override
 	public String toString() {
-		return "Equipamento [codMaquina=" + codMaquina + ", nome=" + nome + ", modelo=" + modelo + ", estado=" + estado
+		return "Equipamento [codMaquina=" + codMaquina + ", nomeEquipamento=" + nomeEquipamento + ", modelo=" + modelo + ", estado=" + estado
 				+ ", dataAquisicao=" + dataAquisicao + "]";
 	}
 
