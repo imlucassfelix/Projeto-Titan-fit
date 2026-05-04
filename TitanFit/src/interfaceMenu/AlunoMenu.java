@@ -18,18 +18,18 @@ public class AlunoMenu {
         int opcao;
         do {
             System.out.println("");
-            System.out.println("========================================");
-            System.out.println("***      TITANFIT - ALUNOS           ***");
-            System.out.println("========================================");
-            System.out.println("[1] - Cadastrar Aluno                ***");
-            System.out.println("[2] - Listar Alunos                  ***");
-            System.out.println("[3] - Atualizar Aluno                ***");
-            System.out.println("[4] - Gerenciar Frequencia           ***");
-            System.out.println("[5] - Remover Aluno                  ***");
-            System.out.println("[0] - Voltar                         ***");
-            System.out.println("========================================");
+            System.out.println("==================================================");
+            System.out.println("***             TITANFIT - ALUNOS              ***");
+            System.out.println("==================================================");
+            System.out.println("[1] - Cadastrar Aluno                          ***");
+            System.out.println("[2] - Listar Alunos                            ***");
+            System.out.println("[3] - Atualizar Aluno                          ***");
+            System.out.println("[4] - Gerenciar Frequencia                     ***");
+            System.out.println("[5] - Remover Aluno                            ***");
+            System.out.println("[0] - Voltar                                   ***");
+            System.out.println("==================================================");
             System.out.print("Escolha uma opção: \n");
-            System.out.println("========================================");
+            System.out.println("==================================================");
             
             opcao = sc.nextInt(); sc.nextLine();
 
@@ -37,48 +37,48 @@ public class AlunoMenu {
                 case 1:
                     sc.nextLine();
 
-                    System.out.println("***  CADASTRO DE ALUNOS  ***");
-                    System.out.println(" Digite o nome do aluno: ");
+                    System.out.println("***             CADASTRO DE ALUNOS             ***");
+                    System.out.println("***           Digite o nome do aluno:          ***");
                     String nomeAluno = sc.nextLine();
                     if
                     (!Validador.campoObrigatorio(nomeAluno)) {
-                        System.out.println("Nome nao pode ser vazio!");
+                        System.out.println("***         Nome nao pode ser vazio!           ***");
                         break;
                     }
 
-                    System.out.println(" Digite o CPF do aluno (11 dígitos): ");
+                    System.out.println("***    Digite o CPF do aluno (11 dígitos):     ***");
                     String cpfAluno = sc.nextLine();
                     if (!Validador.validarCpf(cpfAluno)) {
-                        System.out.println("CPF invalido! Digite 11 digitos numericos.");
+                        System.out.println("**  CPF invalido! Digite 11 digitos numericos.  **");
                         break;
                     }
 
-                    System.out.println(" Sexo (M/F/I): ");
+                    System.out.println("***              Sexo (M/F/I):                 ***");
                     String sexo = sc.nextLine();
                     if (!Validador.validarSexo(sexo)) {
-                        System.out.println("Sexo invalido! Digite M, F ou I.");
+                        System.out.println("***      Sexo invalido! Digite M, F ou I.      ***");
                         break;
                     }
 
-                    System.out.println(" Data de nascimento (dd/mm/aaaa): ");
+                    System.out.println("***      Data de nascimento (dd/mm/aaaa):      ***");
                     String dataNascStr = sc.nextLine();
                     if (!Validador.validarData(dataNascStr)) {
-                        System.out.println("Data invalida! Use o formato dd/mm/aaaa.");
+                        System.out.println("**   Data invalida! Use o formato dd/mm/aaaa.   **");
                         break;
                     }
                     LocalDate dataNascimentoAluno = LocalDate.parse(dataNascStr, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 
-                    System.out.println(" Telefone: ");
+                    System.out.println("***                 Telefone:                  ***");
                     String telefoneAluno = sc.nextLine();
                     if (!Validador.validarTelefone(telefoneAluno)) {
-                        System.out.println("Telefone invalido! Digite 11 digitos numericos.");
+                        System.out.println("*  Telefone invalido! Use 11 digitos numericos.  *");
                         break;
                     }
 
-                    System.out.println(" Digite um endereço de e-mail: ");
+                    System.out.println("***       Digite um endereço de e-mail:        ***");
                     String emailAluno = sc.nextLine();
                     if (!Validador.validarEmail(emailAluno)) {
-                        System.out.println("Email invalido! Digite um email valido. ");
+                        System.out.println("***  Email invalido! Digite um email valido.   ***");
                         break;
                     }
 
@@ -86,7 +86,7 @@ public class AlunoMenu {
 
                     Aluno novoAluno = new Aluno(cpfAluno, telefoneAluno, nomeAluno, emailAluno, dataNascimentoAluno, dataMatricula, sexo);
 
-                    System.out.println("Aluno criado: " + novoAluno);
+                    System.out.println("***              Aluno criado:                 ***" + novoAluno);
                     AlunoDB alunoDB = new AlunoDB();
                     alunoDB.inserir(novoAluno);
                     break;

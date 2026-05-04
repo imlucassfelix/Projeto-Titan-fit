@@ -32,42 +32,42 @@ public class AulaMenu {
 
 				switch (opcao) {
 	                case 1:
-						System.out.println("*** CADASTRAR AULA ***");
-						System.out.print("Código da Aula: ");
+						System.out.println("***               CADASTRAR AULA               ***");
+						System.out.print("***              Código da Aula:               ***");
 						int codAula = sc.nextInt(); sc.nextLine();
 
-						System.out.print("Digite nome da aula: ");
+						System.out.print("***            Digite nome da aula:            ***");
 						String nomeAula = sc.nextLine();
 						if (!Validador.campoObrigatorio(nomeAula)) {
-							System.out.println("Erro: O nome da aula é obrigatório!");
+							System.out.println("**     Erro: O nome da aula é obrigatório!      **");
 							break;
 						}
 
-						System.out.print("Modalidade: ");
+						System.out.print("***                Modalidade:                 ***");
 						String modalidade = sc.nextLine();
 						if (!Validador.campoObrigatorio(modalidade)) {
-							System.out.println("Erro: O nome da aula é obrigatório!");
+							System.out.println("**     Erro: O nome da aula é obrigatório!      **");
 							break;
 						}
 
-						System.out.print("Descrição da Aula: ");
+						System.out.print("***             Descrição da Aula:             ***");
 						String descricaoAula = sc.nextLine();
 						if (!Validador.campoObrigatorio(descricaoAula)) {
-							System.out.println("Erro: O nome da aula é obrigatório!");
+							System.out.println("**     Erro: O nome da aula é obrigatório!      **");
 							break;
 						}
 
-						System.out.print("Capacidade Máxima: ");
+						System.out.print("***            Capacidade Máxima:              ***");
 						int capacidadeMaxima = sc.nextInt(); sc.nextLine();
 						capacidadeMaxima = sc.nextInt();
 						sc.nextLine(); // Limpa o buffer
 						if (!Validador.validarCapacidade(capacidadeMaxima)) {
-							System.out.println("Erro: A capacidade deve estar entre 1 e 50.");
+							System.out.println("*  Erro: A capacidade deve estar entre 1 e 50.   *");
 							break;
 						}
 
 						Aula novaAula = new Aula(codAula, nomeAula, capacidadeMaxima, descricaoAula);
-						System.out.println("Aula cadastrada com sucesso!");
+						System.out.println("***      Aula cadastrada com sucesso!          ***");
 	                    break;
 
 	                case 2:

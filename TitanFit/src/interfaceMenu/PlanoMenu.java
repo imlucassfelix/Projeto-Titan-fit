@@ -13,17 +13,17 @@ public class PlanoMenu {
         int opcao;
         do {
             System.out.println("");
-            System.out.println("========================================");
-            System.out.println("***      TITANFIT - PLANOS           ***");
-            System.out.println("========================================");
-            System.out.println("[1] - Cadastrar Plano");
-            System.out.println("[2] - Listar Planos");
-            System.out.println("[3] - Alterar Plano");
-            System.out.println("[4] - Remover Plano");
-            System.out.println("[0] - Voltar");
-            System.out.println("========================================");
+            System.out.println("==================================================");
+            System.out.println("***             TITANFIT - PLANOS              ***");
+            System.out.println("==================================================");
+            System.out.println("[1] - Cadastrar Plano                          ***");
+            System.out.println("[2] - Listar Planos                            ***");
+            System.out.println("[3] - Alterar Plano                            ***");
+            System.out.println("[4] - Remover Plano                            ***");
+            System.out.println("[0] - Voltar                                   ***");
+            System.out.println("==================================================");
             System.out.print("Escolha uma opção: \n");
-            System.out.println("========================================");
+            System.out.println("==================================================");
             
             opcao = sc.nextInt(); sc.nextLine();
 
