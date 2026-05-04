@@ -13,8 +13,7 @@ public class InscricaoAula {
         this.codInscricao = codInscricao;
         this.codAula = codAula;
         this.cpfAluno = cpfAluno;
-        this.horario = horario;
-    }
+        this.horario = horario; }
 
     public int getCodInscricao() {
         return codInscricao;
