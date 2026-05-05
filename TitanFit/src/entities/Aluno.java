@@ -14,11 +14,12 @@ public class Aluno {
 	public Aluno() {
 	}
 
-	public Aluno(String cpfAluno, String telefoneAluno, String nomeAluno, String emailAluno, LocalDate dataMatricula, LocalDate dataNascimento, String sexo) {
+	public Aluno(String cpfAluno, String nomeAluno, String emailAluno, String telefoneAluno,
+				 LocalDate dataNascimento, LocalDate dataMatricula, String sexo) {
 		this.cpfAluno = cpfAluno;
 		this.nomeAluno = nomeAluno;
-		this.telefoneAluno = telefoneAluno;
 		this.emailAluno = emailAluno;
+		this.telefoneAluno = telefoneAluno;
 		this.dataNascimento = dataNascimento;
 		this.dataMatricula = dataMatricula;
 		this.sexo = sexo;

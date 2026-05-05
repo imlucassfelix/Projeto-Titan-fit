@@ -82,7 +82,7 @@ public class AlunoMenu {
 
                     LocalDate dataMatricula = LocalDate.now();
 
-                    Aluno novoAluno = new Aluno(cpfAluno, telefoneAluno, nomeAluno, emailAluno, dataNascimentoAluno, dataMatricula, sexo);
+                    Aluno novoAluno = new Aluno( cpfAluno, nomeAluno, emailAluno, telefoneAluno, dataNascimentoAluno, dataMatricula, sexo);
 
                     System.out.println("***              Aluno criado:                 ***\n" + novoAluno);
                     AlunoDB alunoDB = new AlunoDB();
@@ -97,7 +97,12 @@ public class AlunoMenu {
                         System.out.println("***          Nenhum aluno cadastrado.          ***");
                     } else {
                         for (Aluno a : lista) {
-                            System.out.println("Nome: " + a.getNomeAluno() + " | CPF: " + a.getCpfAluno());
+                            System.out.println("Nome: " + a.getNomeAluno());
+                            System.out.println("CPF: " + a.getCpfAluno());
+                            System.out.println("Email: " + a.getEmailAluno());
+                            System.out.println("Telefone: " + a.getTelefoneAluno());
+                            System.out.println("Nascimento: " + a.getDataNascimento());
+                            System.out.println("Sexo: " + a.getSexo());
                         }
                     }
                     break;
