@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public class ConexaoBancoDados {
     private static final String URL = "jdbc:mysql://localhost:3306/titanfit?useTimezone=true&serverTimezone=UTC";    private static final String USUARIO = "root";
-    private static final String SENHA = "Geovanna9640@";
+    private static final String SENHA = "";
  
     public static Connection conectar() {
         Connection conexao = null;

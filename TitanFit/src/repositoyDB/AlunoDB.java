@@ -88,7 +88,31 @@ public class AlunoDB {
 	}
 
 	public void atualizar(Aluno aluno) {
-		
+		String sql = "UPDATE aluno SET " +
+				"nome_aluno = ?, " +
+				"email_aluno = ?, " +
+				"telefone_aluno = ?, " +
+				"data_nascimento = ?, " +
+				"sexo = ? " +
+				"WHERE cpf_aluno = ?";
+
+		try (Connection conn = ConexaoBancoDados.conectar();
+			 PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+			stmt.setString(1, aluno.getNomeAluno());
+			stmt.setString(2, aluno.getEmailAluno());
+			stmt.setString(3, aluno.getTelefoneAluno());
+			stmt.setDate(4, Date.valueOf(aluno.getDataNascimento()));
+			stmt.setString(5, aluno.getSexo());
+
+			// O CPF é a chave para encontrar o registro
+			stmt.setString(6, aluno.getCpfAluno());
+
+			stmt.executeUpdate();
+			System.out.println("*** Dados atualizados com sucesso no TitanFit! ***");
+		} catch (SQLException e) {
+			System.out.println("Erro ao atualizar: " + e.getMessage());
+		}
 	}
 
 	public void deletar(String cpfAluno) {
