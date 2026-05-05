@@ -1,10 +1,9 @@
 package repositoyDB;
+
 import entities.Aluno;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import connection.ConexaoBancoDados;
 
 public class AlunoDB {
@@ -32,22 +31,87 @@ public class AlunoDB {
 			System.out.println("***       Erro ao inserir aluno no banco:      ***" + e.getMessage());
 		}
 	}
-	
+
 	public Aluno buscarPorId(String cpfAluno) {
+		String sql = "SELECT * FROM aluno WHERE cpf_aluno = ?";
+
+		try (Connection conn = ConexaoBancoDados.conectar();
+			 PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+			stmt.setString(1, cpfAluno);
+
+			try (var rs = stmt.executeQuery()) {
+				if (rs.next()) {
+					Aluno aluno = new Aluno();
+					aluno.setCpfAluno(rs.getString("cpf_aluno"));
+					aluno.setNomeAluno(rs.getString("nome_aluno"));
+					aluno.setEmailAluno(rs.getString("email_aluno"));
+					aluno.setTelefoneAluno(rs.getString("telefone_aluno"));
+					aluno.setDataNascimento(rs.getDate("data_nascimento").toLocalDate());
+					aluno.setDataMatricula(rs.getDate("data_matricula").toLocalDate());
+					aluno.setSexo(rs.getString("sexo"));
+					return aluno;
+				}
+			}
+		} catch (SQLException e) {
+			System.out.println("***           Erro ao buscar aluno:            ***" + e.getMessage());
+		}
 		return null;
-		
 	}
-	
-	public List<Aluno> listarTodos(){
-		return null;
-		
+
+	public List<Aluno> listarTodos() {
+		String sql = "SELECT * FROM aluno";
+		List<Aluno> listaAlunos = new ArrayList<>();
+
+		try (Connection conn = ConexaoBancoDados.conectar();
+			 PreparedStatement stmt = conn.prepareStatement(sql); ResultSet rs = stmt.executeQuery()) {
+
+			while (rs.next()) {
+				Aluno aluno = new Aluno();
+				aluno.setCpfAluno(rs.getString("cpf_aluno"));
+				aluno.setNomeAluno(rs.getString("nome_aluno"));
+				aluno.setEmailAluno(rs.getString("email_aluno"));
+				aluno.setTelefoneAluno(rs.getString("telefone_aluno"));
+				aluno.setDataNascimento(rs.getDate("data_nascimento").toLocalDate());
+				aluno.setDataMatricula(rs.getDate("data_matricula").toLocalDate());
+				aluno.setSexo(rs.getString("sexo"));
+
+				// Adiciona o aluno preenchido na lista
+				listaAlunos.add(aluno);
+			}
+
+		} catch (SQLException e) {
+			System.out.println("***          Erro ao listar alunos:            ***" + e.getMessage());
+		}
+
+		return listaAlunos; // Retorna a lista completa (ou vazia, caso não haja alunos)
 	}
-	
+
 	public void atualizar(Aluno aluno) {
 		
 	}
-	
+
 	public void deletar(String cpfAluno) {
-		
+		// 1. O SQL precisa estar entre aspas duplas
+		String sql = "DELETE FROM aluno WHERE cpf_aluno = ?";
+
+		try (Connection conn = ConexaoBancoDados.conectar();
+			 PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+			// 2. Define o valor do CPF que será deletado
+			stmt.setString(1, cpfAluno);
+
+			// 3. Executa a deleção
+			int linhasAfetadas = stmt.executeUpdate();
+
+			if (linhasAfetadas > 0) {
+				System.out.println("***   Aluno deletado com sucesso do TitanFit!  ***");
+			} else {
+				System.out.println("***    Nenhum aluno encontrado com esse CPF.   ***");
+			}
+
+		} catch (SQLException e) {
+			System.out.println("***           Erro ao deletar aluno:           ***" + e.getMessage());
+		}
 	}
 }

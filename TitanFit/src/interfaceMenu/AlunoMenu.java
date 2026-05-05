@@ -84,26 +84,43 @@ public class AlunoMenu {
 
                     Aluno novoAluno = new Aluno(cpfAluno, telefoneAluno, nomeAluno, emailAluno, dataNascimentoAluno, dataMatricula, sexo);
 
-                    System.out.println("***              Aluno criado:                 ***" + novoAluno);
+                    System.out.println("***              Aluno criado:                 ***\n" + novoAluno);
                     AlunoDB alunoDB = new AlunoDB();
                     alunoDB.inserir(novoAluno);
                     break;
 
                 case 2:
-                    System.out.println(" Listagem em breve");
+                    System.out.println("***              LISTA DE ALUNOS               ***");
+                    AlunoDB ListarDB = new AlunoDB();
+                    var lista = ListarDB.listarTodos();
+                    if (lista.isEmpty()) {
+                        System.out.println("***          Nenhum aluno cadastrado.          ***");
+                    } else {
+                        for (Aluno a : lista) {
+                            System.out.println("Nome: " + a.getNomeAluno() + " | CPF: " + a.getCpfAluno());
+                        }
+                    }
                     break;
+
                 case 3:
                     System.out.println(" Atualizacao em breve");
                     break;
+
                 case 4:
                     System.out.println(" aguarde ...");
                     break;
+
                 case 5:
-                    System.out.println(" Remocao em breve");
+                    System.out.print("*** Digite o CPF do aluno que deseja remover:  ***");
+                    String cpfRemover = sc.nextLine();
+                    AlunoDB RemoverDB = new AlunoDB();
+                    RemoverDB.deletar(cpfRemover);
                     break;
+
                 case 0:
                     System.out.println("Voltando...");
                     break;
+
                 default:
                     System.out.println("Opção inválida, tente novamente.");
             }
