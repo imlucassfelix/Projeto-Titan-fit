@@ -82,28 +82,78 @@ public class AlunoMenu {
 
                     LocalDate dataMatricula = LocalDate.now();
 
-                    Aluno novoAluno = new Aluno(cpfAluno, telefoneAluno, nomeAluno, emailAluno, dataNascimentoAluno, dataMatricula, sexo);
+                    Aluno novoAluno = new Aluno( cpfAluno, nomeAluno, emailAluno, telefoneAluno, dataNascimentoAluno, dataMatricula, sexo);
 
-                    System.out.println("***              Aluno criado:                 ***" + novoAluno);
+                    System.out.println("***              Aluno criado:                 ***\n" + novoAluno);
                     AlunoDB alunoDB = new AlunoDB();
                     alunoDB.inserir(novoAluno);
                     break;
 
                 case 2:
-                    System.out.println(" Listagem em breve");
+                    System.out.println("***              LISTA DE ALUNOS               ***");
+                    AlunoDB ListarDB = new AlunoDB();
+                    var lista = ListarDB.listarTodos();
+                    if (lista.isEmpty()) {
+                        System.out.println("***          Nenhum aluno cadastrado.          ***");
+                    } else {
+                        for (Aluno a : lista) {
+                            System.out.println("Nome: " + a.getNomeAluno());
+                            System.out.println("CPF: " + a.getCpfAluno());
+                            System.out.println("Email: " + a.getEmailAluno());
+                            System.out.println("Telefone: " + a.getTelefoneAluno());
+                            System.out.println("Nascimento: " + a.getDataNascimento());
+                            System.out.println("Sexo: \n" + a.getSexo());
+                        }
+                    }
                     break;
+
                 case 3:
-                    System.out.println(" Atualizacao em breve");
+                    System.out.println("***          ATUALIZAR DADOS DO ALUNO          ***");
+                    System.out.print("*  Digite o CPF do aluno que deseja atualizar:   *");
+                    String cpfBusca = sc.nextLine();
+
+                    // 1. Buscamos o aluno no banco para garantir que ele existe
+                    Aluno alunoParaAtualizar = new AlunoDB().buscarPorId(cpfBusca);
+
+                    if (alunoParaAtualizar == null) {
+                        System.out.println("Erro: Aluno com CPF " + cpfBusca + " não encontrado!");
+                    } else {
+                        // 2. Pedimos os novos dados (mantendo o que o utilizador não quiser mudar)
+                        System.out.println("Editando aluno: " + alunoParaAtualizar.getNomeAluno());
+
+                        System.out.print("*** Novo Nome (ou aperte Enter para manter):   ***");
+                        String novoNome = sc.nextLine();
+                        if (!novoNome.isEmpty()) alunoParaAtualizar.setNomeAluno(novoNome);
+
+                        System.out.print("*** Novo Email (ou aperte Enter para manter):  ***");
+                        String novoEmail = sc.nextLine();
+                        if (!novoEmail.isEmpty()) alunoParaAtualizar.setEmailAluno(novoEmail);
+
+                        System.out.print("** Novo Telefone (ou aperte Enter para manter): **");
+                        String novoTelefone = sc.nextLine();
+                        if (!novoTelefone.isEmpty()) alunoParaAtualizar.setTelefoneAluno(novoTelefone);
+
+                        // 3. Atualizamos no banco de dados
+                        new AlunoDB().atualizar(alunoParaAtualizar);
+                        System.out.println("***       Dados atualizados com sucesso!       ***");
+                    }
                     break;
+
                 case 4:
                     System.out.println(" aguarde ...");
                     break;
+
                 case 5:
-                    System.out.println(" Remocao em breve");
+                    System.out.print("*** Digite o CPF do aluno que deseja remover:  ***");
+                    String cpfRemover = sc.nextLine();
+                    AlunoDB RemoverDB = new AlunoDB();
+                    RemoverDB.deletar(cpfRemover);
                     break;
+
                 case 0:
                     System.out.println("Voltando...");
                     break;
+
                 default:
                     System.out.println("Opção inválida, tente novamente.");
             }
