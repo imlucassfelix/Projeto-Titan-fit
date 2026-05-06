@@ -9,14 +9,14 @@ public class Plano {
 	private double valor;
 	private List<String> beneficios;
 	private double pagamento;
-	private String codFidelidade;
-	
+	private int codFidelidade; // Corrigido: int para corresponder a Fidelidade.codFidelidade
+
 	public Plano() {
 		this.beneficios = new ArrayList<>();
 	}
 
 	public Plano(int codPlano, String categoria, double valor, List<String> beneficios, double pagamento,
-			String codFidelidade) {
+	             int codFidelidade) {
 		this.codPlano = codPlano;
 		this.categoria = categoria;
 		this.valor = valor;
@@ -26,7 +26,6 @@ public class Plano {
 	}
 
 	public int getCodPlano() {
-
 		return codPlano;
 	}
 
@@ -35,27 +34,22 @@ public class Plano {
 	}
 
 	public String getCategoria() {
-
 		return categoria;
 	}
 
 	public void setCategoria(String categoria) {
-
 		this.categoria = categoria;
 	}
 
 	public double getValor() {
-
 		return valor;
 	}
 
 	public void setValor(double valor) {
-
 		this.valor = valor;
 	}
 
 	public List<String> getBeneficios() {
-
 		return beneficios;
 	}
 
@@ -71,11 +65,11 @@ public class Plano {
 		this.pagamento = pagamento;
 	}
 
-	public String getCodFidelidade() {
+	public int getCodFidelidade() {
 		return codFidelidade;
 	}
 
-	public void setCodFidelidade(String codFidelidade) {
+	public void setCodFidelidade(int codFidelidade) {
 		this.codFidelidade = codFidelidade;
 	}
 
@@ -88,6 +82,4 @@ public class Plano {
 		return "Plano [codPlano=" + codPlano + ", categoria=" + categoria + ", valor=" + valor + ", beneficios="
 				+ beneficios + ", pagamento=" + pagamento + ", codFidelidade=" + codFidelidade + "]";
 	}
-	
-	
 }
