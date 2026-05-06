@@ -5,17 +5,16 @@ public class Status {
 	private String cpfAluno;
 	private int codPlano;
 	private boolean planoAtivo;
-	private boolean planoInativo;
 	
 	public Status() {
 	}
 
-	public Status(int codStatus, String cpfAluno, int codPlano, boolean planoAtivo, boolean planoInativo) {
+	public Status(int codStatus, String cpfAluno, int codPlano, boolean planoAtivo) {
 		this.codStatus = codStatus;
 		this.cpfAluno = cpfAluno;
 		this.codPlano = codPlano;
 		this.planoAtivo = planoAtivo;
-		this.planoInativo = planoInativo;
+
 	}
 
 	public int getCodStatus() {
@@ -50,18 +49,12 @@ public class Status {
 		this.planoAtivo = planoAtivo;
 	}
 
-	public boolean isPlanoInativo() {
-		return planoInativo;
-	}
 
-	public void setPlanoInativo(boolean planoInativo) {
-		this.planoInativo = planoInativo;
-	}
 
 	@Override
 	public String toString() {
 		return "Status [codStatus=" + codStatus + ", cpfAluno=" + cpfAluno + ", codPlano=" + codPlano + ", planoAtivo="
-				+ planoAtivo + ", planoInativo=" + planoInativo + "]";
+				+ planoAtivo + ", planoInativo=" + "]";
 	}
 
 
