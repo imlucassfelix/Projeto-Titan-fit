@@ -2,83 +2,52 @@ package entities;
 
 import java.time.LocalDate;
 
-public class Aluno {
+// HERANÇA: Aluno herda de Pessoa
+public class Aluno extends Pessoa {
 	private String cpfAluno;
 	private String telefoneAluno;
 	private LocalDate dataMatricula;
 	private String nomeAluno;
-	private String emailAluno;
-	private LocalDate dataNascimento;
-	private String sexo;
-	
+
 	public Aluno() {
+		super();
 	}
 
 	public Aluno(String cpfAluno, String nomeAluno, String emailAluno, String telefoneAluno,
-				 LocalDate dataNascimento, LocalDate dataMatricula, String sexo) {
+	             LocalDate dataNascimento, LocalDate dataMatricula, String sexo) {
+		super(emailAluno, dataNascimento, sexo);
 		this.cpfAluno = cpfAluno;
 		this.nomeAluno = nomeAluno;
-		this.emailAluno = emailAluno;
 		this.telefoneAluno = telefoneAluno;
-		this.dataNascimento = dataNascimento;
-		this.dataMatricula = dataMatricula;
-		this.sexo = sexo;
-	}
-
-	public String getCpfAluno() {
-		return cpfAluno;
-	}
-
-	public void setCpfAluno(String cpfAluno) {
-		this.cpfAluno = cpfAluno;
-	}
-
-	public String getTelefoneAluno() {
-		return telefoneAluno;
-	}
-
-	public void setTelefoneAluno(String telefoneAluno) {
-		this.telefoneAluno = telefoneAluno;
-	}
-
-	public LocalDate getDataMatricula() {
-		return dataMatricula;
-	}
-
-	public void setDataMatricula(LocalDate dataMatricula) {
 		this.dataMatricula = dataMatricula;
 	}
 
-	public String getNomeAluno() {
-		return nomeAluno;
-	}
+	public String getCpfAluno() { return cpfAluno; }
+	public void setCpfAluno(String cpfAluno) { this.cpfAluno = cpfAluno; }
 
-	public void setNomeAluno(String nomeAluno) {
-		this.nomeAluno = nomeAluno;
-	}
+	public String getTelefoneAluno() { return telefoneAluno; }
+	public void setTelefoneAluno(String telefoneAluno) { this.telefoneAluno = telefoneAluno; }
 
-	public String getEmailAluno() {
-		return emailAluno;
-	}
+	public LocalDate getDataMatricula() { return dataMatricula; }
+	public void setDataMatricula(LocalDate dataMatricula) { this.dataMatricula = dataMatricula; }
 
-	public void setEmailAluno(String emailAluno) {
-		this.emailAluno = emailAluno;
-	}
+	public String getNomeAluno() { return nomeAluno; }
+	public void setNomeAluno(String nomeAluno) { this.nomeAluno = nomeAluno; }
 
-	public LocalDate getDataNascimento() {
-		return dataNascimento;
-	}
+	// Redirecionando os métodos antigos para a classe Pai para não quebrar o banco de dados
+	public String getEmailAluno() { return super.getEmail(); }
+	public void setEmailAluno(String emailAluno) { super.setEmail(emailAluno); }
 
-	public void setDataNascimento(LocalDate dataNascimento) {
-		this.dataNascimento = dataNascimento;
-	}
+	public LocalDate getDataNascimento() { return super.getDataNascimento(); }
+	public void setDataNascimento(LocalDate dataNascimento) { super.setDataNascimento(dataNascimento); }
 
-	public String getSexo() {
-		return sexo;
-	}
+	public String getSexo() { return super.getSexo(); }
+	public void setSexo(String sexo) { super.setSexo(sexo); }
 
-	public void setSexo(String sexo) {
-		this.sexo = sexo;
+	// POLIMORFISMO: Implementação específica do aluno
+	@Override
+	public String obterIdentificacao() {
+		return "Aluno: " + nomeAluno + " | CPF: " + cpfAluno;
 	}
 
 	@Override
@@ -88,9 +57,9 @@ public class Aluno {
 				", telefoneAluno=" + telefoneAluno +
 				", dataMatricula=" + dataMatricula +
 				", nomeAluno='" + nomeAluno + '\'' +
-				", emailAluno='" + emailAluno + '\'' +
-				", dataNascimento=" + dataNascimento +
-				", sexo='" + sexo + '\'' +
+				", emailAluno='" + getEmailAluno() + '\'' +
+				", dataNascimento=" + getDataNascimento() +
+				", sexo='" + getSexo() + '\'' +
 				'}';
 	}
 }

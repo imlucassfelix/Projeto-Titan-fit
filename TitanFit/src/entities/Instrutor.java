@@ -2,91 +2,58 @@ package entities;
 
 import java.time.LocalDate;
 
-public class Instrutor {
+// HERANÇA: Instrutor herda de Pessoa
+public class Instrutor extends Pessoa {
 	private String cpfInstrutor;
 	private String nomeInstrutor;
-	private String emailInstrutor;
-	private LocalDate dataNascimento;
-	private String sexo;
 	private String especialidade;
 	private double salario;
-	
+
 	public Instrutor() {
+		super();
 	}
-	
+
 	public Instrutor(String cpfInstrutor, String nomeInstrutor, String emailInstrutor, LocalDate dataNascimento,
-			String sexo, String especialidade, double salario) {
+	                 String sexo, String especialidade, double salario) {
+		super(emailInstrutor, dataNascimento, sexo);
 		this.cpfInstrutor = cpfInstrutor;
 		this.nomeInstrutor = nomeInstrutor;
-		this.emailInstrutor = emailInstrutor;
-		this.dataNascimento = dataNascimento;
-		this.sexo = sexo;
 		this.especialidade = especialidade;
 		this.salario = salario;
 	}
 
-	public String getCpfInstrutor() {
-		return cpfInstrutor;
-	}
+	public String getCpfInstrutor() { return cpfInstrutor; }
+	public void setCpfInstrutor(String cpfInstrutor) { this.cpfInstrutor = cpfInstrutor; }
 
-	public void setCpfInstrutor(String cpfInstrutor) {
-		this.cpfInstrutor = cpfInstrutor;
-	}
+	public String getNomeInstrutor() { return nomeInstrutor; }
+	public void setNomeInstrutor(String nomeInstrutor) { this.nomeInstrutor = nomeInstrutor; }
 
-	public String getNomeInstrutor() {
-		return nomeInstrutor;
-	}
+	public String getEspecialidade() { return especialidade; }
+	public void setEspecialidade(String especialidade) { this.especialidade = especialidade; }
 
-	public void setNomeInstrutor(String nomeInstrutor) {
-		this.nomeInstrutor = nomeInstrutor;
-	}
+	public double getSalario() { return salario; }
+	public void setSalario(double salario) { this.salario = salario; }
 
-	public String getEmailInstrutor() {
-		return emailInstrutor;
-	}
+	// Redirecionando para a classe Pai
+	public String getEmailInstrutor() { return super.getEmail(); }
+	public void setEmailInstrutor(String emailInstrutor) { super.setEmail(emailInstrutor); }
 
-	public void setEmailInstrutor(String emailInstrutor) {
-		this.emailInstrutor = emailInstrutor;
-	}
+	public LocalDate getDataNascimento() { return super.getDataNascimento(); }
+	public void setDataNascimento(LocalDate dataNascimento) { super.setDataNascimento(dataNascimento); }
 
-	public LocalDate getDataNascimento() {
-		return dataNascimento;
-	}
+	public String getSexo() { return super.getSexo(); }
+	public void setSexo(String sexo) { super.setSexo(sexo); }
 
-	public void setDataNascimento(LocalDate dataNascimento) {
-		this.dataNascimento = dataNascimento;
-	}
-
-	public String getSexo() {
-		return sexo;
-	}
-
-	public void setSexo(String sexo) {
-		this.sexo = sexo;
-	}
-
-	public String getEspecialidade() {
-		return especialidade;
-	}
-
-	public void setEspecialidade(String especialidade) {
-		this.especialidade = especialidade;
-	}
-
-	public double getSalario() {
-		return salario;
-	}
-
-	public void setSalario(double salario) {
-		this.salario = salario;
+	// POLIMORFISMO: Implementação específica do instrutor
+	@Override
+	public String obterIdentificacao() {
+		return "Instrutor: " + nomeInstrutor + " | Especialidade: " + especialidade;
 	}
 
 	@Override
 	public String toString() {
 		return "Instrutor [cpfInstrutor=" + cpfInstrutor + ", nomeInstrutor=" + nomeInstrutor + ", emailInstrutor="
-				+ emailInstrutor + ", dataNascimento=" + dataNascimento + ", sexo=" + sexo + ", especialidade="
+				+ getEmailInstrutor() + ", dataNascimento=" + getDataNascimento() + ", sexo=" + getSexo() + ", especialidade="
 				+ especialidade + ", salario=" + salario + "]";
 	}
-	
-
 }
