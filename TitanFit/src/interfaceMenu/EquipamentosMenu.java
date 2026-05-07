@@ -1,6 +1,8 @@
 package interfaceMenu;
 import entities.Equipamentos;
 import repositoyDB.EquipamentosDB;
+import util.MetodosAula;
+import util.MetodosEquipamentos;
 import util.Validador;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -77,14 +79,11 @@ public class EquipamentosMenu {
                     break;
 
                 case 2:
-                    System.out.println(" Listagem em breve");
-                    break;
+                    MetodosEquipamentos.listarEquipamentos();
                 case 3:
-                    System.out.println(" Atualizacao em breve");
-                    break;
+                    MetodosEquipamentos.gerenciarEquipamentos();
                 case 4:
-                    System.out.println(" Remocao em breve");
-                    break;
+                    MetodosEquipamentos.removerEquipamentos();
                 case 0:
                     System.out.println("Voltando...");
                     break;
