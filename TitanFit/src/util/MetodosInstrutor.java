@@ -1,6 +1,7 @@
 package util;
 
 import entities.Instrutor;
+import repositoyDB.AlunoDB;
 import repositoyDB.InstrutorDB;
 
 import java.time.LocalDate;
@@ -71,6 +72,11 @@ public class MetodosInstrutor {
     }
 
     public static void removerInstrutor(){
+            System.out.print("** Digite CPF do Instrutor que deseja remover:  **");
+            String cpfRemover = sc.nextLine();
+            InstrutorDB RemoverDB = new InstrutorDB();
+            RemoverDB.deletar(cpfRemover);
+
     }
 
 }
