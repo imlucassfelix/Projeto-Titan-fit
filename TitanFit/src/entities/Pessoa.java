@@ -18,12 +18,29 @@ public abstract class Pessoa {
     }
 
     // Getters e Setters
-    public String getEmail() { return email; }
-    public void setEmail(String email) { this.email = email; }
-    public LocalDate getDataNascimento() { return dataNascimento; }
-    public void setDataNascimento(LocalDate dataNascimento) { this.dataNascimento = dataNascimento; }
-    public String getSexo() { return sexo; }
-    public void setSexo(String sexo) { this.sexo = sexo; }
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public LocalDate getDataNascimento() {
+        return dataNascimento;
+    }
+
+    public void setDataNascimento(LocalDate dataNascimento) {
+        this.dataNascimento = dataNascimento;
+    }
+
+    public String getSexo() {
+        return sexo;
+    }
+
+    public void setSexo(String sexo) {
+        this.sexo = sexo;
+    }
 
     // 2. POLIMORFISMO (Preparação): Método abstrato que cada filho vai implementar do seu jeito
     public abstract String obterIdentificacao();

@@ -11,30 +11,29 @@ import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 public class MetodosAluno {
-    private static Scanner sc = new Scanner(System.in);
 
-    public static void cadastrarAlunos(){
+    public static void cadastrarAlunos(Scanner sc){
         System.out.println("==================================================");
-        System.out.println("*** CADASTRO DE ALUNOS             ***");
+        System.out.println("***           CADASTRO DE ALUNOS               ***");
         System.out.println("==================================================");
-        System.out.print("*** Digite o nome do aluno:          ***\n");
+        System.out.print("***      Digite o nome do aluno:               ***\n");
         String nomeAluno = sc.nextLine();
         if (!Validador.campoObrigatorio(nomeAluno)) {
-            System.out.println("*** Nome nao pode ser vazio!           ***");
+            System.out.println("***     Nome nao pode ser vazio!               ***");
             return;
         }
 
-        System.out.print("*** Digite o CPF do aluno (11 dígitos):     ***\n");
+        System.out.print("***  Digite o CPF do aluno (11 dígitos):       ***\n");
         String cpfAluno = sc.nextLine();
         if (!Validador.validarCpf(cpfAluno)) {
-            System.out.println("** CPF invalido! Digite 11 digitos numericos.  **");
+            System.out.println("**  CPF invalido! Digite 11 digitos numericos.  **");
             return;
         }
 
-        System.out.print("*** Sexo (M/F/I):                 ***\n");
+        System.out.print("***        Sexo (M/F/I):                      ***\n");
         String sexo = sc.nextLine();
         if (!Validador.validarSexo(sexo)) {
-            System.out.println("*** Sexo invalido! Digite M, F ou I.      ***");
+            System.out.println("***   Sexo invalido! Digite M, F ou I.         ***");
             return;
         }
 
@@ -66,13 +65,13 @@ public class MetodosAluno {
         new AlunoDB().inserir(novoAluno);
     }
 
-    public static void listarAlunos(){
+    public static void listarAlunos(Scanner sc){
         System.out.println("==================================================");
-        System.out.println("*** LISTA DE ALUNOS               ***");
+        System.out.println("***           LISTA DE ALUNOS                  ***");
         System.out.println("==================================================");
         var lista = new AlunoDB().listarTodos();
         if (lista.isEmpty()) {
-            System.out.println("*** Nenhum aluno cadastrado.          ***");
+            System.out.println("***         Nenhum aluno cadastrado.           ***");
         } else {
             for (Aluno a : lista) {
                 // Aqui estamos usando o Polimorfismo da classe Pessoa/Aluno
@@ -85,11 +84,11 @@ public class MetodosAluno {
         }
     }
 
-    public static void atualizarAlunos(){
+    public static void atualizarAlunos(Scanner sc){
         System.out.println("==================================================");
-        System.out.println("*** ATUALIZAR DADOS DO ALUNO          ***");
+        System.out.println("***          ATUALIZAR DADOS DO ALUNO          ***");
         System.out.println("==================================================");
-        System.out.print("* Digite o CPF do aluno que deseja atualizar:   *\n");
+        System.out.print("*  Digite o CPF do aluno que deseja atualizar:   *\n");
         String cpfBusca = sc.nextLine();
 
         AlunoDB db = new AlunoDB();
@@ -116,15 +115,15 @@ public class MetodosAluno {
         }
     }
 
-    public static void frequenciaAlunos(){
+    public static void frequenciaAlunos(Scanner sc){
         System.out.println("==================================================");
-        System.out.println("*** REGISTRAR FREQUÊNCIA              ***");
+        System.out.println("***          REGISTRAR FREQUÊNCIA              ***");
         System.out.println("==================================================");
 
-        System.out.print("*** Digite o CPF do aluno:                     ***\n");
+        System.out.print("***        Digite o CPF do aluno:              ***\n");
         String cpfAluno = sc.nextLine();
 
-        System.out.print("*** Digite o Código da Aula:                   ***\n");
+        System.out.print("***        Digite o Código da Aula:            ***\n");
         int codAula = sc.nextInt(); sc.nextLine();
 
         LocalDate dataHoje = LocalDate.now();
@@ -134,9 +133,9 @@ public class MetodosAluno {
         new FrequentaDB().inserir(freq);
     }
 
-    public static void removerAlunos(){
+    public static void removerAlunos(Scanner sc){
         System.out.println("==================================================");
-        System.out.println("*** REMOVER ALUNO                 ***");
+        System.out.println("***             REMOVER ALUNO                  ***");
         System.out.println("==================================================");
         System.out.print("*** Digite o CPF do aluno que deseja remover:  ***\n");
         String cpfRemover = sc.nextLine();

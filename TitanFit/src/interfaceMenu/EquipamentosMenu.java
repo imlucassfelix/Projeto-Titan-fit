@@ -30,20 +30,25 @@ public class EquipamentosMenu {
 
             switch (opcao) {
                 case 1:
-                    MetodosEquipamentos.cadastrarEquipamentos();
+                    MetodosEquipamentos.cadastrarEquipamentos(sc);
                     break;
+
                 case 2:
-                    MetodosEquipamentos.listarEquipamentos();
+                    MetodosEquipamentos.listarEquipamentos(sc);
                     break;
+
                 case 3:
-                    MetodosEquipamentos.gerenciarEquipamentos();
+                    MetodosEquipamentos.gerenciarEquipamentos(sc);
                     break;
+
                 case 4:
-                    MetodosEquipamentos.removerEquipamentos();
+                    MetodosEquipamentos.removerEquipamentos(sc);
                     break;
+
                 case 0:
                     System.out.println("Voltando...");
                     break;
+
                 default:
                     System.out.println("Opção inválida, tente novamente.");
             }

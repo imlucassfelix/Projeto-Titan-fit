@@ -35,20 +35,25 @@ public class InscricaoMenu {
 
             switch (opcao) {
                 case 1:
-                    MetodosInscricao.novaInscricao();
+                    MetodosInscricao.novaInscricao(sc);
+                    break;
 
                 case 2:
-                    MetodosInscricao.listarTurma();
+                    MetodosInscricao.listarTurma(sc);
+                    break;
 
                 case 3:
-                    MetodosInscricao.alterarTurma();
+                    MetodosInscricao.alterarTurma(sc);
+                    break;
 
                 case 4:
-                    MetodosInscricao.removerTurma();
+                    MetodosInscricao.removerTurma(sc);
+                    break;
 
                 case 0:
                     System.out.println("Voltando...");
                     break;
+
                 default:
                     System.out.println("Opção inválida.");
             }

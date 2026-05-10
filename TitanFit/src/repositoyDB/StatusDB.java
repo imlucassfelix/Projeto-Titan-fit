@@ -9,7 +9,7 @@ import connection.ConexaoBancoDados;
 public class StatusDB {
 
     public void inserir(Status status) {
-        String sql = "INSERT INTO status (cod_status, cpf_aluno, cod_plano, plano_ativo) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO status_aluno (cod_status, cpf_aluno, cod_plano, plano_ativo) VALUES (?, ?, ?, ?)";
 
         try (Connection conn = ConexaoBancoDados.conectar();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -32,7 +32,7 @@ public class StatusDB {
     }
 
     public Status buscarPorId(int codStatus) {
-        String sql = "SELECT * FROM status WHERE cod_status = ?";
+        String sql = "SELECT * FROM status_aluno WHERE cod_status = ?";
 
         try (Connection conn = ConexaoBancoDados.conectar();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -56,7 +56,7 @@ public class StatusDB {
     }
 
     public List<Status> listarTodos() {
-        String sql = "SELECT * FROM status";
+        String sql = "SELECT * FROM status_aluno";
         List<Status> listaStatus = new ArrayList<>();
 
         try (Connection conn = ConexaoBancoDados.conectar();
@@ -80,7 +80,7 @@ public class StatusDB {
     }
 
     public void atualizar(Status status) {
-        String sql = "UPDATE status SET " +
+        String sql = "UPDATE status_aluno SET " +
                 "cpf_aluno = ?, " +
                 "cod_plano = ?, " +
                 "plano_ativo = ? " +
@@ -105,7 +105,7 @@ public class StatusDB {
     }
 
     public void deletar(int codStatus) {
-        String sql = "DELETE FROM status WHERE cod_status = ?";
+        String sql = "DELETE FROM status_aluno WHERE cod_status = ?";
 
         try (Connection conn = ConexaoBancoDados.conectar();
              PreparedStatement stmt = conn.prepareStatement(sql)) {

@@ -39,19 +39,19 @@ public class PlanoMenu {
 
             switch (opcao) {
                 case 1:
-                    MetodosPlano.cadastrarPlano();
+                    MetodosPlano.cadastrarPlano(sc);
                     break;
 
                 case 2:
-                    MetodosPlano.listarPlanos();
+                    MetodosPlano.listarPlanos(sc);
                     break;
 
                 case 3:
-                    MetodosPlano.alterarPlano();
+                    MetodosPlano.alterarPlano(sc);
                     break;
 
                 case 4:
-                    MetodosPlano.removerPlano();
+                    MetodosPlano.removerPlano(sc);
                     break;
 
                 case 0:

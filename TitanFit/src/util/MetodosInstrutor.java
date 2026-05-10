@@ -8,9 +8,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 public class MetodosInstrutor {
-    private static Scanner sc = new Scanner(System.in);
 
-    public static void cadastrarInstrutor(){
+    public static void cadastrarInstrutor(Scanner sc){
         System.out.println("==================================================");
         System.out.println("*** CADASTRAR INSTRUTOR               ***");
         System.out.println("==================================================");
@@ -68,7 +67,7 @@ public class MetodosInstrutor {
         instrutorDB.inserir(novoInstrutor);
     }
 
-    public static void listarInstrutor(){
+    public static void listarInstrutor(Scanner sc){
         System.out.println("==================================================");
         System.out.println("*** LISTA DE INSTRUTORES             ***");
         System.out.println("==================================================");
@@ -87,7 +86,7 @@ public class MetodosInstrutor {
         }
     }
 
-    public static void atualizarInstrutor(){
+    public static void atualizarInstrutor(Scanner sc){
         System.out.println("==================================================");
         System.out.println("*** ATUALIZAR INSTRUTOR              ***");
         System.out.println("==================================================");
@@ -115,7 +114,7 @@ public class MetodosInstrutor {
         db.atualizar(instrutor);
     }
 
-    public static void removerInstrutor(){
+    public static void removerInstrutor(Scanner sc){
         System.out.println("==================================================");
         System.out.println("*** REMOVER INSTRUTOR               ***");
         System.out.println("==================================================");

@@ -5,9 +5,8 @@ import repositoyDB.InscricaoAulaDB;
 import java.util.Scanner;
 
 public class MetodosInscricao {
-    private static Scanner sc = new Scanner(System.in);
 
-    public static void novaInscricao(){
+    public static void novaInscricao(Scanner sc){
         System.out.println("==================================================");
         System.out.println("*** NOVA INSCRICAO               ***");
         System.out.println("==================================================");
@@ -36,7 +35,7 @@ public class MetodosInscricao {
         new InscricaoAulaDB().inserir(novaInscricao);
     }
 
-    public static void listarTurma(){
+    public static void listarTurma(Scanner sc){
         System.out.println("==================================================");
         System.out.println("*** LISTA DE INSCRIÇÕES            ***");
         System.out.println("==================================================");
@@ -55,7 +54,7 @@ public class MetodosInscricao {
         }
     }
 
-    public static void alterarTurma(){
+    public static void alterarTurma(Scanner sc){
         System.out.println("==================================================");
         System.out.println("*** ALTERAR TURMA/HORÁRIO             ***");
         System.out.println("==================================================");
@@ -84,7 +83,7 @@ public class MetodosInscricao {
         db.atualizar(inscricao);
     }
 
-    public static void removerTurma(){
+    public static void removerTurma(Scanner sc){
         System.out.println("==================================================");
         System.out.println("*** REMOVER MATRÍCULA              ***");
         System.out.println("==================================================");

@@ -8,9 +8,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 public class MetodosEquipamentos {
-    private static Scanner sc = new Scanner(System.in);
 
-    public static void cadastrarEquipamentos(){
+    public static void cadastrarEquipamentos(Scanner sc){
         System.out.println("==================================================");
         System.out.println("*** CADASTRAR EQUIPAMENTO             ***");
         System.out.println("==================================================");
@@ -50,7 +49,7 @@ public class MetodosEquipamentos {
         new EquipamentosDB().inserir(novoEquipamento);
     }
 
-    public static void listarEquipamentos(){
+    public static void listarEquipamentos(Scanner sc){
         System.out.println("==================================================");
         System.out.println("*** LISTA DE EQUIPAMENTOS             ***");
         System.out.println("==================================================");
@@ -70,7 +69,7 @@ public class MetodosEquipamentos {
         }
     }
 
-    public static void gerenciarEquipamentos(){
+    public static void gerenciarEquipamentos(Scanner sc){
         System.out.println("==================================================");
         System.out.println("*** ATUALIZAR EQUIPAMENTO              ***");
         System.out.println("==================================================");
@@ -94,7 +93,7 @@ public class MetodosEquipamentos {
         db.atualizar(equipamento);
     }
 
-    public static void removerEquipamentos(){
+    public static void removerEquipamentos(Scanner sc){
         System.out.println("==================================================");
         System.out.println("*** REMOVER EQUIPAMENTO              ***");
         System.out.println("==================================================");

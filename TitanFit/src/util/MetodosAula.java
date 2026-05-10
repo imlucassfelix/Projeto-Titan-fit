@@ -4,9 +4,8 @@ import entities.Aula;
 import java.util.Scanner;
 
 public class MetodosAula {
-    private static Scanner sc = new Scanner(System.in);
 
-    public static void cadastrarAula(){
+    public static void cadastrarAula(Scanner sc){
         System.out.println("*** CADASTRAR AULA               ***");
         System.out.print("*** Código da Aula:               ***\n");
         int codAula = sc.nextInt(); sc.nextLine();
@@ -54,7 +53,7 @@ public class MetodosAula {
         new repositoyDB.AulaDB().inserir(novaAula);
     }
 
-    public static void listarAula(){
+    public static void listarAula(Scanner sc){
         System.out.println("==================================================");
         System.out.println("*** LISTA DE AULAS               ***");
         System.out.println("==================================================");
@@ -74,7 +73,7 @@ public class MetodosAula {
         }
     }
 
-    public static void editarAula(){
+    public static void editarAula(Scanner sc){
         System.out.println("==================================================");
         System.out.println("*** EDITAR AULA                ***");
         System.out.println("==================================================");
@@ -102,7 +101,7 @@ public class MetodosAula {
         db.atualizar(aula);
     }
 
-    public static void excluirAula(){
+    public static void excluirAula(Scanner sc){
         System.out.println("==================================================");
         System.out.println("*** EXCLUIR AULA                ***");
         System.out.println("==================================================");

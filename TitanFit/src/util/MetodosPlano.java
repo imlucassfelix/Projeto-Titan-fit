@@ -9,9 +9,8 @@ import java.util.List;
 import java.util.Scanner;
 
 public class MetodosPlano {
-    private static Scanner sc;
 
-    public static void cadastrarPlano() {
+    public static void cadastrarPlano(Scanner sc) {
         System.out.println("==================================================");
         System.out.println("***             CADASTRAR PLANO                ***");
         System.out.println("==================================================");
@@ -59,7 +58,7 @@ public class MetodosPlano {
         System.out.println("***       Plano cadastrado com sucesso!        ***");
     }
 
-    public static void listarPlanos() {
+    public static void listarPlanos(Scanner sc) {
         System.out.println("==================================================");
         System.out.println("***              LISTA DE PLANOS               ***");
         System.out.println("==================================================");
@@ -92,7 +91,7 @@ public class MetodosPlano {
         System.out.println("==================================================");
     }
 
-    public static void alterarPlano() {
+    public static void alterarPlano(Scanner sc) {
         System.out.println("==================================================");
         System.out.println("***             ALTERAR PLANO                  ***");
         System.out.println("==================================================");
@@ -153,7 +152,7 @@ public class MetodosPlano {
         System.out.println("***       Plano atualizado com sucesso!        ***");
     }
 
-    public static void removerPlano() {
+    public static void removerPlano(Scanner sc) {
         System.out.println("==================================================");
         System.out.println("***             REMOVER PLANO                  ***");
         System.out.println("==================================================");
@@ -179,7 +178,7 @@ public class MetodosPlano {
         }
     }
 
-    public static int selecionarFidelidade() {
+    public static int selecionarFidelidade(Scanner sc) {
         FidelidadeDB fidelidadeDB = new FidelidadeDB();
         List<Fidelidade> fidelidades = fidelidadeDB.listarTodos();
 

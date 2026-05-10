@@ -31,23 +31,29 @@ public class AlunoMenu {
 
             switch (opcao) {
                 case 1:
-                    MetodosAluno.cadastrarAlunos();
+                    MetodosAluno.cadastrarAlunos(sc);
                     break;
+
                 case 2:
-                    MetodosAluno.listarAlunos();
+                    MetodosAluno.listarAlunos(sc);
                     break;
+
                 case 3:
-                    MetodosAluno.atualizarAlunos();
+                    MetodosAluno.atualizarAlunos(sc);
                     break;
+
                 case 4:
-                    MetodosAluno.frequenciaAlunos();
+                    MetodosAluno.frequenciaAlunos(sc);
                     break;
+
                 case 5:
-                    MetodosAluno.removerAlunos();
+                    MetodosAluno.removerAlunos(sc);
                     break;
+
                 case 0:
                     System.out.println("Voltando...");
                     break;
+
                 default:
                     System.out.println("Opção inválida, tente novamente.");
             }

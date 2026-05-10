@@ -33,20 +33,25 @@ public class AulaMenu {
 
 				switch (opcao) {
 	                case 1:
-						MetodosAula.cadastrarAula();
+						MetodosAula.cadastrarAula(sc);
+						break;
 
 	                case 2:
-	                    MetodosAula.listarAula();
+	                    MetodosAula.listarAula(sc);
+						break;
 
 	                case 3:
-	                    MetodosAula.editarAula();
+	                    MetodosAula.editarAula(sc);
+						break;
 
 	                case 4:
-	                    MetodosAula.excluirAula();
+	                    MetodosAula.excluirAula(sc);
+						break;
 
 	                case 0:
 	                    System.out.println("Voltando...");
 	                    break;
+
 	                default:
 	                    System.out.println("Opção inválida, tente novamente.");
 	            }

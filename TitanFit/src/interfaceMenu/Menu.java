@@ -35,24 +35,31 @@ public class Menu {
                 case 1:
                      new AlunoMenu(sc).exibirMenu();
                     break;
+
                 case 2:
                 	new InstrutorMenu(sc).exibirMenu();
                     break;
+
                 case 3:
                 	new PlanoMenu(sc).exibirMenu();
                     break;
+
                 case 4:
                 	new AulaMenu(sc).exibirMenu();
                     break;
+
                 case 5:
                     new InscricaoMenu(sc).exibirMenu();
                     break;
+
                 case 6:
                 	new EquipamentosMenu(sc).exibirMenu();
                     break;
+
                 case 0:
                     System.out.println("Encerrando o sistema...");
                     break;
+
                 default:
                     System.out.println("Opção inválida, tente novamente.");
             }

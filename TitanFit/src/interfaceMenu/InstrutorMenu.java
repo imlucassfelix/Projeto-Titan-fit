@@ -29,20 +29,25 @@ public class InstrutorMenu {
 
             switch (opcao) {
                 case 1:
-                    util.MetodosInstrutor.cadastrarInstrutor();
+                    util.MetodosInstrutor.cadastrarInstrutor(sc);
                     break;
+
                 case 2:
-                    util.MetodosInstrutor.listarInstrutor();
+                    util.MetodosInstrutor.listarInstrutor(sc);
                     break;
+
                 case 3:
-                    util.MetodosInstrutor.atualizarInstrutor();
+                    util.MetodosInstrutor.atualizarInstrutor(sc);
                     break;
+
                 case 4:
-                    util.MetodosInstrutor.removerInstrutor();
+                    util.MetodosInstrutor.removerInstrutor(sc);
                     break;
+
                 case 0:
                     System.out.println("Voltando...");
                     break;
+
                 default:
                     System.out.println("Opção inválida, tente novamente.");
             }
