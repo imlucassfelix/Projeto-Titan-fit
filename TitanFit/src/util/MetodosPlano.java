@@ -53,7 +53,15 @@ public class MetodosPlano {
             return;
         }
 
-        Plano novoPlano = new Plano(codPlano, categoria, valor, beneficios, pagamento, codFidelidade);
+        System.out.print("***         Duração do Plano (em meses):       ***\n");
+        int duracaoMeses = sc.nextInt();
+        sc.nextLine();
+        if (duracaoMeses <= 0) {
+            System.out.println("**  Erro: Duração deve ser maior que zero!     **");
+            return;
+        }
+
+        Plano novoPlano = new Plano(codPlano, categoria, valor, beneficios, pagamento, codFidelidade, duracaoMeses);
         new PlanoDB().inserir(novoPlano);
         System.out.println("***       Plano cadastrado com sucesso!        ***");
     }
@@ -78,6 +86,7 @@ public class MetodosPlano {
             System.out.printf("Valor:      R$ %.2f%n", p.getValor());
             System.out.printf("Pagamento:  R$ %.2f%n", p.getPagamento());
             System.out.println("Benefícios: " + String.join(", ", p.getBeneficios()));
+            System.out.println("Duração:    " + p.getDuracaoMeses() + " meses");
 
             Fidelidade fidelidade = fidelidadeDB.buscarPorId(p.getCodFidelidade());
             if (fidelidade != null) {
@@ -147,6 +156,11 @@ public class MetodosPlano {
                 System.out.println("** Fidelidade inválida. Mantendo a anterior.   **");
             }
         }
+
+        System.out.print("*** Nova Duração em meses (0 para manter):     ***\n");
+        int novaDuracao = sc.nextInt();
+        sc.nextLine();
+        if (novaDuracao > 0) plano.setDuracaoMeses(novaDuracao);
 
         new PlanoDB().atualizar(plano);
         System.out.println("***       Plano atualizado com sucesso!        ***");

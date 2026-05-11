@@ -1,7 +1,16 @@
 package util;
 
+import entities.Aula;
 import entities.InscricaoAula;
+import entities.Plano;
+import entities.Status;
+import repositoryDB.AulaDB;
 import repositoryDB.InscricaoAulaDB;
+import repositoryDB.PlanoDB;
+import repositoryDB.StatusDB;
+
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Scanner;
 
 public class MetodosInscricao {
@@ -31,8 +40,80 @@ public class MetodosInscricao {
             return;
         }
 
+        // -------------------------------------------------------
+        // REGRA 1: Verificar se o plano do aluno está ativo
+        // -------------------------------------------------------
+        StatusDB statusDB = new StatusDB();
+        Status status = statusDB.buscarPorCpf(cpfAluno);
+
+        if (status == null) {
+            System.out.println("** Erro: Aluno não possui plano vinculado.     **");
+            System.out.println("** Cadastre um status/plano antes de inscrever.**");
+            return;
+        }
+
+        PlanoDB planoDB = new PlanoDB();
+        Plano plano = planoDB.buscarPorId(status.getCodPlano());
+
+        if (plano == null) {
+            System.out.println("** Erro: Plano vinculado ao aluno não encontrado.**");
+            return;
+        }
+
+        // Buscar dataMatricula do aluno para calcular vencimento
+        repositoryDB.AlunoDB alunoDB = new repositoryDB.AlunoDB();
+        entities.Aluno aluno = alunoDB.buscarPorId(cpfAluno);
+        if (aluno == null) {
+            System.out.println("** Erro: Aluno com CPF informado não encontrado.**");
+            return;
+        }
+
+        LocalDate dataVencimento = aluno.getDataMatricula().plusMonths(plano.getDuracaoMeses());
+        if (LocalDate.now().isAfter(dataVencimento)) {
+            System.out.println("** Erro: Plano do aluno está VENCIDO!          **");
+            System.out.println("** Data de vencimento: " + dataVencimento + "       **");
+            System.out.println("** Renove o plano antes de realizar a inscrição.**");
+            return;
+        }
+
+        // -------------------------------------------------------
+        // REGRA 2: Verificar capacidade máxima da aula
+        // -------------------------------------------------------
+        AulaDB aulaDB = new AulaDB();
+        Aula aula = aulaDB.buscarPorId(codAula);
+
+        if (aula == null) {
+            System.out.println("** Erro: Aula com código " + codAula + " não encontrada.**");
+            return;
+        }
+
+        InscricaoAulaDB inscricaoAulaDB = new InscricaoAulaDB();
+        int totalInscritos = inscricaoAulaDB.contarInscritosPorAula(codAula);
+
+        if (totalInscritos >= aula.getCapacidadeMaxima()) {
+            System.out.println("** Erro: Aula atingiu a capacidade máxima!     **");
+            System.out.printf("** Capacidade: %d/%d alunos.%n", totalInscritos, aula.getCapacidadeMaxima());
+            return;
+        }
+
+        // -------------------------------------------------------
+        // REGRA 3: Verificar conflito de horário
+        // -------------------------------------------------------
+        List<InscricaoAula> inscricoesDoAluno = inscricaoAulaDB.listarPorCpf(cpfAluno);
+        for (InscricaoAula i : inscricoesDoAluno) {
+            if (horario.equals(i.getHorario()) && i.getCodAula() != codAula) {
+                System.out.println("** Erro: Conflito de horário detectado!        **");
+                System.out.println("** O aluno já está inscrito em outra aula      **");
+                System.out.println("** no horário " + horario + " (Aula cód.: " + i.getCodAula() + ").  **");
+                return;
+            }
+        }
+
+        // -------------------------------------------------------
+        // Todas as condições atendidas — confirmar inscrição
+        // -------------------------------------------------------
         InscricaoAula novaInscricao = new InscricaoAula(codInscricao, codAula, cpfAluno, horario);
-        new InscricaoAulaDB().inserir(novaInscricao);
+        inscricaoAulaDB.inserir(novaInscricao);
     }
 
     public static void listarTurma(Scanner sc){

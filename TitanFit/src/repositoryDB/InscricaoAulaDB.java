@@ -105,6 +105,61 @@ public class InscricaoAulaDB {
         }
     }
 
+    // Conta quantos alunos já estão inscritos em uma aula — usado para verificar capacidade máxima
+    public int contarInscritosPorAula(int codAula) {
+        String sql = "SELECT COUNT(*) FROM inscricao_aula WHERE cod_aula = ?";
+        try (Connection conn = ConexaoBancoDados.conectar();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, codAula);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            System.out.println("***     Erro ao contar inscritos na aula:         ***" + e.getMessage());
+        }
+        return 0;
+    }
+
+    // Retorna todas as inscrições de um aluno — usado para verificar conflito de horário
+    public List<InscricaoAula> listarPorCpf(String cpfAluno) {
+        String sql = "SELECT * FROM inscricao_aula WHERE cpf_aluno = ?";
+        List<InscricaoAula> lista = new ArrayList<>();
+        String cpfLimpo = cpfAluno != null ? cpfAluno.replace(".", "").replace("-", "") : null;
+        try (Connection conn = ConexaoBancoDados.conectar();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, cpfLimpo);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    InscricaoAula i = new InscricaoAula();
+                    i.setCodInscricao(rs.getInt("cod_inscricao"));
+                    i.setCodAula(rs.getInt("cod_aula"));
+                    i.setCpfAluno(rs.getString("cpf_aluno"));
+                    i.setHorario(rs.getString("horario"));
+                    lista.add(i);
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("***     Erro ao listar inscrições do aluno:       ***" + e.getMessage());
+        }
+        return lista;
+    }
+
+    // Conta inscrições de um aluno — usado para exibir estatísticas
+    public int contarInscricoesPorCpf(String cpfAluno) {
+        String sql = "SELECT COUNT(*) FROM inscricao_aula WHERE cpf_aluno = ?";
+        String cpfLimpo = cpfAluno != null ? cpfAluno.replace(".", "").replace("-", "") : null;
+        try (Connection conn = ConexaoBancoDados.conectar();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, cpfLimpo);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            System.out.println("***   Erro ao contar inscrições do aluno:         ***" + e.getMessage());
+        }
+        return 0;
+    }
+
     public void deletar(int codInscricao) {
         String sql = "DELETE FROM inscricao_aula WHERE cod_inscricao = ?";
 

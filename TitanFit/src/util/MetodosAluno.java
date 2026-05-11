@@ -2,12 +2,18 @@ package util;
 
 import entities.Aluno;
 import entities.Frequenta;
+import entities.Plano;
+import entities.Status;
 import repositoryDB.AlunoDB;
 import repositoryDB.FrequentaDB;
+import repositoryDB.InscricaoAulaDB;
+import repositoryDB.PlanoDB;
+import repositoryDB.StatusDB;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Scanner;
 
 public class MetodosAluno {
@@ -73,12 +79,48 @@ public class MetodosAluno {
         if (lista.isEmpty()) {
             System.out.println("***         Nenhum aluno cadastrado.           ***");
         } else {
+            FrequentaDB frequentaDB = new FrequentaDB();
+            InscricaoAulaDB inscricaoAulaDB = new InscricaoAulaDB();
+            StatusDB statusDB = new StatusDB();
+            PlanoDB planoDB = new PlanoDB();
+
             for (Aluno a : lista) {
-                // Aqui estamos usando o Polimorfismo da classe Pessoa/Aluno
                 System.out.println(a.obterIdentificacao());
                 System.out.println("Email: " + a.getEmailAluno());
                 System.out.println("Telefone: " + a.getTelefoneAluno());
                 System.out.println("Matrícula: " + a.getDataMatricula());
+
+                // Estatística: frequências
+                List<Frequenta> frequencias = frequentaDB.listarPorCpf(a.getCpfAluno());
+                System.out.println("Total de visitas: " + frequencias.size());
+                if (!frequencias.isEmpty()) {
+                    // listarPorCpf já retorna ordenado por data DESC
+                    System.out.println("Última visita: " + frequencias.get(0).getDataEntrada());
+                } else {
+                    System.out.println("Última visita: nenhuma registrada");
+                }
+
+                // Estatística: aulas inscritas
+                int totalAulas = inscricaoAulaDB.contarInscricoesPorCpf(a.getCpfAluno());
+                System.out.println("Aulas inscritas: " + totalAulas);
+
+                // Estatística: status do plano
+                Status status = statusDB.buscarPorCpf(a.getCpfAluno());
+                if (status != null) {
+                    Plano plano = planoDB.buscarPorId(status.getCodPlano());
+                    if (plano != null) {
+                        LocalDate vencimento = a.getDataMatricula().plusMonths(plano.getDuracaoMeses());
+                        String statusPlano = LocalDate.now().isAfter(vencimento) ? "VENCIDO" : "ATIVO";
+                        System.out.println("Plano: " + plano.getCategoria()
+                                + " | Status: " + statusPlano
+                                + " | Vencimento: " + vencimento);
+                    } else {
+                        System.out.println("Plano: não encontrado (cód. " + status.getCodPlano() + ")");
+                    }
+                } else {
+                    System.out.println("Plano: nenhum plano vinculado");
+                }
+
                 System.out.println("--------------------------------------------------");
             }
         }

@@ -127,4 +127,28 @@ public class FrequentaDB {
             System.out.println("***          Erro ao deletar frequência:           ***" + e.getMessage());
         }
     }
+
+    // Retorna todas as frequências de um aluno — usado para calcular total de visitas e última visita
+    public List<Frequenta> listarPorCpf(String cpfAluno) {
+        String sql = "SELECT * FROM frequenta WHERE cpf_aluno = ? ORDER BY data_entrada DESC, hora_entrada DESC";
+        List<Frequenta> lista = new ArrayList<>();
+        String cpfLimpo = cpfAluno != null ? cpfAluno.replace(".", "").replace("-", "") : null;
+        try (Connection conn = ConexaoBancoDados.conectar();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, cpfLimpo);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    Frequenta f = new Frequenta();
+                    f.setCpfAluno(rs.getString("cpf_aluno"));
+                    f.setCodAula(rs.getInt("cod_aula"));
+                    f.setDataEntrada(rs.getDate("data_entrada").toLocalDate());
+                    f.setHoraEntrada(rs.getTime("hora_entrada").toLocalTime());
+                    lista.add(f);
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("***       Erro ao listar frequências do aluno:      ***" + e.getMessage());
+        }
+        return lista;
+    }
 }

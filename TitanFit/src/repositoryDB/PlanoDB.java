@@ -10,7 +10,7 @@ import connection.ConexaoBancoDados;
 public class PlanoDB {
 
     public void inserir(Plano plano) {
-        String sql = "INSERT INTO plano (cod_plano, categoria, valor, beneficios, pagamento, cod_fidelidade) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO plano (cod_plano, categoria, valor, beneficios, pagamento, cod_fidelidade, duracao_meses) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = ConexaoBancoDados.conectar();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -24,6 +24,7 @@ public class PlanoDB {
 
             stmt.setDouble(5, plano.getPagamento());
             stmt.setInt(6, plano.getCodFidelidade()); // Corrigido: setInt
+            stmt.setInt(7, plano.getDuracaoMeses());
 
             stmt.executeUpdate();
             System.out.println("***    Plano inserido com sucesso no TitanFit!    ***");
@@ -77,7 +78,8 @@ public class PlanoDB {
                 "valor = ?, " +
                 "beneficios = ?, " +
                 "pagamento = ?, " +
-                "cod_fidelidade = ? " +
+                "cod_fidelidade = ?, " +
+                "duracao_meses = ? " +
                 "WHERE cod_plano = ?";
 
         try (Connection conn = ConexaoBancoDados.conectar();
@@ -91,7 +93,8 @@ public class PlanoDB {
 
             stmt.setDouble(4, plano.getPagamento());
             stmt.setInt(5, plano.getCodFidelidade()); // Corrigido: setInt
-            stmt.setInt(6, plano.getCodPlano());
+            stmt.setInt(6, plano.getDuracaoMeses());
+            stmt.setInt(7, plano.getCodPlano());
 
             stmt.executeUpdate();
             System.out.println("*** Dados atualizados com sucesso no TitanFit! ***");
@@ -134,6 +137,7 @@ public class PlanoDB {
 
         plano.setPagamento(rs.getDouble("pagamento"));
         plano.setCodFidelidade(rs.getInt("cod_fidelidade")); // Corrigido: getInt
+        plano.setDuracaoMeses(rs.getInt("duracao_meses"));
         return plano;
     }
 }

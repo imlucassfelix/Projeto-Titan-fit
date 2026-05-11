@@ -124,4 +124,27 @@ public class StatusDB {
             System.out.println("***           Erro ao deletar status:             ***" + e.getMessage());
         }
     }
+
+    // Busca o status do aluno pelo CPF — usado para verificar plano ativo na inscrição
+    public Status buscarPorCpf(String cpfAluno) {
+        String sql = "SELECT * FROM status_aluno WHERE cpf_aluno = ? LIMIT 1";
+        String cpfLimpo = cpfAluno != null ? cpfAluno.replace(".", "").replace("-", "") : null;
+        try (Connection conn = ConexaoBancoDados.conectar();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, cpfLimpo);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    Status status = new Status();
+                    status.setCodStatus(rs.getInt("cod_status"));
+                    status.setCpfAluno(rs.getString("cpf_aluno"));
+                    status.setCodPlano(rs.getInt("cod_plano"));
+                    status.setPlanoAtivo(rs.getBoolean("plano_ativo"));
+                    return status;
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("***       Erro ao buscar status do aluno:         ***" + e.getMessage());
+        }
+        return null;
+    }
 }
