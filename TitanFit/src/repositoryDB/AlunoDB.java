@@ -1,4 +1,4 @@
-package repositoyDB;
+package repositoryDB;
 
 import entities.Aluno;
 import java.sql.*;

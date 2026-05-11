@@ -1,14 +1,7 @@
 package interfaceMenu;
 
-import entities.Fidelidade;
-import entities.Plano;
-import repositoyDB.FidelidadeDB;
-import repositoyDB.PlanoDB;
 import util.MetodosPlano;
-import util.Validador;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class PlanoMenu {

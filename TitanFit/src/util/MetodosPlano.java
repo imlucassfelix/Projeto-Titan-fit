@@ -2,8 +2,8 @@ package util;
 
 import entities.Fidelidade;
 import entities.Plano;
-import repositoyDB.FidelidadeDB;
-import repositoyDB.PlanoDB;
+import repositoryDB.FidelidadeDB;
+import repositoryDB.PlanoDB;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;

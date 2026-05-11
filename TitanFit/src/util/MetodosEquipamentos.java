@@ -1,7 +1,7 @@
 package util;
 
 import entities.Equipamentos;
-import repositoyDB.EquipamentosDB;
+import repositoryDB.EquipamentosDB;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

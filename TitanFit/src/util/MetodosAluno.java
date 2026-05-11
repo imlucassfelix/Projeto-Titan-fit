@@ -2,8 +2,8 @@ package util;
 
 import entities.Aluno;
 import entities.Frequenta;
-import repositoyDB.AlunoDB;
-import repositoyDB.FrequentaDB;
+import repositoryDB.AlunoDB;
+import repositoryDB.FrequentaDB;
 
 import java.time.LocalDate;
 import java.time.LocalTime;

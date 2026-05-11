@@ -50,7 +50,7 @@ public class MetodosAula {
         }
 
         Aula novaAula = new Aula(codAula, nomeAula, capacidadeMaxima, descricaoAula, modalidade, cpfInstrutor);
-        new repositoyDB.AulaDB().inserir(novaAula);
+        new repositoryDB.AulaDB().inserir(novaAula);
     }
 
     public static void listarAula(Scanner sc){
@@ -58,7 +58,7 @@ public class MetodosAula {
         System.out.println("*** LISTA DE AULAS               ***");
         System.out.println("==================================================");
 
-        var lista = new repositoyDB.AulaDB().listarTodos();
+        var lista = new repositoryDB.AulaDB().listarTodos();
         if (lista.isEmpty()) {
             System.out.println("*** Nenhuma aula cadastrada.         ***");
         } else {
@@ -80,7 +80,7 @@ public class MetodosAula {
         System.out.print("*** Digite o Código da Aula para editar:       ***\n");
         int codBusca = sc.nextInt(); sc.nextLine();
 
-        repositoyDB.AulaDB db = new repositoyDB.AulaDB();
+        repositoryDB.AulaDB db = new repositoryDB.AulaDB();
         Aula aula = db.buscarPorId(codBusca);
 
         if (aula == null) {
@@ -108,6 +108,6 @@ public class MetodosAula {
         System.out.print("*** Digite o Código da Aula para remover:      ***\n");
         int codRemover = sc.nextInt(); sc.nextLine();
 
-        new repositoyDB.AulaDB().deletar(codRemover);
+        new repositoryDB.AulaDB().deletar(codRemover);
     }
 }

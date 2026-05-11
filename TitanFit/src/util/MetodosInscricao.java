@@ -1,7 +1,7 @@
 package util;
 
 import entities.InscricaoAula;
-import repositoyDB.InscricaoAulaDB;
+import repositoryDB.InscricaoAulaDB;
 import java.util.Scanner;
 
 public class MetodosInscricao {
