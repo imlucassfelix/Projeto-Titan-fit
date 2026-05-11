@@ -3,7 +3,7 @@ package connection;
 import com.mysql.cj.x.protobuf.MysqlxDatatypes;
 
 public class TesteConexao {
-    public static void main(MysqlxDatatypes.Scalar.String[] args) {
+    public static void main(String[] args) {
         // Como estão no mesmo pacote, basta chamar direto:
         var conn = ConexaoBancoDados.conectar();
 

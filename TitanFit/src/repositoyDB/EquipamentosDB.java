@@ -9,7 +9,7 @@ import connection.ConexaoBancoDados;
 public class EquipamentosDB {
 
 	public void inserir(Equipamentos equipamento) {
-		String sql = "INSERT INTO equipamento (cod_maquina, nome_equipamento, modelo, estado, data_aquisicao) VALUES (?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO equipamentos (cod_maquina, nome_equipamento, modelo, estado, data_aquisicao) VALUES (?, ?, ?, ?, ?)";
 
 		try (Connection conn = ConexaoBancoDados.conectar();
 		     PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -29,7 +29,7 @@ public class EquipamentosDB {
 	}
 
 	public Equipamentos buscarPorId(int codMaquina) {
-		String sql = "SELECT * FROM equipamento WHERE cod_maquina = ?";
+		String sql = "SELECT * FROM equipamentos WHERE cod_maquina = ?";
 
 		try (Connection conn = ConexaoBancoDados.conectar();
 		     PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -54,7 +54,7 @@ public class EquipamentosDB {
 	}
 
 	public List<Equipamentos> listarTodos() {
-		String sql = "SELECT * FROM equipamento";
+		String sql = "SELECT * FROM equipamentos";
 		List<Equipamentos> listaEquipamentos = new ArrayList<>();
 
 		try (Connection conn = ConexaoBancoDados.conectar();
@@ -79,7 +79,7 @@ public class EquipamentosDB {
 	}
 
 	public void atualizar(Equipamentos equipamento) {
-		String sql = "UPDATE equipamento SET " +
+		String sql = "UPDATE equipamentos SET " +
 				"nome_equipamento = ?, " +
 				"modelo = ?, " +
 				"estado = ?, " +
@@ -105,7 +105,7 @@ public class EquipamentosDB {
 	}
 
 	public void deletar(int codMaquina) {
-		String sql = "DELETE FROM equipamento WHERE cod_maquina = ?";
+		String sql = "DELETE FROM equipamentos WHERE cod_maquina = ?";
 
 		try (Connection conn = ConexaoBancoDados.conectar();
 		     PreparedStatement stmt = conn.prepareStatement(sql)) {

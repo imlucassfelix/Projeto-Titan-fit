@@ -47,7 +47,7 @@ public class MetodosPlano {
         double pagamento = sc.nextDouble();
         sc.nextLine();
 
-        int codFidelidade = selecionarFidelidade();
+        int codFidelidade = selecionarFidelidade(sc);
         if (codFidelidade == -1) {
             System.out.println("**  Erro: Nenhuma fidelidade válida selecionada. **");
             return;
@@ -140,7 +140,7 @@ public class MetodosPlano {
         System.out.print("*** Alterar fidelidade? (S/N):                 ***\n");
         String alterarFidelidade = sc.nextLine();
         if (alterarFidelidade.equalsIgnoreCase("S")) {
-            int novoCodFidelidade = selecionarFidelidade();
+            int novoCodFidelidade = selecionarFidelidade(sc);
             if (novoCodFidelidade != -1) {
                 plano.setCodFidelidade(novoCodFidelidade);
             } else {
