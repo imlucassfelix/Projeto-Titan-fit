@@ -6,8 +6,17 @@ import java.util.ArrayList;
 import java.util.List;
 import connection.ConexaoBancoDados;
 
-public class FidelidadeDB {
+/**
+ * Repositorio de acesso ao banco para a entidade Fidelidade.
+ * Realiza operacoes CRUD na tabela 'fidelidade' do MySQL.
+ * Implementa Persistivel para padronizacao dos repositorios.
+ *
+ * @author Lucas Felix
+ * @version 1.0
+ */
+public class FidelidadeDB implements Persistivel<Fidelidade, Integer> {
 
+	@Override
 	public void inserir(Fidelidade fidelidade) {
 		String sql = "INSERT INTO fidelidade (cod_fidelidade, descricao, periodo) VALUES (?, ?, ?)";
 
@@ -26,7 +35,8 @@ public class FidelidadeDB {
 		}
 	}
 
-	public Fidelidade buscarPorId(int codFidelidade) {
+	@Override
+	public Fidelidade buscarPorId(Integer codFidelidade) {
 		String sql = "SELECT * FROM fidelidade WHERE cod_fidelidade = ?";
 
 		try (Connection conn = ConexaoBancoDados.conectar();
@@ -49,6 +59,7 @@ public class FidelidadeDB {
 		return null;
 	}
 
+	@Override
 	public List<Fidelidade> listarTodos() {
 		String sql = "SELECT * FROM fidelidade";
 		List<Fidelidade> lista = new ArrayList<>();
@@ -72,6 +83,7 @@ public class FidelidadeDB {
 		return lista;
 	}
 
+	@Override
 	public void atualizar(Fidelidade fidelidade) {
 		String sql = "UPDATE fidelidade SET descricao = ?, periodo = ? WHERE cod_fidelidade = ?";
 
@@ -90,7 +102,8 @@ public class FidelidadeDB {
 		}
 	}
 
-	public void deletar(int codFidelidade) {
+	@Override
+	public void deletar(Integer codFidelidade) {
 		String sql = "DELETE FROM fidelidade WHERE cod_fidelidade = ?";
 
 		try (Connection conn = ConexaoBancoDados.conectar();
@@ -102,7 +115,7 @@ public class FidelidadeDB {
 			if (linhasAfetadas > 0) {
 				System.out.println("***  Fidelidade deletada com sucesso do TitanFit! ***");
 			} else {
-				System.out.println("***  Nenhuma fidelidade encontrada com esse código. ***");
+				System.out.println("***  Nenhuma fidelidade encontrada com esse codigo. ***");
 			}
 
 		} catch (SQLException e) {

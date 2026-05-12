@@ -6,14 +6,27 @@ import java.util.ArrayList;
 import java.util.List;
 import connection.ConexaoBancoDados;
 
-public class AlunoDB {
+/**
+ * Repositorio de acesso ao banco para a entidade Aluno.
+ * Realiza operacoes CRUD na tabela 'aluno' do MySQL.
+ * Implementa Persistivel para padronizacao dos repositorios.
+ *
+ * @author Lucas Rodrigues
+ * @version 1.0
+ */
+public class AlunoDB implements Persistivel<Aluno, String> {
+
+	/**
+	 * Insere um novo aluno no banco de dados.
+	 *
+	 * @param aluno Objeto Aluno com os dados a inserir
+	 */
+	@Override
 	public void inserir(Aluno aluno) {
-		// Dica: Liste as colunas explicitamente. É mais seguro se você mudar a tabela depois.
 		String sql = "INSERT INTO aluno (cpf_aluno, nome_aluno, email_aluno, telefone_aluno, data_nascimento, data_matricula, sexo) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-		// O try-with-resources garante que a conexão e o statement sejam fechados sozinhos
 		try (Connection conn = ConexaoBancoDados.conectar();
-			 PreparedStatement stmt = conn.prepareStatement(sql)) {
+		     PreparedStatement stmt = conn.prepareStatement(sql)) {
 
 			stmt.setString(1, aluno.getCpfAluno());
 			stmt.setString(2, aluno.getNomeAluno());
@@ -27,16 +40,22 @@ public class AlunoDB {
 			System.out.println("***  Aluno inserido com sucesso no TitanFit!   ***");
 
 		} catch (SQLException e) {
-			// Em projetos profissionais, costumamos lançar uma exceção personalizada ou usar um Logger
 			System.out.println("***       Erro ao inserir aluno no banco:      ***" + e.getMessage());
 		}
 	}
 
+	/**
+	 * Busca um aluno pelo CPF.
+	 *
+	 * @param cpfAluno CPF do aluno (11 digitos)
+	 * @return Aluno encontrado, ou null se nao existir
+	 */
+	@Override
 	public Aluno buscarPorId(String cpfAluno) {
 		String sql = "SELECT * FROM aluno WHERE cpf_aluno = ?";
 
 		try (Connection conn = ConexaoBancoDados.conectar();
-			 PreparedStatement stmt = conn.prepareStatement(sql)) {
+		     PreparedStatement stmt = conn.prepareStatement(sql)) {
 
 			stmt.setString(1, cpfAluno);
 
@@ -59,12 +78,18 @@ public class AlunoDB {
 		return null;
 	}
 
+	/**
+	 * Lista todos os alunos cadastrados no banco de dados.
+	 *
+	 * @return Lista de alunos (vazia se nao houver registros)
+	 */
+	@Override
 	public List<Aluno> listarTodos() {
 		String sql = "SELECT * FROM aluno";
 		List<Aluno> listaAlunos = new ArrayList<>();
 
 		try (Connection conn = ConexaoBancoDados.conectar();
-			 PreparedStatement stmt = conn.prepareStatement(sql); ResultSet rs = stmt.executeQuery()) {
+		     PreparedStatement stmt = conn.prepareStatement(sql); ResultSet rs = stmt.executeQuery()) {
 
 			while (rs.next()) {
 				Aluno aluno = new Aluno();
@@ -76,7 +101,6 @@ public class AlunoDB {
 				aluno.setDataMatricula(rs.getDate("data_matricula").toLocalDate());
 				aluno.setSexo(rs.getString("sexo"));
 
-				// Adiciona o aluno preenchido na lista
 				listaAlunos.add(aluno);
 			}
 
@@ -84,9 +108,15 @@ public class AlunoDB {
 			System.out.println("***          Erro ao listar alunos:            ***" + e.getMessage());
 		}
 
-		return listaAlunos; // Retorna a lista completa (ou vazia, caso não haja alunos)
+		return listaAlunos;
 	}
 
+	/**
+	 * Atualiza os dados de um aluno existente no banco.
+	 *
+	 * @param aluno Objeto Aluno com os dados atualizados
+	 */
+	@Override
 	public void atualizar(Aluno aluno) {
 		String sql = "UPDATE aluno SET " +
 				"nome_aluno = ?, " +
@@ -97,15 +127,13 @@ public class AlunoDB {
 				"WHERE cpf_aluno = ?";
 
 		try (Connection conn = ConexaoBancoDados.conectar();
-			 PreparedStatement stmt = conn.prepareStatement(sql)) {
+		     PreparedStatement stmt = conn.prepareStatement(sql)) {
 
 			stmt.setString(1, aluno.getNomeAluno());
 			stmt.setString(2, aluno.getEmailAluno());
 			stmt.setString(3, aluno.getTelefoneAluno());
 			stmt.setDate(4, Date.valueOf(aluno.getDataNascimento()));
 			stmt.setString(5, aluno.getSexo());
-
-			// O CPF é a chave para encontrar o registro
 			stmt.setString(6, aluno.getCpfAluno());
 
 			stmt.executeUpdate();
@@ -115,17 +143,20 @@ public class AlunoDB {
 		}
 	}
 
+	/**
+	 * Remove um aluno do banco de dados pelo CPF.
+	 *
+	 * @param cpfAluno CPF do aluno a ser removido
+	 */
+	@Override
 	public void deletar(String cpfAluno) {
-		// 1. O SQL precisa estar entre aspas duplas
 		String sql = "DELETE FROM aluno WHERE cpf_aluno = ?";
 
 		try (Connection conn = ConexaoBancoDados.conectar();
-			 PreparedStatement stmt = conn.prepareStatement(sql)) {
+		     PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-			// 2. Define o valor do CPF que será deletado
 			stmt.setString(1, cpfAluno);
 
-			// 3. Executa a deleção
 			int linhasAfetadas = stmt.executeUpdate();
 
 			if (linhasAfetadas > 0) {

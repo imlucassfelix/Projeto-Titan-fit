@@ -6,8 +6,17 @@ import java.util.ArrayList;
 import java.util.List;
 import connection.ConexaoBancoDados;
 
-public class StatusDB {
+/**
+ * Repositorio de acesso ao banco para a entidade Status.
+ * Realiza operacoes CRUD na tabela 'status_aluno' do MySQL.
+ * Implementa Persistivel para padronizacao dos repositorios.
+ *
+ * @author Mateus Santos
+ * @version 1.0
+ */
+public class StatusDB implements Persistivel<Status, Integer> {
 
+    @Override
     public void inserir(Status status) {
         String sql = "INSERT INTO status_aluno (cod_status, cpf_aluno, cod_plano, plano_ativo) VALUES (?, ?, ?, ?)";
 
@@ -16,7 +25,6 @@ public class StatusDB {
 
             stmt.setInt(1, status.getCodStatus());
 
-            // Removendo pontos e traços para salvar apenas os números no banco
             String cpfLimpo = status.getCpfAluno() != null ? status.getCpfAluno().replace(".", "").replace("-", "") : null;
             stmt.setString(2, cpfLimpo);
 
@@ -31,7 +39,8 @@ public class StatusDB {
         }
     }
 
-    public Status buscarPorId(int codStatus) {
+    @Override
+    public Status buscarPorId(Integer codStatus) {
         String sql = "SELECT * FROM status_aluno WHERE cod_status = ?";
 
         try (Connection conn = ConexaoBancoDados.conectar();
@@ -55,6 +64,7 @@ public class StatusDB {
         return null;
     }
 
+    @Override
     public List<Status> listarTodos() {
         String sql = "SELECT * FROM status_aluno";
         List<Status> listaStatus = new ArrayList<>();
@@ -79,6 +89,7 @@ public class StatusDB {
         return listaStatus;
     }
 
+    @Override
     public void atualizar(Status status) {
         String sql = "UPDATE status_aluno SET " +
                 "cpf_aluno = ?, " +
@@ -93,8 +104,6 @@ public class StatusDB {
             stmt.setString(1, cpfLimpo);
             stmt.setInt(2, status.getCodPlano());
             stmt.setBoolean(3, status.isPlanoAtivo());
-
-            // O código do status é a chave de busca
             stmt.setInt(4, status.getCodStatus());
 
             stmt.executeUpdate();
@@ -104,7 +113,8 @@ public class StatusDB {
         }
     }
 
-    public void deletar(int codStatus) {
+    @Override
+    public void deletar(Integer codStatus) {
         String sql = "DELETE FROM status_aluno WHERE cod_status = ?";
 
         try (Connection conn = ConexaoBancoDados.conectar();
@@ -117,7 +127,7 @@ public class StatusDB {
             if (linhasAfetadas > 0) {
                 System.out.println("***    Status deletado com sucesso do TitanFit!   ***");
             } else {
-                System.out.println("***  Nenhum status encontrado com esse código.    ***");
+                System.out.println("***  Nenhum status encontrado com esse codigo.    ***");
             }
 
         } catch (SQLException e) {
@@ -125,7 +135,13 @@ public class StatusDB {
         }
     }
 
-    // Busca o status do aluno pelo CPF — usado para verificar plano ativo na inscrição
+    /**
+     * Busca o status do aluno pelo CPF.
+     * Usado para verificar plano ativo na inscricao.
+     *
+     * @param cpfAluno CPF do aluno
+     * @return Status encontrado, ou null se nao existir
+     */
     public Status buscarPorCpf(String cpfAluno) {
         String sql = "SELECT * FROM status_aluno WHERE cpf_aluno = ? LIMIT 1";
         String cpfLimpo = cpfAluno != null ? cpfAluno.replace(".", "").replace("-", "") : null;

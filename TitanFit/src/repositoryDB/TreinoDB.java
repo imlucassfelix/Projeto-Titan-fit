@@ -6,8 +6,17 @@ import java.util.ArrayList;
 import java.util.List;
 import connection.ConexaoBancoDados;
 
-public class TreinoDB {
+/**
+ * Repositorio de acesso ao banco para a entidade Treino.
+ * Realiza operacoes CRUD na tabela 'treino' do MySQL.
+ * Implementa Persistivel para padronizacao dos repositorios.
+ *
+ * @author Ryan Vinicius
+ * @version 1.0
+ */
+public class TreinoDB implements Persistivel<Treino, Integer> {
 
+	@Override
 	public void inserir(Treino treino) {
 		String sql = "INSERT INTO treino (cod_treino, cod_aula, series, grupo_muscular, exercicio) VALUES (?, ?, ?, ?, ?)";
 
@@ -28,7 +37,8 @@ public class TreinoDB {
 		}
 	}
 
-	public Treino buscarPorId(int codTreino) {
+	@Override
+	public Treino buscarPorId(Integer codTreino) {
 		String sql = "SELECT * FROM treino WHERE cod_treino = ?";
 
 		try (Connection conn = ConexaoBancoDados.conectar();
@@ -53,6 +63,7 @@ public class TreinoDB {
 		return null;
 	}
 
+	@Override
 	public List<Treino> listarTodos() {
 		String sql = "SELECT * FROM treino";
 		List<Treino> listaTreinos = new ArrayList<>();
@@ -78,6 +89,7 @@ public class TreinoDB {
 		return listaTreinos;
 	}
 
+	@Override
 	public void atualizar(Treino treino) {
 		String sql = "UPDATE treino SET " +
 				"cod_aula = ?, " +
@@ -93,8 +105,6 @@ public class TreinoDB {
 			stmt.setString(2, treino.getSeries());
 			stmt.setString(3, treino.getGrupoMuscular());
 			stmt.setString(4, treino.getExercicio());
-
-			// O código do treino é a chave de busca
 			stmt.setInt(5, treino.getCodTreino());
 
 			stmt.executeUpdate();
@@ -104,7 +114,8 @@ public class TreinoDB {
 		}
 	}
 
-	public void deletar(int codTreino) {
+	@Override
+	public void deletar(Integer codTreino) {
 		String sql = "DELETE FROM treino WHERE cod_treino = ?";
 
 		try (Connection conn = ConexaoBancoDados.conectar();
@@ -117,7 +128,7 @@ public class TreinoDB {
 			if (linhasAfetadas > 0) {
 				System.out.println("***    Treino deletado com sucesso do TitanFit!   ***");
 			} else {
-				System.out.println("***  Nenhum treino encontrado com esse código.    ***");
+				System.out.println("***  Nenhum treino encontrado com esse codigo.    ***");
 			}
 
 		} catch (SQLException e) {

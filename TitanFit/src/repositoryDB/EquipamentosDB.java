@@ -6,8 +6,17 @@ import java.util.ArrayList;
 import java.util.List;
 import connection.ConexaoBancoDados;
 
-public class EquipamentosDB {
+/**
+ * Repositorio de acesso ao banco para a entidade Equipamentos.
+ * Realiza operacoes CRUD na tabela 'equipamentos' do MySQL.
+ * Implementa Persistivel para padronizacao dos repositorios.
+ *
+ * @author Mateus Santos
+ * @version 1.0
+ */
+public class EquipamentosDB implements Persistivel<Equipamentos, Integer> {
 
+	@Override
 	public void inserir(Equipamentos equipamento) {
 		String sql = "INSERT INTO equipamentos (cod_maquina, nome_equipamento, modelo, estado, data_aquisicao) VALUES (?, ?, ?, ?, ?)";
 
@@ -28,7 +37,8 @@ public class EquipamentosDB {
 		}
 	}
 
-	public Equipamentos buscarPorId(int codMaquina) {
+	@Override
+	public Equipamentos buscarPorId(Integer codMaquina) {
 		String sql = "SELECT * FROM equipamentos WHERE cod_maquina = ?";
 
 		try (Connection conn = ConexaoBancoDados.conectar();
@@ -53,6 +63,7 @@ public class EquipamentosDB {
 		return null;
 	}
 
+	@Override
 	public List<Equipamentos> listarTodos() {
 		String sql = "SELECT * FROM equipamentos";
 		List<Equipamentos> listaEquipamentos = new ArrayList<>();
@@ -78,6 +89,7 @@ public class EquipamentosDB {
 		return listaEquipamentos;
 	}
 
+	@Override
 	public void atualizar(Equipamentos equipamento) {
 		String sql = "UPDATE equipamentos SET " +
 				"nome_equipamento = ?, " +
@@ -93,8 +105,6 @@ public class EquipamentosDB {
 			stmt.setString(2, equipamento.getModelo());
 			stmt.setString(3, equipamento.getEstado());
 			stmt.setDate(4, Date.valueOf(equipamento.getDataAquisicao()));
-
-			// O código da máquina é a chave de busca
 			stmt.setInt(5, equipamento.getCodMaquina());
 
 			stmt.executeUpdate();
@@ -104,7 +114,8 @@ public class EquipamentosDB {
 		}
 	}
 
-	public void deletar(int codMaquina) {
+	@Override
+	public void deletar(Integer codMaquina) {
 		String sql = "DELETE FROM equipamentos WHERE cod_maquina = ?";
 
 		try (Connection conn = ConexaoBancoDados.conectar();
@@ -117,7 +128,7 @@ public class EquipamentosDB {
 			if (linhasAfetadas > 0) {
 				System.out.println("*** Equipamento deletado com sucesso do TitanFit! ***");
 			} else {
-				System.out.println("*** Nenhuma máquina encontrada com esse código.   ***");
+				System.out.println("*** Nenhuma maquina encontrada com esse codigo.   ***");
 			}
 
 		} catch (SQLException e) {

@@ -7,8 +7,17 @@ import java.util.Arrays;
 import java.util.List;
 import connection.ConexaoBancoDados;
 
-public class PlanoDB {
+/**
+ * Repositorio de acesso ao banco para a entidade Plano.
+ * Realiza operacoes CRUD na tabela 'plano' do MySQL.
+ * Implementa Persistivel para padronizacao dos repositorios.
+ *
+ * @author Lucas Felix
+ * @version 1.0
+ */
+public class PlanoDB implements Persistivel<Plano, Integer> {
 
+    @Override
     public void inserir(Plano plano) {
         String sql = "INSERT INTO plano (cod_plano, categoria, valor, beneficios, pagamento, cod_fidelidade, duracao_meses) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
@@ -23,7 +32,7 @@ public class PlanoDB {
             stmt.setString(4, beneficiosStr);
 
             stmt.setDouble(5, plano.getPagamento());
-            stmt.setInt(6, plano.getCodFidelidade()); // Corrigido: setInt
+            stmt.setInt(6, plano.getCodFidelidade());
             stmt.setInt(7, plano.getDuracaoMeses());
 
             stmt.executeUpdate();
@@ -34,7 +43,8 @@ public class PlanoDB {
         }
     }
 
-    public Plano buscarPorId(int codPlano) {
+    @Override
+    public Plano buscarPorId(Integer codPlano) {
         String sql = "SELECT * FROM plano WHERE cod_plano = ?";
 
         try (Connection conn = ConexaoBancoDados.conectar();
@@ -53,6 +63,7 @@ public class PlanoDB {
         return null;
     }
 
+    @Override
     public List<Plano> listarTodos() {
         String sql = "SELECT * FROM plano";
         List<Plano> listaPlanos = new ArrayList<>();
@@ -72,6 +83,7 @@ public class PlanoDB {
         return listaPlanos;
     }
 
+    @Override
     public void atualizar(Plano plano) {
         String sql = "UPDATE plano SET " +
                 "categoria = ?, " +
@@ -92,7 +104,7 @@ public class PlanoDB {
             stmt.setString(3, beneficiosStr);
 
             stmt.setDouble(4, plano.getPagamento());
-            stmt.setInt(5, plano.getCodFidelidade()); // Corrigido: setInt
+            stmt.setInt(5, plano.getCodFidelidade());
             stmt.setInt(6, plano.getDuracaoMeses());
             stmt.setInt(7, plano.getCodPlano());
 
@@ -103,7 +115,8 @@ public class PlanoDB {
         }
     }
 
-    public void deletar(int codPlano) {
+    @Override
+    public void deletar(Integer codPlano) {
         String sql = "DELETE FROM plano WHERE cod_plano = ?";
 
         try (Connection conn = ConexaoBancoDados.conectar();
@@ -115,7 +128,7 @@ public class PlanoDB {
             if (linhasAfetadas > 0) {
                 System.out.println("***     Plano deletado com sucesso do TitanFit!   ***");
             } else {
-                System.out.println("***   Nenhum plano encontrado com esse código.    ***");
+                System.out.println("***   Nenhum plano encontrado com esse codigo.    ***");
             }
 
         } catch (SQLException e) {
@@ -123,7 +136,6 @@ public class PlanoDB {
         }
     }
 
-    // Método auxiliar para evitar duplicação de código de mapeamento
     private Plano mapearPlano(ResultSet rs) throws SQLException {
         Plano plano = new Plano();
         plano.setCodPlano(rs.getInt("cod_plano"));
@@ -136,7 +148,7 @@ public class PlanoDB {
         }
 
         plano.setPagamento(rs.getDouble("pagamento"));
-        plano.setCodFidelidade(rs.getInt("cod_fidelidade")); // Corrigido: getInt
+        plano.setCodFidelidade(rs.getInt("cod_fidelidade"));
         plano.setDuracaoMeses(rs.getInt("duracao_meses"));
         return plano;
     }

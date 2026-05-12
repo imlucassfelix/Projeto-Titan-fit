@@ -6,8 +6,17 @@ import java.util.ArrayList;
 import java.util.List;
 import connection.ConexaoBancoDados;
 
-public class InscricaoAulaDB {
+/**
+ * Repositorio de acesso ao banco para a entidade InscricaoAula.
+ * Realiza operacoes CRUD na tabela 'inscricao_aula' do MySQL.
+ * Implementa Persistivel para padronizacao dos repositorios.
+ *
+ * @author Lucas Rodrigues
+ * @version 1.0
+ */
+public class InscricaoAulaDB implements Persistivel<InscricaoAula, Integer> {
 
+    @Override
     public void inserir(InscricaoAula inscricao) {
         String sql = "INSERT INTO inscricao_aula (cod_inscricao, cod_aula, cpf_aluno, horario) VALUES (?, ?, ?, ?)";
 
@@ -23,14 +32,15 @@ public class InscricaoAulaDB {
             stmt.setString(4, inscricao.getHorario());
 
             stmt.executeUpdate();
-            System.out.println("***  Inscrição inserida com sucesso no TitanFit!  ***");
+            System.out.println("***  Inscricao inserida com sucesso no TitanFit!  ***");
 
         } catch (SQLException e) {
-            System.out.println("***     Erro ao inserir inscrição no banco:       ***" + e.getMessage());
+            System.out.println("***     Erro ao inserir inscricao no banco:       ***" + e.getMessage());
         }
     }
 
-    public InscricaoAula buscarPorId(int codInscricao) {
+    @Override
+    public InscricaoAula buscarPorId(Integer codInscricao) {
         String sql = "SELECT * FROM inscricao_aula WHERE cod_inscricao = ?";
 
         try (Connection conn = ConexaoBancoDados.conectar();
@@ -49,11 +59,12 @@ public class InscricaoAulaDB {
                 }
             }
         } catch (SQLException e) {
-            System.out.println("***          Erro ao buscar inscrição:            ***" + e.getMessage());
+            System.out.println("***          Erro ao buscar inscricao:            ***" + e.getMessage());
         }
         return null;
     }
 
+    @Override
     public List<InscricaoAula> listarTodos() {
         String sql = "SELECT * FROM inscricao_aula";
         List<InscricaoAula> listaInscricoes = new ArrayList<>();
@@ -72,12 +83,13 @@ public class InscricaoAulaDB {
             }
 
         } catch (SQLException e) {
-            System.out.println("***          Erro ao listar inscrições:           ***" + e.getMessage());
+            System.out.println("***          Erro ao listar inscricoes:           ***" + e.getMessage());
         }
 
         return listaInscricoes;
     }
 
+    @Override
     public void atualizar(InscricaoAula inscricao) {
         String sql = "UPDATE inscricao_aula SET " +
                 "cod_aula = ?, " +
@@ -94,8 +106,6 @@ public class InscricaoAulaDB {
             stmt.setString(2, cpfLimpo);
 
             stmt.setString(3, inscricao.getHorario());
-
-            // O código da inscrição é a chave de busca
             stmt.setInt(4, inscricao.getCodInscricao());
 
             stmt.executeUpdate();
@@ -105,7 +115,35 @@ public class InscricaoAulaDB {
         }
     }
 
-    // Conta quantos alunos já estão inscritos em uma aula — usado para verificar capacidade máxima
+    @Override
+    public void deletar(Integer codInscricao) {
+        String sql = "DELETE FROM inscricao_aula WHERE cod_inscricao = ?";
+
+        try (Connection conn = ConexaoBancoDados.conectar();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, codInscricao);
+
+            int linhasAfetadas = stmt.executeUpdate();
+
+            if (linhasAfetadas > 0) {
+                System.out.println("***  Inscricao deletada com sucesso do TitanFit!  ***");
+            } else {
+                System.out.println("*** Nenhum registro encontrado com esse codigo.   ***");
+            }
+
+        } catch (SQLException e) {
+            System.out.println("***          Erro ao deletar inscricao:           ***" + e.getMessage());
+        }
+    }
+
+    /**
+     * Conta quantos alunos estao inscritos em uma aula.
+     * Usado para verificar a capacidade maxima antes de uma nova inscricao.
+     *
+     * @param codAula Codigo da aula
+     * @return Total de alunos inscritos
+     */
     public int contarInscritosPorAula(int codAula) {
         String sql = "SELECT COUNT(*) FROM inscricao_aula WHERE cod_aula = ?";
         try (Connection conn = ConexaoBancoDados.conectar();
@@ -120,7 +158,13 @@ public class InscricaoAulaDB {
         return 0;
     }
 
-    // Retorna todas as inscrições de um aluno — usado para verificar conflito de horário
+    /**
+     * Lista todas as inscricoes de um aluno pelo CPF.
+     * Usado para verificar conflito de horario antes de uma nova inscricao.
+     *
+     * @param cpfAluno CPF do aluno
+     * @return Lista de inscricoes do aluno
+     */
     public List<InscricaoAula> listarPorCpf(String cpfAluno) {
         String sql = "SELECT * FROM inscricao_aula WHERE cpf_aluno = ?";
         List<InscricaoAula> lista = new ArrayList<>();
@@ -139,12 +183,18 @@ public class InscricaoAulaDB {
                 }
             }
         } catch (SQLException e) {
-            System.out.println("***     Erro ao listar inscrições do aluno:       ***" + e.getMessage());
+            System.out.println("***     Erro ao listar inscricoes do aluno:       ***" + e.getMessage());
         }
         return lista;
     }
 
-    // Conta inscrições de um aluno — usado para exibir estatísticas
+    /**
+     * Conta o total de inscricoes de um aluno.
+     * Usado para exibir estatisticas na listagem de alunos.
+     *
+     * @param cpfAluno CPF do aluno
+     * @return Total de inscricoes
+     */
     public int contarInscricoesPorCpf(String cpfAluno) {
         String sql = "SELECT COUNT(*) FROM inscricao_aula WHERE cpf_aluno = ?";
         String cpfLimpo = cpfAluno != null ? cpfAluno.replace(".", "").replace("-", "") : null;
@@ -155,29 +205,8 @@ public class InscricaoAulaDB {
                 if (rs.next()) return rs.getInt(1);
             }
         } catch (SQLException e) {
-            System.out.println("***   Erro ao contar inscrições do aluno:         ***" + e.getMessage());
+            System.out.println("***   Erro ao contar inscricoes do aluno:         ***" + e.getMessage());
         }
         return 0;
-    }
-
-    public void deletar(int codInscricao) {
-        String sql = "DELETE FROM inscricao_aula WHERE cod_inscricao = ?";
-
-        try (Connection conn = ConexaoBancoDados.conectar();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            stmt.setInt(1, codInscricao);
-
-            int linhasAfetadas = stmt.executeUpdate();
-
-            if (linhasAfetadas > 0) {
-                System.out.println("***  Inscrição deletada com sucesso do TitanFit!  ***");
-            } else {
-                System.out.println("*** Nenhum registro encontrado com esse código.   ***");
-            }
-
-        } catch (SQLException e) {
-            System.out.println("***          Erro ao deletar inscrição:           ***" + e.getMessage());
-        }
     }
 }

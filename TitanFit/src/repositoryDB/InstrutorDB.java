@@ -6,8 +6,22 @@ import java.util.ArrayList;
 import java.util.List;
 import connection.ConexaoBancoDados;
 
-public class InstrutorDB {
+/**
+ * Repositorio de acesso ao banco para a entidade Instrutor.
+ * Realiza operacoes CRUD na tabela 'instrutor' do MySQL.
+ * Implementa Persistivel para padronizacao dos repositorios.
+ *
+ * @author Mateus Santos
+ * @version 1.0
+ */
+public class InstrutorDB implements Persistivel<Instrutor, String> {
 
+	/**
+	 * Insere um novo instrutor no banco de dados.
+	 *
+	 * @param instrutor Objeto Instrutor com os dados a inserir
+	 */
+	@Override
 	public void inserir(Instrutor instrutor) {
 		String sql = "INSERT INTO instrutor (cpf_instrutor, nome_instrutor, email_instrutor, data_nascimento, sexo, especialidade, salario) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
@@ -30,6 +44,13 @@ public class InstrutorDB {
 		}
 	}
 
+	/**
+	 * Busca um instrutor pelo CPF.
+	 *
+	 * @param cpfInstrutor CPF do instrutor (11 digitos)
+	 * @return Instrutor encontrado, ou null se nao existir
+	 */
+	@Override
 	public Instrutor buscarPorId(String cpfInstrutor) {
 		String sql = "SELECT * FROM instrutor WHERE cpf_instrutor = ?";
 
@@ -57,6 +78,12 @@ public class InstrutorDB {
 		return null;
 	}
 
+	/**
+	 * Lista todos os instrutores cadastrados no banco de dados.
+	 *
+	 * @return Lista de instrutores (vazia se nao houver registros)
+	 */
+	@Override
 	public List<Instrutor> listarTodos() {
 		String sql = "SELECT * FROM instrutor";
 		List<Instrutor> listaInstrutores = new ArrayList<>();
@@ -84,6 +111,12 @@ public class InstrutorDB {
 		return listaInstrutores;
 	}
 
+	/**
+	 * Atualiza os dados de um instrutor existente no banco.
+	 *
+	 * @param instrutor Objeto Instrutor com os dados atualizados
+	 */
+	@Override
 	public void atualizar(Instrutor instrutor) {
 		String sql = "UPDATE instrutor SET " +
 				"nome_instrutor = ?, " +
@@ -103,8 +136,6 @@ public class InstrutorDB {
 			stmt.setString(4, instrutor.getSexo());
 			stmt.setString(5, instrutor.getEspecialidade());
 			stmt.setDouble(6, instrutor.getSalario());
-
-			// O CPF é a chave de busca
 			stmt.setString(7, instrutor.getCpfInstrutor());
 
 			stmt.executeUpdate();
@@ -114,6 +145,12 @@ public class InstrutorDB {
 		}
 	}
 
+	/**
+	 * Remove um instrutor do banco de dados pelo CPF.
+	 *
+	 * @param cpfInstrutor CPF do instrutor a ser removido
+	 */
+	@Override
 	public void deletar(String cpfInstrutor) {
 		String sql = "DELETE FROM instrutor WHERE cpf_instrutor = ?";
 
@@ -135,3 +172,4 @@ public class InstrutorDB {
 		}
 	}
 }
+ 
