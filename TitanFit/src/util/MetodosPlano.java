@@ -14,56 +14,58 @@ public class MetodosPlano {
         System.out.println("==================================================");
         System.out.println("***             CADASTRAR PLANO                ***");
         System.out.println("==================================================");
+        try {
+            System.out.print("***              Código do Plano:              ***\n");
+            int codPlano = sc.nextInt();
+            sc.nextLine();
 
-        System.out.print("***              Código do Plano:              ***\n");
-        int codPlano = sc.nextInt();
-        sc.nextLine();
+            System.out.print("***         Categoria do Plano:                ***\n");
+            String categoria = sc.nextLine();
+            Validador.campoObrigatorio(categoria, "Categoria");
 
-        System.out.print("***         Categoria do Plano:                ***\n");
-        String categoria = sc.nextLine();
-        if (!Validador.campoObrigatorio(categoria)) {
-            System.out.println("**   Erro: A categoria é obrigatória!          **");
-            return;
-        }
+            System.out.print("***              Valor do Plano: R$            ***\n");
+            double valor = sc.nextDouble();
+            sc.nextLine();
 
-        System.out.print("***              Valor do Plano: R$            ***\n");
-        double valor = sc.nextDouble();
-        sc.nextLine();
+            System.out.print("***      Quantos benefícios deseja adicionar?  ***\n");
+            int qtdBeneficios = sc.nextInt();
+            sc.nextLine();
 
-        System.out.print("***      Quantos benefícios deseja adicionar?  ***\n");
-        int qtdBeneficios = sc.nextInt();
-        sc.nextLine();
-
-        List<String> beneficios = new ArrayList<>();
-        for (int i = 1; i <= qtdBeneficios; i++) {
-            System.out.print("***                Benefício " + i + ":               ***\n");
-            String beneficio = sc.nextLine();
-            if (Validador.campoObrigatorio(beneficio)) {
-                beneficios.add(beneficio);
+            List<String> beneficios = new ArrayList<>();
+            for (int i = 1; i <= qtdBeneficios; i++) {
+                System.out.print("***                Benefício " + i + ":               ***\n");
+                String beneficio = sc.nextLine();
+                try {
+                    Validador.campoObrigatorio(beneficio, "Benefício " + i);
+                    beneficios.add(beneficio);
+                } catch (DadoInvalidoExcecao ex) {
+                    System.out.println("** Benefício " + i + " inválido — ignorando: " + ex.getMessage() + " **");
+                }
             }
+
+            System.out.print("***            Valor de Pagamento: R$          ***\n");
+            double pagamento = sc.nextDouble();
+            sc.nextLine();
+
+            int codFidelidade = selecionarFidelidade(sc);
+            if (codFidelidade == -1) {
+                System.out.println("**  Erro: Nenhuma fidelidade válida selecionada. **");
+                return;
+            }
+
+            System.out.print("***         Duração do Plano (em meses):       ***\n");
+            int duracaoMeses = sc.nextInt();
+            sc.nextLine();
+            if (duracaoMeses <= 0) {
+                throw new DadoInvalidoExcecao("Duração deve ser maior que zero.");
+            }
+
+            Plano novoPlano = new Plano(codPlano, categoria, valor, beneficios, pagamento, codFidelidade, duracaoMeses);
+            new PlanoDB().inserir(novoPlano);
+            System.out.println("***       Plano cadastrado com sucesso!        ***");
+        } catch (DadoInvalidoExcecao e) {
+            System.out.println("*** Erro de validação: " + e.getMessage() + " ***");
         }
-
-        System.out.print("***            Valor de Pagamento: R$          ***\n");
-        double pagamento = sc.nextDouble();
-        sc.nextLine();
-
-        int codFidelidade = selecionarFidelidade(sc);
-        if (codFidelidade == -1) {
-            System.out.println("**  Erro: Nenhuma fidelidade válida selecionada. **");
-            return;
-        }
-
-        System.out.print("***         Duração do Plano (em meses):       ***\n");
-        int duracaoMeses = sc.nextInt();
-        sc.nextLine();
-        if (duracaoMeses <= 0) {
-            System.out.println("**  Erro: Duração deve ser maior que zero!     **");
-            return;
-        }
-
-        Plano novoPlano = new Plano(codPlano, categoria, valor, beneficios, pagamento, codFidelidade, duracaoMeses);
-        new PlanoDB().inserir(novoPlano);
-        System.out.println("***       Plano cadastrado com sucesso!        ***");
     }
 
     public static void listarPlanos(Scanner sc) {
@@ -104,66 +106,77 @@ public class MetodosPlano {
         System.out.println("==================================================");
         System.out.println("***             ALTERAR PLANO                  ***");
         System.out.println("==================================================");
-
-        System.out.print("*** Código do plano que deseja alterar:        ***\n");
-        int codPlano = sc.nextInt();
-        sc.nextLine();
-
-        Plano plano = new PlanoDB().buscarPorId(codPlano);
-        if (plano == null) {
-            System.out.println("*** Erro: Plano com código " + codPlano + " não encontrado. ***");
-            return;
-        }
-
-        System.out.println("Editando plano: " + plano.getCategoria());
-
-        System.out.print("*** Nova Categoria (Enter para manter):        ***\n");
-        String novaCategoria = sc.nextLine();
-        if (!novaCategoria.isEmpty()) plano.setCategoria(novaCategoria);
-
-        System.out.print("*** Novo Valor (0 para manter): R$             ***\n");
-        double novoValor = sc.nextDouble();
-        sc.nextLine();
-        if (novoValor > 0) plano.setValor(novoValor);
-
-        System.out.print("*** Novo Pagamento (0 para manter): R$         ***\n");
-        double novoPagamento = sc.nextDouble();
-        sc.nextLine();
-        if (novoPagamento > 0) plano.setPagamento(novoPagamento);
-
-        System.out.print("*** Alterar benefícios? (S/N):                 ***\n");
-        String alterarBeneficios = sc.nextLine();
-        if (alterarBeneficios.equalsIgnoreCase("S")) {
-            System.out.print("*** Quantos benefícios deseja adicionar?       ***\n");
-            int qtd = sc.nextInt();
+        try {
+            System.out.print("*** Código do plano que deseja alterar:        ***\n");
+            int codPlano = sc.nextInt();
             sc.nextLine();
-            List<String> novosBeneficios = new ArrayList<>();
-            for (int i = 1; i <= qtd; i++) {
-                System.out.print("*** Benefício " + i + ":                            ***\n");
-                String b = sc.nextLine();
-                if (Validador.campoObrigatorio(b)) novosBeneficios.add(b);
+
+            Plano plano = new PlanoDB().buscarPorId(codPlano);
+            if (plano == null) {
+                System.out.println("*** Erro: Plano com código " + codPlano + " não encontrado. ***");
+                return;
             }
-            plano.setBeneficios(novosBeneficios);
-        }
 
-        System.out.print("*** Alterar fidelidade? (S/N):                 ***\n");
-        String alterarFidelidade = sc.nextLine();
-        if (alterarFidelidade.equalsIgnoreCase("S")) {
-            int novoCodFidelidade = selecionarFidelidade(sc);
-            if (novoCodFidelidade != -1) {
-                plano.setCodFidelidade(novoCodFidelidade);
-            } else {
-                System.out.println("** Fidelidade inválida. Mantendo a anterior.   **");
+            System.out.println("Editando plano: " + plano.getCategoria());
+
+            System.out.print("*** Nova Categoria (Enter para manter):        ***\n");
+            String novaCategoria = sc.nextLine();
+            if (!novaCategoria.isEmpty()) {
+                Validador.campoObrigatorio(novaCategoria, "Categoria");
+                plano.setCategoria(novaCategoria);
             }
+
+            System.out.print("*** Novo Valor (0 para manter): R$             ***\n");
+            double novoValor = sc.nextDouble();
+            sc.nextLine();
+            if (novoValor > 0) plano.setValor(novoValor);
+
+            System.out.print("*** Novo Pagamento (0 para manter): R$         ***\n");
+            double novoPagamento = sc.nextDouble();
+            sc.nextLine();
+            if (novoPagamento > 0) plano.setPagamento(novoPagamento);
+
+            System.out.print("*** Alterar benefícios? (S/N):                 ***\n");
+            String alterarBeneficios = sc.nextLine();
+            if (alterarBeneficios.equalsIgnoreCase("S")) {
+                System.out.print("*** Quantos benefícios deseja adicionar?       ***\n");
+                int qtd = sc.nextInt();
+                sc.nextLine();
+                List<String> novosBeneficios = new ArrayList<>();
+                for (int i = 1; i <= qtd; i++) {
+                    System.out.print("*** Benefício " + i + ":                            ***\n");
+                    String b = sc.nextLine();
+                    try {
+                        Validador.campoObrigatorio(b, "Benefício " + i);
+                        novosBeneficios.add(b);
+                    } catch (DadoInvalidoExcecao ex) {
+                        System.out.println("** Benefício " + i + " inválido — ignorando: " + ex.getMessage() + " **");
+                    }
+                }
+                plano.setBeneficios(novosBeneficios);
+            }
+
+            System.out.print("*** Alterar fidelidade? (S/N):                 ***\n");
+            String alterarFidelidade = sc.nextLine();
+            if (alterarFidelidade.equalsIgnoreCase("S")) {
+                int novoCodFidelidade = selecionarFidelidade(sc);
+                if (novoCodFidelidade != -1) {
+                    plano.setCodFidelidade(novoCodFidelidade);
+                } else {
+                    System.out.println("** Fidelidade inválida. Mantendo a anterior.   **");
+                }
+            }
+
+            System.out.print("*** Nova Duração em meses (0 para manter):     ***\n");
+            int novaDuracao = sc.nextInt();
+            sc.nextLine();
+            if (novaDuracao > 0) plano.setDuracaoMeses(novaDuracao);
+
+            new PlanoDB().atualizar(plano);
+            System.out.println("***       Plano atualizado com sucesso!        ***");
+        } catch (DadoInvalidoExcecao e) {
+            System.out.println("*** Erro de validação: " + e.getMessage() + " ***");
         }
-
-        System.out.print("*** Nova Duração em meses (0 para manter):     ***\n");
-        int novaDuracao = sc.nextInt();
-        sc.nextLine();
-        if (novaDuracao > 0) plano.setDuracaoMeses(novaDuracao);
-
-        new PlanoDB().atualizar(plano);
-        System.out.println("***       Plano atualizado com sucesso!        ***");
     }
 
     public static void removerPlano(Scanner sc) {

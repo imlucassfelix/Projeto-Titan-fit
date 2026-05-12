@@ -7,50 +7,36 @@ public class MetodosAula {
 
     public static void cadastrarAula(Scanner sc){
         System.out.println("*** CADASTRAR AULA               ***");
-        System.out.print("*** Código da Aula:               ***\n");
-        int codAula = sc.nextInt(); sc.nextLine();
-        if (!Validador.campoObrigatorio(String.valueOf(codAula))) {
-            System.out.println("*** Erro: Código é obrigatório!         ***");
-            return;
-        }
+        try {
+            System.out.print("*** Código da Aula:               ***\n");
+            int codAula = sc.nextInt(); sc.nextLine();
+            // Código numérico já vem como int - não precisa validar como campo string
 
-        System.out.print("*** Digite nome da aula:            ***\n");
-        String nomeAula = sc.nextLine();
-        if (!Validador.campoObrigatorio(nomeAula)) {
-            System.out.println("** Erro: O nome da aula é obrigatória!      **");
-            return;
-        }
+            System.out.print("*** Digite nome da aula:            ***\n");
+            String nomeAula = sc.nextLine();
+            Validador.campoObrigatorio(nomeAula, "Nome da aula");
 
-        System.out.print("*** Modalidade:                 ***\n");
-        String modalidade = sc.nextLine();
-        if (!Validador.campoObrigatorio(modalidade)) {
-            System.out.println("** Erro: O nome da modalidade é obrigatório!   **");
-            return;
-        }
+            System.out.print("*** Modalidade:                 ***\n");
+            String modalidade = sc.nextLine();
+            Validador.campoObrigatorio(modalidade, "Modalidade");
 
-        System.out.print("*** Descrição da Aula:             ***\n");
-        String descricaoAula = sc.nextLine();
-        if (!Validador.campoObrigatorio(descricaoAula)) {
-            System.out.println("** Erro: descricao da aula é obrigatória!    **");
-            return;
-        }
+            System.out.print("*** Descrição da Aula:             ***\n");
+            String descricaoAula = sc.nextLine();
+            Validador.campoObrigatorio(descricaoAula, "Descrição da aula");
 
-        System.out.print("*** Capacidade Máxima:              ***\n");
-        int capacidadeMaxima = sc.nextInt(); sc.nextLine();
-        if (!Validador.validarCapacidade(capacidadeMaxima)) {
-            System.out.println("* Erro: A capacidade deve estar entre 1 e 50.   *");
-            return;
-        }
+            System.out.print("*** Capacidade Máxima:              ***\n");
+            int capacidadeMaxima = sc.nextInt(); sc.nextLine();
+            Validador.validarCapacidade(capacidadeMaxima);
 
-        System.out.print("*** CPF do Instrutor responsável:        ***\n");
-        String cpfInstrutor = sc.nextLine();
-        if (!Validador.validarCpf(cpfInstrutor)) {
-            System.out.println("** CPF inválido! Digite 11 dígitos numéricos.  **");
-            return;
-        }
+            System.out.print("*** CPF do Instrutor responsável:        ***\n");
+            String cpfInstrutor = sc.nextLine();
+            Validador.validarCpf(cpfInstrutor);
 
-        Aula novaAula = new Aula(codAula, nomeAula, capacidadeMaxima, descricaoAula, modalidade, cpfInstrutor);
-        new repositoryDB.AulaDB().inserir(novaAula);
+            Aula novaAula = new Aula(codAula, nomeAula, capacidadeMaxima, descricaoAula, modalidade, cpfInstrutor);
+            new repositoryDB.AulaDB().inserir(novaAula);
+        } catch (DadoInvalidoExcecao e) {
+            System.out.println("*** Erro de validação: " + e.getMessage() + " ***");
+        }
     }
 
     public static void listarAula(Scanner sc){

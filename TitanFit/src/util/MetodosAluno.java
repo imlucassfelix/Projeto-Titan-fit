@@ -22,53 +22,39 @@ public class MetodosAluno {
         System.out.println("==================================================");
         System.out.println("***           CADASTRO DE ALUNOS               ***");
         System.out.println("==================================================");
-        System.out.print("***      Digite o nome do aluno:               ***\n");
-        String nomeAluno = sc.nextLine();
-        if (!Validador.campoObrigatorio(nomeAluno)) {
-            System.out.println("***     Nome nao pode ser vazio!               ***");
-            return;
+        try {
+            System.out.print("***      Digite o nome do aluno:               ***\n");
+            String nomeAluno = sc.nextLine();
+            Validador.campoObrigatorio(nomeAluno, "Nome");
+
+            System.out.print("***  Digite o CPF do aluno (11 dígitos):       ***\n");
+            String cpfAluno = sc.nextLine();
+            Validador.validarCpf(cpfAluno);
+
+            System.out.print("***        Sexo (M/F/I):                      ***\n");
+            String sexo = sc.nextLine();
+            Validador.validarSexo(sexo);
+
+            System.out.print("*** Data de nascimento (dd/mm/aaaa):      ***\n");
+            String dataNascStr = sc.nextLine();
+            Validador.validarData(dataNascStr);
+            LocalDate dataNascimentoAluno = LocalDate.parse(dataNascStr, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+
+            System.out.print("*** Telefone:                  ***\n");
+            String telefoneAluno = sc.nextLine();
+            Validador.validarTelefone(telefoneAluno);
+
+            System.out.print("*** Digite um endereço de e-mail:        ***\n");
+            String emailAluno = sc.nextLine();
+            Validador.validarEmail(emailAluno);
+
+            LocalDate dataMatricula = LocalDate.now();
+
+            Aluno novoAluno = new Aluno(cpfAluno, nomeAluno, emailAluno, telefoneAluno, dataNascimentoAluno, dataMatricula, sexo);
+            new AlunoDB().inserir(novoAluno);
+        } catch (DadoInvalidoExcecao e) {
+            System.out.println("*** Erro de validação: " + e.getMessage() + " ***");
         }
-
-        System.out.print("***  Digite o CPF do aluno (11 dígitos):       ***\n");
-        String cpfAluno = sc.nextLine();
-        if (!Validador.validarCpf(cpfAluno)) {
-            System.out.println("**  CPF invalido! Digite 11 digitos numericos.  **");
-            return;
-        }
-
-        System.out.print("***        Sexo (M/F/I):                      ***\n");
-        String sexo = sc.nextLine();
-        if (!Validador.validarSexo(sexo)) {
-            System.out.println("***   Sexo invalido! Digite M, F ou I.         ***");
-            return;
-        }
-
-        System.out.print("*** Data de nascimento (dd/mm/aaaa):      ***\n");
-        String dataNascStr = sc.nextLine();
-        if (!Validador.validarData(dataNascStr)) {
-            System.out.println("** Data invalida! Use o formato dd/mm/aaaa.   **");
-            return;
-        }
-        LocalDate dataNascimentoAluno = LocalDate.parse(dataNascStr, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-
-        System.out.print("*** Telefone:                  ***\n");
-        String telefoneAluno = sc.nextLine();
-        if (!Validador.validarTelefone(telefoneAluno)) {
-            System.out.println("* Telefone invalido! Use 11 digitos numericos.  *");
-            return;
-        }
-
-        System.out.print("*** Digite um endereço de e-mail:        ***\n");
-        String emailAluno = sc.nextLine();
-        if (!Validador.validarEmail(emailAluno)) {
-            System.out.println("*** Email invalido! Digite um email valido.   ***");
-            return;
-        }
-
-        LocalDate dataMatricula = LocalDate.now();
-
-        Aluno novoAluno = new Aluno(cpfAluno, nomeAluno, emailAluno, telefoneAluno, dataNascimentoAluno, dataMatricula, sexo);
-        new AlunoDB().inserir(novoAluno);
     }
 
     public static void listarAlunos(Scanner sc){
@@ -130,15 +116,19 @@ public class MetodosAluno {
         System.out.println("==================================================");
         System.out.println("***          ATUALIZAR DADOS DO ALUNO          ***");
         System.out.println("==================================================");
-        System.out.print("*  Digite o CPF do aluno que deseja atualizar:   *\n");
-        String cpfBusca = sc.nextLine();
+        try {
+            System.out.print("*  Digite o CPF do aluno que deseja atualizar:   *\n");
+            String cpfBusca = sc.nextLine();
+            Validador.validarCpf(cpfBusca);
 
-        AlunoDB db = new AlunoDB();
-        Aluno alunoParaAtualizar = db.buscarPorId(cpfBusca);
+            AlunoDB db = new AlunoDB();
+            Aluno alunoParaAtualizar = db.buscarPorId(cpfBusca);
 
-        if (alunoParaAtualizar == null) {
-            System.out.println("Erro: Aluno com CPF " + cpfBusca + " não encontrado!");
-        } else {
+            if (alunoParaAtualizar == null) {
+                System.out.println("Erro: Aluno com CPF " + cpfBusca + " não encontrado!");
+                return;
+            }
+
             System.out.println("Editando aluno: " + alunoParaAtualizar.getNomeAluno());
 
             System.out.print("*** Novo Nome (ou aperte Enter para manter):   ***\n");
@@ -147,13 +137,21 @@ public class MetodosAluno {
 
             System.out.print("*** Novo Email (ou aperte Enter para manter):  ***\n");
             String novoEmail = sc.nextLine();
-            if (!novoEmail.isEmpty()) alunoParaAtualizar.setEmailAluno(novoEmail);
+            if (!novoEmail.isEmpty()) {
+                Validador.validarEmail(novoEmail);
+                alunoParaAtualizar.setEmailAluno(novoEmail);
+            }
 
             System.out.print("** Novo Telefone (ou aperte Enter para manter): **\n");
             String novoTelefone = sc.nextLine();
-            if (!novoTelefone.isEmpty()) alunoParaAtualizar.setTelefoneAluno(novoTelefone);
+            if (!novoTelefone.isEmpty()) {
+                Validador.validarTelefone(novoTelefone);
+                alunoParaAtualizar.setTelefoneAluno(novoTelefone);
+            }
 
             db.atualizar(alunoParaAtualizar);
+        } catch (DadoInvalidoExcecao e) {
+            System.out.println("*** Erro de validação: " + e.getMessage() + " ***");
         }
     }
 
@@ -161,26 +159,35 @@ public class MetodosAluno {
         System.out.println("==================================================");
         System.out.println("***          REGISTRAR FREQUÊNCIA              ***");
         System.out.println("==================================================");
+        try {
+            System.out.print("***        Digite o CPF do aluno:              ***\n");
+            String cpfAluno = sc.nextLine();
+            Validador.validarCpf(cpfAluno);
 
-        System.out.print("***        Digite o CPF do aluno:              ***\n");
-        String cpfAluno = sc.nextLine();
+            System.out.print("***        Digite o Código da Aula:            ***\n");
+            int codAula = sc.nextInt(); sc.nextLine();
 
-        System.out.print("***        Digite o Código da Aula:            ***\n");
-        int codAula = sc.nextInt(); sc.nextLine();
+            LocalDate dataHoje = LocalDate.now();
+            LocalTime horaAgora = LocalTime.now();
 
-        LocalDate dataHoje = LocalDate.now();
-        LocalTime horaAgora = LocalTime.now();
-
-        Frequenta freq = new Frequenta(cpfAluno, codAula, dataHoje, horaAgora);
-        new FrequentaDB().inserir(freq);
+            Frequenta freq = new Frequenta(cpfAluno, codAula, dataHoje, horaAgora);
+            new FrequentaDB().inserir(freq);
+        } catch (DadoInvalidoExcecao e) {
+            System.out.println("*** Erro de validação: " + e.getMessage() + " ***");
+        }
     }
 
     public static void removerAlunos(Scanner sc){
         System.out.println("==================================================");
         System.out.println("***             REMOVER ALUNO                  ***");
         System.out.println("==================================================");
-        System.out.print("*** Digite o CPF do aluno que deseja remover:  ***\n");
-        String cpfRemover = sc.nextLine();
-        new AlunoDB().deletar(cpfRemover);
+        try {
+            System.out.print("*** Digite o CPF do aluno que deseja remover:  ***\n");
+            String cpfRemover = sc.nextLine();
+            Validador.validarCpf(cpfRemover);
+            new AlunoDB().deletar(cpfRemover);
+        } catch (DadoInvalidoExcecao e) {
+            System.out.println("*** Erro de validação: " + e.getMessage() + " ***");
+        }
     }
 }
