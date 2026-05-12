@@ -1,17 +1,10 @@
 package interfaceMenu;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import util.MetodosInscricao;
-import util.Validador;
 import java.util.Scanner;
-import entities.InscricaoAula;
 
 
 public class InscricaoMenu {
     private Scanner sc;
-    private List<InscricaoAula> listaInscricoes = new ArrayList<>();
 
     public InscricaoMenu(Scanner sc) {
             this.sc = sc;

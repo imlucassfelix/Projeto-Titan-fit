@@ -54,7 +54,7 @@ public class Status {
 	@Override
 	public String toString() {
 		return "Status [codStatus=" + codStatus + ", cpfAluno=" + cpfAluno + ", codPlano=" + codPlano + ", planoAtivo="
-				+ planoAtivo + ", planoInativo=" + "]";
+				+ planoAtivo + "]";
 	}
 
 

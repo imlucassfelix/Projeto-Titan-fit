@@ -3,100 +3,88 @@ import java.time.LocalTime;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-
 public class Validador {
-    /**
-     * Valida se o CPF tem exatamente 11 digitos numericos. String com o CPF digitado  retorna true se valido, false caso contrario
-     */
 
-    public static boolean validarCpf(String cpf) {
-        if
-        (cpf == null) return false;
+    public static void validarCpf(String cpf) throws DadoInvalidoExcecao {
+        if (cpf == null || cpf.trim().isEmpty()) {
+            throw new DadoInvalidoExcecao("CPF nao pode ser vazio.");
+        }
 
         cpf = cpf.replaceAll("[^0-9]", "");
-        // remove pontos e tracos
-        return cpf.length() == 11;
-    }
 
-    /**
-     * * Valida se o sexo for M, F ou I. retorna true se valido, false caso contrario
-     */
-
-    public static boolean validarSexo(String sexo) {
-        if (sexo == null) return false;
-        return
-                sexo.equalsIgnoreCase("M") || sexo.equalsIgnoreCase("F") || sexo.equalsIgnoreCase("I");
-    }
-
-    /**
-     * Valida se a data esta no formato dd/MM/yyyy. String com a data
-     digitada retorna true se valido, false caso contrario
-     */
-
-    public static boolean validarData(String data) {
-        try { DateTimeFormatter fmt =
-            DateTimeFormatter.ofPattern("dd/MM/yyyy"); LocalDate.parse(data, fmt); return true;
-        }
-    catch (DateTimeParseException e) {
-            return false;
+        if (cpf.length() != 11) {
+            throw new DadoInvalidoExcecao("CPF invalido! Digite 11 digitos.");
         }
     }
 
-    /**
-     * Valida se um campo obrigatorio nao esta vazio. String com o valor digitado retorna true se preenchido,
-     false se vazio
-     */
+    public static void validarSexo(String sexo) throws DadoInvalidoExcecao {
+        if (sexo == null || sexo.trim().isEmpty()) {
+            throw new DadoInvalidoExcecao("Sexo nao pode ser vazio.");
+        }
 
-    public static boolean campoObrigatorio(String valor) {
-        return
-            valor != null && !valor.trim().isEmpty();
+        if (!sexo.equalsIgnoreCase("M") &&
+                !sexo.equalsIgnoreCase("F") &&
+                !sexo.equalsIgnoreCase("I")) {
+            throw new DadoInvalidoExcecao("Sexo invalido! Digite M, F ou I.");
+        }
     }
 
-    /**
-     * Valida se o telefone tem um formato correto (10 ou 11 dígitos). Retorna true se válido, false caso contrário.
-     */
-    public static boolean validarTelefone(String telefoneAluno) {
-        if (telefoneAluno == null) return false;
+    public static void validarData(String data) throws DadoInvalidoExcecao {
+        if (data == null) {
+            throw new DadoInvalidoExcecao("Data nao pode ser nula.");
+        }
 
-        // Remove tudo que não for dígito
-        String telAluno = telefoneAluno.replaceAll("[^0-9]", "");
-
-        // Telefone com DDD (10) ou Celular com nono dígito e DDD (11)
-        return telAluno.length() == 10 || telAluno.length() == 11;
-    }
-
-    /**
-     * Valida se o formato do e-mail é válido. Retorna true se for um e-mail válido, false caso contrário.
-     */
-    public static boolean validarEmail(String email) {
-        if (email == null) return false;
-
-        // Regex simples para verificar formato de e-mail
-        String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
-        return email.matches(emailRegex);
-    }
-
-    public static boolean validarCapacidade(int capacidade) {
-        final int MINIMO = 1;
-        final int MAXIMO = 50;
-
-        return capacidade >= MINIMO && capacidade <= MAXIMO;
-    }
-
-    /**
-     * Valida se o horário está no formato HH:mm (ex: 08:30, 23:45). Retorna true se válido, false caso contrário.
-     */
-    public static boolean validarHorario(String horario) {
-        if (horario == null) return false;
         try {
-            DateTimeFormatter fmt = DateTimeFormatter.ofPattern("HH:mm");
-            LocalTime.parse(horario, fmt);
-            return true;
+            LocalDate.parse(data, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         } catch (DateTimeParseException e) {
-            return false;
+            throw new DadoInvalidoExcecao("Data invalida! Use dd/mm/aaaa.");
+        }
+    }
+
+    public static void campoObrigatorio(String valor, String nomeCampo) throws DadoInvalidoExcecao {
+        if (valor == null || valor.trim().isEmpty()) {
+            throw new DadoInvalidoExcecao(nomeCampo + " nao pode ser vazio.");
+        }
+    }
+
+    public static void validarTelefone(String tel) throws DadoInvalidoExcecao {
+        if (tel == null) {
+            throw new DadoInvalidoExcecao("Telefone nao pode ser nulo.");
+        }
+
+        String t = tel.replaceAll("[^0-9]", "");
+
+        if (t.length() != 10 && t.length() != 11) {
+            throw new DadoInvalidoExcecao("Telefone invalido! Use 10 ou 11 digitos.");
+        }
+    }
+
+    public static void validarEmail(String email) throws DadoInvalidoExcecao {
+        if (email == null) {
+            throw new DadoInvalidoExcecao("Email nao pode ser nulo.");
+        }
+
+        if (!email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")) {
+            throw new DadoInvalidoExcecao("Email invalido!");
+        }
+    }
+
+    public static void validarCapacidade(int cap) throws DadoInvalidoExcecao {
+        if (cap < 1 || cap > 50) {
+            throw new DadoInvalidoExcecao("Capacidade deve estar entre 1 e 50.");
+        }
+    }
+
+    public static void validarHorario(String h) throws DadoInvalidoExcecao {
+        if (h == null) {
+            throw new DadoInvalidoExcecao("Horario nao pode ser nulo.");
+        }
+
+        try {
+            LocalTime.parse(h, DateTimeFormatter.ofPattern("HH:mm"));
+        } catch (DateTimeParseException e) {
+            throw new DadoInvalidoExcecao("Horario invalido! Use HH:mm.");
         }
     }
 }
-
-
 

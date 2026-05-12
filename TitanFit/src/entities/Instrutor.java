@@ -44,11 +44,8 @@ public class Instrutor extends Pessoa {
 	public String getSexo() { return super.getSexo(); }
 	public void setSexo(String sexo) { super.setSexo(sexo); }
 
-	// POLIMORFISMO: Implementação específica do instrutor
-	@Override
-	public String obterIdentificacao() {
-		return "Instrutor: " + nomeInstrutor + " | Especialidade: " + especialidade;
-	}
+	@Override public final String obterIdentificacao() { return
+			"Instrutor: " + nomeInstrutor + " | CPF: " + cpfInstrutor; }
 
 	@Override
 	public String toString() {

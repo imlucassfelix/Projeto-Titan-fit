@@ -44,11 +44,9 @@ public class Aluno extends Pessoa {
 	public String getSexo() { return super.getSexo(); }
 	public void setSexo(String sexo) { super.setSexo(sexo); }
 
-	// POLIMORFISMO: Implementação específica do aluno
-	@Override
-	public String obterIdentificacao() {
-		return "Aluno: " + nomeAluno + " | CPF: " + cpfAluno;
-	}
+	@Override public final String obterIdentificacao() { return
+			"Aluno: " + nomeAluno + " | CPF: " + cpfAluno; }
+
 
 	@Override
 	public String toString() {

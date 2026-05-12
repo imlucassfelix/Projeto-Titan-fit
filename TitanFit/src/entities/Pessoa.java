@@ -2,7 +2,6 @@ package entities;
 
 import java.time.LocalDate;
 
-// 1. ABSTRAÇÃO: Uma classe que não pode ser instanciada diretamente, serve de molde.
 public abstract class Pessoa {
     protected String email;
     protected LocalDate dataNascimento;
@@ -42,6 +41,6 @@ public abstract class Pessoa {
         this.sexo = sexo;
     }
 
-    // 2. POLIMORFISMO (Preparação): Método abstrato que cada filho vai implementar do seu jeito
+
     public abstract String obterIdentificacao();
 }
