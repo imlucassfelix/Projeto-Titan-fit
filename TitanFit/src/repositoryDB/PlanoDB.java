@@ -30,10 +30,8 @@ public class PlanoDB implements Persistivel<Plano, Integer> {
 
             String beneficiosStr = plano.getBeneficios() != null ? String.join(",", plano.getBeneficios()) : "";
             stmt.setString(4, beneficiosStr);
-
-            stmt.setDouble(5, plano.getPagamento());
-            stmt.setInt(6, plano.getCodFidelidade());
-            stmt.setInt(7, plano.getDuracaoMeses());
+            stmt.setInt(5, plano.getCodFidelidade());
+            stmt.setInt(6, plano.getDuracaoMeses());
 
             stmt.executeUpdate();
             System.out.println("***    Plano inserido com sucesso no TitanFit!    ***");
@@ -102,11 +100,9 @@ public class PlanoDB implements Persistivel<Plano, Integer> {
 
             String beneficiosStr = plano.getBeneficios() != null ? String.join(",", plano.getBeneficios()) : "";
             stmt.setString(3, beneficiosStr);
-
-            stmt.setDouble(4, plano.getPagamento());
-            stmt.setInt(5, plano.getCodFidelidade());
-            stmt.setInt(6, plano.getDuracaoMeses());
-            stmt.setInt(7, plano.getCodPlano());
+            stmt.setInt(4, plano.getCodFidelidade());
+            stmt.setInt(5, plano.getDuracaoMeses());
+            stmt.setInt(6, plano.getCodPlano());
 
             stmt.executeUpdate();
             System.out.println("*** Dados atualizados com sucesso no TitanFit! ***");
@@ -146,8 +142,6 @@ public class PlanoDB implements Persistivel<Plano, Integer> {
         if (beneficiosStr != null && !beneficiosStr.isEmpty()) {
             plano.setBeneficios(new ArrayList<>(Arrays.asList(beneficiosStr.split(","))));
         }
-
-        plano.setPagamento(rs.getDouble("pagamento"));
         plano.setCodFidelidade(rs.getInt("cod_fidelidade"));
         plano.setDuracaoMeses(rs.getInt("duracao_meses"));
         return plano;

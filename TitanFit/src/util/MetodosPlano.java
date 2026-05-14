@@ -72,7 +72,7 @@ public class MetodosPlano {
                 throw new DadoInvalidoExcecao("Duração deve ser maior que zero.");
             }
 
-            Plano novoPlano = new Plano(codPlano, categoria, valor, beneficios, pagamento, codFidelidade, duracaoMeses);
+            Plano novoPlano = new Plano(codPlano, categoria, valor, beneficios, codFidelidade, duracaoMeses);
             new PlanoDB().inserir(novoPlano);
             System.out.println("***       Plano cadastrado com sucesso!        ***");
         } catch (DadoInvalidoExcecao e) {
@@ -98,7 +98,6 @@ public class MetodosPlano {
             System.out.println("Código:     " + p.getCodPlano());
             System.out.println("Categoria:  " + p.getCategoria());
             System.out.printf("Valor:      R$ %.2f%n", p.getValor());
-            System.out.printf("Pagamento:  R$ %.2f%n", p.getPagamento());
             System.out.println("Benefícios: " + String.join(", ", p.getBeneficios()));
             System.out.println("Duração:    " + p.getDuracaoMeses() + " meses");
 
@@ -142,11 +141,6 @@ public class MetodosPlano {
             double novoValor = sc.nextDouble();
             sc.nextLine();
             if (novoValor > 0) plano.setValor(novoValor);
-
-            System.out.print("*** Novo Pagamento (0 para manter): R$         ***\n");
-            double novoPagamento = sc.nextDouble();
-            sc.nextLine();
-            if (novoPagamento > 0) plano.setPagamento(novoPagamento);
 
             System.out.print("*** Alterar benefícios? (S/N):                 ***\n");
             String alterarBeneficios = sc.nextLine();

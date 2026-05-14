@@ -22,7 +22,6 @@ public class Plano {
 	private String categoria;
 	private double valor;
 	private List<String> beneficios;
-	private double pagamento;
 	private int codFidelidade; // Corrigido: int para corresponder a Fidelidade.codFidelidade
 	private int duracaoMeses;  // Duração do plano em meses — usado para calcular vencimento
 
@@ -30,13 +29,11 @@ public class Plano {
 		this.beneficios = new ArrayList<>();
 	}
 
-	public Plano(int codPlano, String categoria, double valor, List<String> beneficios, double pagamento,
-	             int codFidelidade, int duracaoMeses) {
+	public Plano(int codPlano, String categoria, double valor, List<String> beneficios, int codFidelidade, int duracaoMeses) {
 		this.codPlano = codPlano;
 		this.categoria = categoria;
 		this.valor = valor;
 		this.beneficios = beneficios;
-		this.pagamento = pagamento;
 		this.codFidelidade = codFidelidade;
 		this.duracaoMeses = duracaoMeses;
 	}
@@ -73,24 +70,12 @@ public class Plano {
 		this.beneficios = beneficios;
 	}
 
-	public double getPagamento() {
-		return pagamento;
-	}
-
-	public void setPagamento(double pagamento) {
-		this.pagamento = pagamento;
-	}
-
 	public int getCodFidelidade() {
 		return codFidelidade;
 	}
 
 	public void setCodFidelidade(int codFidelidade) {
 		this.codFidelidade = codFidelidade;
-	}
-
-	public void adicionarBeneficio(String beneficio) {
-		this.beneficios.add(beneficio);
 	}
 
 	public int getDuracaoMeses() {
@@ -104,7 +89,7 @@ public class Plano {
 	@Override
 	public String toString() {
 		return "Plano [codPlano=" + codPlano + ", categoria=" + categoria + ", valor=" + valor + ", beneficios="
-				+ beneficios + ", pagamento=" + pagamento + ", codFidelidade=" + codFidelidade
+				+ beneficios + ", codFidelidade=" + codFidelidade
 				+ ", duracaoMeses=" + duracaoMeses + "]";
 	}
 }
