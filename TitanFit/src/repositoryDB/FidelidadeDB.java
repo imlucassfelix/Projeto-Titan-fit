@@ -11,14 +11,17 @@ import connection.ConexaoBancoDados;
  * Realiza operacoes CRUD na tabela 'fidelidade' do MySQL.
  * Implementa Persistivel para padronizacao dos repositorios.
  *
+ * <p>Alteracao v2.0: coluna {@code valor_desconto} adicionada
+ * para suportar o desconto fixo por fidelidade.</p>
+ *
  * @author Lucas Felix
- * @version 1.0
+ * @version 2.0
  */
 public class FidelidadeDB implements Persistivel<Fidelidade, Integer> {
 
 	@Override
 	public void inserir(Fidelidade fidelidade) {
-		String sql = "INSERT INTO fidelidade (cod_fidelidade, descricao, periodo) VALUES (?, ?, ?)";
+		String sql = "INSERT INTO fidelidade (cod_fidelidade, descricao, periodo, valor_desconto) VALUES (?, ?, ?, ?)";
 
 		try (Connection conn = ConexaoBancoDados.conectar();
 		     PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -26,6 +29,7 @@ public class FidelidadeDB implements Persistivel<Fidelidade, Integer> {
 			stmt.setInt(1, fidelidade.getCodFidelidade());
 			stmt.setString(2, fidelidade.getDescricao());
 			stmt.setDate(3, Date.valueOf(fidelidade.getPeriodo()));
+			stmt.setDouble(4, fidelidade.getValorDesconto());
 
 			stmt.executeUpdate();
 			System.out.println("***  Fidelidade inserida com sucesso no TitanFit! ***");
@@ -46,11 +50,7 @@ public class FidelidadeDB implements Persistivel<Fidelidade, Integer> {
 
 			try (ResultSet rs = stmt.executeQuery()) {
 				if (rs.next()) {
-					Fidelidade fidelidade = new Fidelidade();
-					fidelidade.setCodFidelidade(rs.getInt("cod_fidelidade"));
-					fidelidade.setDescricao(rs.getString("descricao"));
-					fidelidade.setPeriodo(rs.getDate("periodo").toLocalDate());
-					return fidelidade;
+					return mapear(rs);
 				}
 			}
 		} catch (SQLException e) {
@@ -69,11 +69,7 @@ public class FidelidadeDB implements Persistivel<Fidelidade, Integer> {
 		     ResultSet rs = stmt.executeQuery()) {
 
 			while (rs.next()) {
-				Fidelidade fidelidade = new Fidelidade();
-				fidelidade.setCodFidelidade(rs.getInt("cod_fidelidade"));
-				fidelidade.setDescricao(rs.getString("descricao"));
-				fidelidade.setPeriodo(rs.getDate("periodo").toLocalDate());
-				lista.add(fidelidade);
+				lista.add(mapear(rs));
 			}
 
 		} catch (SQLException e) {
@@ -85,14 +81,15 @@ public class FidelidadeDB implements Persistivel<Fidelidade, Integer> {
 
 	@Override
 	public void atualizar(Fidelidade fidelidade) {
-		String sql = "UPDATE fidelidade SET descricao = ?, periodo = ? WHERE cod_fidelidade = ?";
+		String sql = "UPDATE fidelidade SET descricao = ?, periodo = ?, valor_desconto = ? WHERE cod_fidelidade = ?";
 
 		try (Connection conn = ConexaoBancoDados.conectar();
 		     PreparedStatement stmt = conn.prepareStatement(sql)) {
 
 			stmt.setString(1, fidelidade.getDescricao());
 			stmt.setDate(2, Date.valueOf(fidelidade.getPeriodo()));
-			stmt.setInt(3, fidelidade.getCodFidelidade());
+			stmt.setDouble(3, fidelidade.getValorDesconto());
+			stmt.setInt(4, fidelidade.getCodFidelidade());
 
 			stmt.executeUpdate();
 			System.out.println("*** Fidelidade atualizada com sucesso no TitanFit! ***");
@@ -121,5 +118,14 @@ public class FidelidadeDB implements Persistivel<Fidelidade, Integer> {
 		} catch (SQLException e) {
 			System.out.println("***        Erro ao deletar fidelidade:             ***" + e.getMessage());
 		}
+	}
+
+	private Fidelidade mapear(ResultSet rs) throws SQLException {
+		Fidelidade f = new Fidelidade();
+		f.setCodFidelidade(rs.getInt("cod_fidelidade"));
+		f.setDescricao(rs.getString("descricao"));
+		f.setPeriodo(rs.getDate("periodo").toLocalDate());
+		f.setValorDesconto(rs.getDouble("valor_desconto"));
+		return f;
 	}
 }

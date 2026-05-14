@@ -3,13 +3,15 @@ package entities;
 /**
  * Representa um plano de assinatura disponivel para os alunos.
  *
- * <p>Cada plano possui categoria, valor, beneficios, forma de pagamento,
- * vinculo com {@link Fidelidade} e duracao em meses. A duracao e usada
- * para calcular o vencimento do plano do aluno.</p>
+ * <p>Cada plano possui categoria, valor, beneficios e duracao em meses.
+ * A duracao e usada para calcular o vencimento do plano do aluno.</p>
+ *
+ * <p>Alteracao v2.0: o campo {@code codFidelidade} foi removido do Plano.
+ * A fidelidade agora e vinculada diretamente ao aluno via {@link Status},
+ * permitindo que diferentes alunos tenham descontos distintos no mesmo plano.</p>
  *
  * @author Lucas Felix
- * @version 1.0
- * @see Fidelidade
+ * @version 2.0
  * @see Status
  * @see repositoryDB.PlanoDB
  */
@@ -22,19 +24,17 @@ public class Plano {
 	private String categoria;
 	private double valor;
 	private List<String> beneficios;
-	private int codFidelidade; // Corrigido: int para corresponder a Fidelidade.codFidelidade
-	private int duracaoMeses;  // Duração do plano em meses — usado para calcular vencimento
+	private int duracaoMeses; // Duracao do plano em meses — usado para calcular vencimento
 
 	public Plano() {
 		this.beneficios = new ArrayList<>();
 	}
 
-	public Plano(int codPlano, String categoria, double valor, List<String> beneficios, int codFidelidade, int duracaoMeses) {
+	public Plano(int codPlano, String categoria, double valor, List<String> beneficios, int duracaoMeses) {
 		this.codPlano = codPlano;
 		this.categoria = categoria;
 		this.valor = valor;
 		this.beneficios = beneficios;
-		this.codFidelidade = codFidelidade;
 		this.duracaoMeses = duracaoMeses;
 	}
 
@@ -70,14 +70,6 @@ public class Plano {
 		this.beneficios = beneficios;
 	}
 
-	public int getCodFidelidade() {
-		return codFidelidade;
-	}
-
-	public void setCodFidelidade(int codFidelidade) {
-		this.codFidelidade = codFidelidade;
-	}
-
 	public int getDuracaoMeses() {
 		return duracaoMeses;
 	}
@@ -88,8 +80,10 @@ public class Plano {
 
 	@Override
 	public String toString() {
-		return "Plano [codPlano=" + codPlano + ", categoria=" + categoria + ", valor=" + valor + ", beneficios="
-				+ beneficios + ", codFidelidade=" + codFidelidade
+		return "Plano [codPlano=" + codPlano
+				+ ", categoria=" + categoria
+				+ ", valor=" + valor
+				+ ", beneficios=" + beneficios
 				+ ", duracaoMeses=" + duracaoMeses + "]";
 	}
 }

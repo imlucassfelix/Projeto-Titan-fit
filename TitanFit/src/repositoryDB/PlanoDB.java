@@ -12,14 +12,17 @@ import connection.ConexaoBancoDados;
  * Realiza operacoes CRUD na tabela 'plano' do MySQL.
  * Implementa Persistivel para padronizacao dos repositorios.
  *
+ * <p>Alteracao v2.0: campo {@code cod_fidelidade} removido da tabela plano.
+ * A fidelidade agora e vinculada ao aluno via {@link entities.Status}.</p>
+ *
  * @author Lucas Felix
- * @version 1.0
+ * @version 2.0
  */
 public class PlanoDB implements Persistivel<Plano, Integer> {
 
     @Override
     public void inserir(Plano plano) {
-        String sql = "INSERT INTO plano (cod_plano, categoria, valor, beneficios, pagamento, cod_fidelidade, duracao_meses) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO plano (cod_plano, categoria, valor, beneficios, duracao_meses) VALUES (?, ?, ?, ?, ?)";
 
         try (Connection conn = ConexaoBancoDados.conectar();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -30,8 +33,7 @@ public class PlanoDB implements Persistivel<Plano, Integer> {
 
             String beneficiosStr = plano.getBeneficios() != null ? String.join(",", plano.getBeneficios()) : "";
             stmt.setString(4, beneficiosStr);
-            stmt.setInt(5, plano.getCodFidelidade());
-            stmt.setInt(6, plano.getDuracaoMeses());
+            stmt.setInt(5, plano.getDuracaoMeses());
 
             stmt.executeUpdate();
             System.out.println("***    Plano inserido com sucesso no TitanFit!    ***");
@@ -87,8 +89,6 @@ public class PlanoDB implements Persistivel<Plano, Integer> {
                 "categoria = ?, " +
                 "valor = ?, " +
                 "beneficios = ?, " +
-                "pagamento = ?, " +
-                "cod_fidelidade = ?, " +
                 "duracao_meses = ? " +
                 "WHERE cod_plano = ?";
 
@@ -100,9 +100,8 @@ public class PlanoDB implements Persistivel<Plano, Integer> {
 
             String beneficiosStr = plano.getBeneficios() != null ? String.join(",", plano.getBeneficios()) : "";
             stmt.setString(3, beneficiosStr);
-            stmt.setInt(4, plano.getCodFidelidade());
-            stmt.setInt(5, plano.getDuracaoMeses());
-            stmt.setInt(6, plano.getCodPlano());
+            stmt.setInt(4, plano.getDuracaoMeses());
+            stmt.setInt(5, plano.getCodPlano());
 
             stmt.executeUpdate();
             System.out.println("*** Dados atualizados com sucesso no TitanFit! ***");
@@ -142,7 +141,6 @@ public class PlanoDB implements Persistivel<Plano, Integer> {
         if (beneficiosStr != null && !beneficiosStr.isEmpty()) {
             plano.setBeneficios(new ArrayList<>(Arrays.asList(beneficiosStr.split(","))));
         }
-        plano.setCodFidelidade(rs.getInt("cod_fidelidade"));
         plano.setDuracaoMeses(rs.getInt("duracao_meses"));
         return plano;
     }

@@ -11,25 +11,35 @@ import connection.ConexaoBancoDados;
  * Realiza operacoes CRUD na tabela 'status_aluno' do MySQL.
  * Implementa Persistivel para padronizacao dos repositorios.
  *
+ * <p>Alteracao v2.0: coluna {@code cod_fidelidade} adicionada (nullable).
+ * Indica se o aluno aderiu a uma fidelidade com desconto no plano.</p>
+ *
  * @author Mateus Santos
- * @version 1.0
+ * @version 2.0
  */
 public class StatusDB implements Persistivel<Status, Integer> {
 
     @Override
     public void inserir(Status status) {
-        String sql = "INSERT INTO status_aluno (cod_status, cpf_aluno, cod_plano, plano_ativo) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO status_aluno (cod_status, cpf_aluno, cod_plano, plano_ativo, cod_fidelidade) VALUES (?, ?, ?, ?, ?)";
 
         try (Connection conn = ConexaoBancoDados.conectar();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setInt(1, status.getCodStatus());
 
-            String cpfLimpo = status.getCpfAluno() != null ? status.getCpfAluno().replace(".", "").replace("-", "") : null;
+            String cpfLimpo = status.getCpfAluno() != null
+                    ? status.getCpfAluno().replace(".", "").replace("-", "") : null;
             stmt.setString(2, cpfLimpo);
 
             stmt.setInt(3, status.getCodPlano());
             stmt.setBoolean(4, status.isPlanoAtivo());
+
+            if (status.getCodFidelidade() != null) {
+                stmt.setInt(5, status.getCodFidelidade());
+            } else {
+                stmt.setNull(5, Types.INTEGER);
+            }
 
             stmt.executeUpdate();
             System.out.println("***    Status inserido com sucesso no TitanFit!   ***");
@@ -48,14 +58,9 @@ public class StatusDB implements Persistivel<Status, Integer> {
 
             stmt.setInt(1, codStatus);
 
-            try (var rs = stmt.executeQuery()) {
+            try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    Status status = new Status();
-                    status.setCodStatus(rs.getInt("cod_status"));
-                    status.setCpfAluno(rs.getString("cpf_aluno"));
-                    status.setCodPlano(rs.getInt("cod_plano"));
-                    status.setPlanoAtivo(rs.getBoolean("plano_ativo"));
-                    return status;
+                    return mapear(rs);
                 }
             }
         } catch (SQLException e) {
@@ -70,16 +75,11 @@ public class StatusDB implements Persistivel<Status, Integer> {
         List<Status> listaStatus = new ArrayList<>();
 
         try (Connection conn = ConexaoBancoDados.conectar();
-             PreparedStatement stmt = conn.prepareStatement(sql); ResultSet rs = stmt.executeQuery()) {
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
-                Status status = new Status();
-                status.setCodStatus(rs.getInt("cod_status"));
-                status.setCpfAluno(rs.getString("cpf_aluno"));
-                status.setCodPlano(rs.getInt("cod_plano"));
-                status.setPlanoAtivo(rs.getBoolean("plano_ativo"));
-
-                listaStatus.add(status);
+                listaStatus.add(mapear(rs));
             }
 
         } catch (SQLException e) {
@@ -94,17 +94,26 @@ public class StatusDB implements Persistivel<Status, Integer> {
         String sql = "UPDATE status_aluno SET " +
                 "cpf_aluno = ?, " +
                 "cod_plano = ?, " +
-                "plano_ativo = ? " +
+                "plano_ativo = ?, " +
+                "cod_fidelidade = ? " +
                 "WHERE cod_status = ?";
 
         try (Connection conn = ConexaoBancoDados.conectar();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            String cpfLimpo = status.getCpfAluno() != null ? status.getCpfAluno().replace(".", "").replace("-", "") : null;
+            String cpfLimpo = status.getCpfAluno() != null
+                    ? status.getCpfAluno().replace(".", "").replace("-", "") : null;
             stmt.setString(1, cpfLimpo);
             stmt.setInt(2, status.getCodPlano());
             stmt.setBoolean(3, status.isPlanoAtivo());
-            stmt.setInt(4, status.getCodStatus());
+
+            if (status.getCodFidelidade() != null) {
+                stmt.setInt(4, status.getCodFidelidade());
+            } else {
+                stmt.setNull(4, Types.INTEGER);
+            }
+
+            stmt.setInt(5, status.getCodStatus());
 
             stmt.executeUpdate();
             System.out.println("*** Dados atualizados com sucesso no TitanFit! ***");
@@ -123,7 +132,6 @@ public class StatusDB implements Persistivel<Status, Integer> {
             stmt.setInt(1, codStatus);
 
             int linhasAfetadas = stmt.executeUpdate();
-
             if (linhasAfetadas > 0) {
                 System.out.println("***    Status deletado com sucesso do TitanFit!   ***");
             } else {
@@ -145,17 +153,14 @@ public class StatusDB implements Persistivel<Status, Integer> {
     public Status buscarPorCpf(String cpfAluno) {
         String sql = "SELECT * FROM status_aluno WHERE cpf_aluno = ? LIMIT 1";
         String cpfLimpo = cpfAluno != null ? cpfAluno.replace(".", "").replace("-", "") : null;
+
         try (Connection conn = ConexaoBancoDados.conectar();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
+
             stmt.setString(1, cpfLimpo);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    Status status = new Status();
-                    status.setCodStatus(rs.getInt("cod_status"));
-                    status.setCpfAluno(rs.getString("cpf_aluno"));
-                    status.setCodPlano(rs.getInt("cod_plano"));
-                    status.setPlanoAtivo(rs.getBoolean("plano_ativo"));
-                    return status;
+                    return mapear(rs);
                 }
             }
         } catch (SQLException e) {
@@ -163,4 +168,36 @@ public class StatusDB implements Persistivel<Status, Integer> {
         }
         return null;
     }
+
+    /**
+     * Retorna o proximo codigo de status disponivel (max + 1).
+     * Usado para auto-incremento no cadastro de alunos.
+     *
+     * @return Proximo codigo disponivel (1 se tabela vazia)
+     */
+    public int proximoCodigo() {
+        String sql = "SELECT COALESCE(MAX(cod_status), 0) + 1 FROM status_aluno";
+        try (Connection conn = ConexaoBancoDados.conectar();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+            if (rs.next()) return rs.getInt(1);
+        } catch (SQLException e) {
+            System.out.println("***     Erro ao obter proximo codigo de status:   ***" + e.getMessage());
+        }
+        return 1;
+    }
+
+    private Status mapear(ResultSet rs) throws SQLException {
+        Status status = new Status();
+        status.setCodStatus(rs.getInt("cod_status"));
+        status.setCpfAluno(rs.getString("cpf_aluno"));
+        status.setCodPlano(rs.getInt("cod_plano"));
+        status.setPlanoAtivo(rs.getBoolean("plano_ativo"));
+
+        int codFid = rs.getInt("cod_fidelidade");
+        status.setCodFidelidade(rs.wasNull() ? null : codFid);
+
+        return status;
+    }
 }
+ 
