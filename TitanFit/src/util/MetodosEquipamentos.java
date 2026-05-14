@@ -1,5 +1,16 @@
 package util;
 
+/**
+ * Metodos de negocio para o modulo de Equipamentos do Titan Fit.
+ *
+ * <p>Gerencia as operacoes de cadastro, listagem, atualizacao
+ * de estado e remocao de equipamentos.</p>
+ *
+ * @author Mateus Santos
+ * @version 1.0
+ * @see interfaceMenu.EquipamentosMenu
+ */
+
 import entities.Equipamentos;
 import repositoryDB.EquipamentosDB;
 

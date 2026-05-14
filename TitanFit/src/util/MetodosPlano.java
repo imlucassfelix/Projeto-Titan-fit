@@ -1,5 +1,17 @@
 package util;
 
+/**
+ * Metodos de negocio para o modulo de Planos do Titan Fit.
+ *
+ * <p>Gerencia as operacoes de cadastro, listagem, alteracao e
+ * remocao de planos, incluindo a selecao interativa de
+ * {@link entities.Fidelidade}.</p>
+ *
+ * @author Lucas Felix
+ * @version 1.0
+ * @see interfaceMenu.PlanoMenu
+ */
+
 import entities.Fidelidade;
 import entities.Plano;
 import repositoryDB.FidelidadeDB;

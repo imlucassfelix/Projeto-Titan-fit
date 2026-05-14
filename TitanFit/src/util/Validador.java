@@ -1,4 +1,20 @@
 package util;
+
+/**
+ * Classe utilitaria com metodos estaticos de validacao de dados.
+ *
+ * <p>Centraliza todas as regras de validacao de entrada do sistema
+ * Titan Fit — CPF, email, telefone, sexo, data, horario e capacidade.
+ * Todos os metodos lancam {@link DadoInvalidoExcecao} em caso de
+ * dados invalidos.</p>
+ *
+ * <p>Nao instanciavel — todos os metodos sao estaticos.</p>
+ *
+ * @author Lucas Felix, Lucas Rodrigues, Mateus Santos, Ryan Vinicius
+ * @version 1.0
+ * @see DadoInvalidoExcecao
+ */
+
 import java.time.LocalTime;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

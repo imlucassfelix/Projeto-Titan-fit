@@ -1,5 +1,19 @@
 package entities;
 
+/**
+ * Representa um plano de assinatura disponivel para os alunos.
+ *
+ * <p>Cada plano possui categoria, valor, beneficios, forma de pagamento,
+ * vinculo com {@link Fidelidade} e duracao em meses. A duracao e usada
+ * para calcular o vencimento do plano do aluno.</p>
+ *
+ * @author Lucas Felix
+ * @version 1.0
+ * @see Fidelidade
+ * @see Status
+ * @see repositoryDB.PlanoDB
+ */
+
 import java.util.List;
 import java.util.ArrayList;
 

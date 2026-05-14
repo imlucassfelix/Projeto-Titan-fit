@@ -1,5 +1,18 @@
 package entities;
 
+/**
+ * Registra a presenca de um {@link Aluno} em uma {@link Aula}
+ * (tabela associativa FREQUENTA).
+ *
+ * <p>A chave primaria e composta por (cpf_aluno, cod_aula,
+ * data_entrada, hora_entrada), o que permite registrar multiplas
+ * presenças na mesma aula em dias diferentes.</p>
+ *
+ * @author Lucas Rodrigues
+ * @version 1.0
+ * @see repositoryDB.FrequentaDB
+ */
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 

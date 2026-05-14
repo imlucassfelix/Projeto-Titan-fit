@@ -1,5 +1,20 @@
 package connection;
 
+/**
+ * Fabrica de conexoes JDBC para o banco de dados MySQL do Titan Fit.
+ *
+ * <p>O nome do banco pode ser sobrescrito via System Property:
+ * <pre>{@code
+ * java -Dtitanfit.db.name=titanfit_test -jar titanfit.jar
+ * }</pre>
+ * O valor padrao e {@code "titanfit"}.</p>
+ *
+ * <p>Nao instanciavel — todos os metodos sao estaticos.</p>
+ *
+ * @author Lucas Rodrigues
+ * @version 1.0
+ */
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;

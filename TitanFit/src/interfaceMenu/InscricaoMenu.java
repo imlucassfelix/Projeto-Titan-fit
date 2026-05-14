@@ -1,7 +1,14 @@
 package interfaceMenu;
+
+/**
+ * Submenu de inscricoes e matriculas no Titan Fit.
+ *
+ * @author Lucas Rodrigues
+ * @version 1.0
+ */
+
 import util.MetodosInscricao;
 import java.util.Scanner;
-
 
 public class InscricaoMenu {
     private Scanner sc;

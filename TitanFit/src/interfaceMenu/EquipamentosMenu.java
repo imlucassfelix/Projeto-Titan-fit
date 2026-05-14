@@ -1,5 +1,12 @@
 package interfaceMenu;
 
+/**
+ * Submenu de inventario de equipamentos no Titan Fit.
+ *
+ * @author Mateus Santos
+ * @version 1.0
+ */
+
 import util.MetodosEquipamentos;
 import java.util.Scanner;
 

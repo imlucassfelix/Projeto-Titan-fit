@@ -1,5 +1,18 @@
 package entities;
 
+/**
+ * Representa um treino vinculado a uma aula no Titan Fit.
+ *
+ * <p>Cada treino descreve um exercicio especifico, o grupo muscular
+ * trabalhado e a quantidade de series/repeticoes. Um treino pertence
+ * a exatamente uma {@link Aula}.</p>
+ *
+ * @author Ryan Vinicius
+ * @version 1.0
+ * @see Aula
+ * @see repositoryDB.TreinoDB
+ */
+
 public class Treino {
 	private int codTreino;
 	private int codAula;

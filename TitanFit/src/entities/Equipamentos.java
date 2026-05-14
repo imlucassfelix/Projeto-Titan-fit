@@ -1,5 +1,17 @@
 package entities;
 
+/**
+ * Representa um equipamento (maquina) disponivel na academia Titan Fit.
+ *
+ * <p>Armazena nome, modelo, estado de conservacao e data de aquisicao.
+ * O controle do estado dos equipamentos suporta o planejamento de
+ * manutencao preventiva.</p>
+ *
+ * @author Mateus Santos
+ * @version 1.0
+ * @see repositoryDB.EquipamentosDB
+ */
+
 import java.time.LocalDate;
 
 public class Equipamentos {

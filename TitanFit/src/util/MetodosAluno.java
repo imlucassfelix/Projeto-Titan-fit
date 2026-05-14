@@ -1,5 +1,18 @@
 package util;
 
+/**
+ * Metodos de negocio para o modulo de Alunos do Titan Fit.
+ *
+ * <p>Encapsula todas as operacoes de cadastro, listagem,
+ * atualizacao, controle de frequencia e remocao de alunos,
+ * orquestrando chamadas a {@link repositoryDB.AlunoDB} e
+ * aos validadores.</p>
+ *
+ * @author Lucas Rodrigues
+ * @version 1.0
+ * @see interfaceMenu.AlunoMenu
+ */
+
 import entities.Aluno;
 import entities.Frequenta;
 import entities.Plano;

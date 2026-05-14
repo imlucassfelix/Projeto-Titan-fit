@@ -1,5 +1,23 @@
 package interfaceMenu;
 
+/**
+ * Submenu de gerenciamento de alunos no Titan Fit.
+ *
+ * <p>Exibe as opcoes: cadastrar, listar, atualizar, gerenciar
+ * frequencia e remover alunos, delegando para {@link util.MetodosAluno}.</p>
+ *
+ * @author Lucas Rodrigues
+ * @version 1.0
+ */
+
+// ── AulaMenu.java ────────────────────────────────────────────
+/**
+ * Submenu de gerenciamento de aulas e treinos no Titan Fit.
+ *
+ * @author Ryan Vinicius
+ * @version 1.0
+ */
+
 import util.MetodosAluno;
 import java.util.Scanner;
 

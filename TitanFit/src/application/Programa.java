@@ -1,4 +1,18 @@
 package application;
+
+/**
+ * Classe principal do sistema Titan Fit.
+ *
+ * <p>Ponto de entrada da aplicacao ({@code main}). Exibe a mensagem
+ * de boas-vindas, instancia o {@link java.util.Scanner} compartilhado
+ * e inicia o {@link interfaceMenu.Menu} principal.</p>
+ *
+ * @author Lucas Rodrigues, Mateus Santos, Lucas Felix, Ryan Vinicius
+ * @version 1.0
+ * @see interfaceMenu.Menu
+ * @see BoasVindas
+ */
+
 import java.util.Scanner;
 import interfaceMenu.Menu;
 

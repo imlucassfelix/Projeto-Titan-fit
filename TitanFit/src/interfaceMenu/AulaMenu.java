@@ -1,9 +1,13 @@
 package interfaceMenu;
 
-import entities.Aula;
-import util.MetodosAluno;
+/**
+ * Submenu de gerenciamento de aulas e treinos no Titan Fit.
+ *
+ * @author Ryan Vinicius
+ * @version 1.0
+ */
+
 import util.MetodosAula;
-import util.Validador;
 import java.util.Scanner;
 
 public class AulaMenu {

@@ -1,5 +1,12 @@
 package interfaceMenu;
 
+/**
+ * Submenu de gerenciamento de instrutores no Titan Fit.
+ *
+ * @author Mateus Santos
+ * @version 1.0
+ */
+
 import java.util.Scanner;
 
 public class InstrutorMenu {

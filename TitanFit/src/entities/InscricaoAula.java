@@ -1,5 +1,17 @@
 package entities;
 
+/**
+ * Representa a inscricao de um {@link Aluno} em uma {@link Aula}.
+ *
+ * <p>Armazena o horario preferencial do aluno. A logica de negocio
+ * que valida capacidade maxima e conflito de horario esta em
+ * {@link util.MetodosInscricao#novaInscricao(java.util.Scanner)}.</p>
+ *
+ * @author Lucas Rodrigues
+ * @version 1.0
+ * @see repositoryDB.InscricaoAulaDB
+ */
+
 public class InscricaoAula {
     private int codInscricao;
     private int codAula;

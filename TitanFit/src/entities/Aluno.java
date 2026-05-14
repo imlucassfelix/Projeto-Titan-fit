@@ -1,5 +1,21 @@
 package entities;
 
+/**
+ * Representa um aluno matriculado na academia Titan Fit.
+ *
+ * <p>Herda de {@link Pessoa} os atributos de contato (e-mail,
+ * data de nascimento, sexo) e adiciona os dados especificos do
+ * aluno: CPF, telefone, data de matricula e nome.</p>
+ *
+ * <p>O metodo {@link #obterIdentificacao()} e utilizado pelo sistema
+ * para exibir o aluno de forma polimórfica (Polimorfismo — Aula 11).</p>
+ *
+ * @author Lucas Rodrigues
+ * @version 1.0
+ * @see Pessoa
+ * @see repositoryDB.AlunoDB
+ */
+
 import java.time.LocalDate;
 
 // HERANÇA: Aluno herda de Pessoa

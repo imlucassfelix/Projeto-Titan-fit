@@ -1,5 +1,18 @@
 package entities;
 
+/**
+ * Representa um instrutor profissional da academia Titan Fit.
+ *
+ * <p>Herda de {@link Pessoa} e acrescenta dados profissionais:
+ * especialidade e salario. Cada instrutor pode ser responsavel
+ * por uma ou mais aulas ({@link Aula}).</p>
+ *
+ * @author Mateus Santos
+ * @version 1.0
+ * @see Pessoa
+ * @see repositoryDB.InstrutorDB
+ */
+
 import java.time.LocalDate;
 
 // HERANÇA: Instrutor herda de Pessoa

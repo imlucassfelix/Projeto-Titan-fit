@@ -1,5 +1,12 @@
 package application;
 
+/**
+ * Exibe a mensagem de boas-vindas ao iniciar o sistema Titan Fit.
+ *
+ * @author Lucas Rodrigues
+ * @version 1.0
+ */
+
 public class BoasVindas {
 	public void iniciar() {
         System.out.println("==================================================");

@@ -1,5 +1,17 @@
 package util;
 
+/**
+ * Metodos de negocio para o modulo de Instrutores do Titan Fit.
+ *
+ * <p>Encapsula as operacoes de cadastro, listagem, atualizacao
+ * e remocao de instrutores, com validacoes e acesso a
+ * {@link repositoryDB.InstrutorDB}.</p>
+ *
+ * @author Mateus Santos
+ * @version 1.0
+ * @see interfaceMenu.InstrutorMenu
+ */
+
 import entities.Instrutor;
 import repositoryDB.InstrutorDB;
 

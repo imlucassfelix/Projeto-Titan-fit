@@ -1,5 +1,12 @@
 package interfaceMenu;
 
+/**
+ * Submenu de gerenciamento de planos no Titan Fit.
+ *
+ * @author Lucas Felix
+ * @version 1.0
+ */
+
 import util.MetodosPlano;
 
 import java.util.Scanner;

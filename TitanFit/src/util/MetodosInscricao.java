@@ -1,5 +1,20 @@
 package util;
 
+/**
+ * Metodos de negocio para o modulo de Inscricoes do Titan Fit.
+ *
+ * <p>Implementa as tres regras de negocio criticas para inscricao:</p>
+ * <ol>
+ *   <li>Verificacao de plano ativo e nao vencido do aluno</li>
+ *   <li>Verificacao de capacidade maxima da aula</li>
+ *   <li>Verificacao de conflito de horario do aluno</li>
+ * </ol>
+ *
+ * @author Lucas Rodrigues
+ * @version 1.0
+ * @see interfaceMenu.InscricaoMenu
+ */
+
 import entities.Aula;
 import entities.InscricaoAula;
 import entities.Plano;

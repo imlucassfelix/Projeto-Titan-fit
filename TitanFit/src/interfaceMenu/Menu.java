@@ -1,5 +1,17 @@
 package interfaceMenu;
 
+/**
+ * Menu principal do sistema Titan Fit.
+ *
+ * <p>Ponto de entrada da navegacao — exibe as opcoes de modulos
+ * e delega para os submenus especificos ({@link AlunoMenu},
+ * {@link InstrutorMenu}, {@link PlanoMenu}, etc.).</p>
+ *
+ * @author Lucas Rodrigues, Mateus Santos
+ * @version 1.0
+ * @see application.Programa
+ */
+
 import java.util.Scanner;
 
 public class Menu {

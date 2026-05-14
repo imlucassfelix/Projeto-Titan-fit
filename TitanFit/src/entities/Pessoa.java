@@ -1,5 +1,19 @@
 package entities;
 
+/**
+ * Classe abstrata que representa uma pessoa no sistema Titan Fit.
+ *
+ * <p>Serve como base da hierarquia de heranca, reunindo atributos
+ * comuns a {@link Aluno} e {@link Instrutor}: e-mail, data de
+ * nascimento e sexo. Aplica o principio de reutilizacao de codigo
+ * (Heranca — Aula 10).</p>
+ *
+ * @author Lucas Rodrigues, Mateus Santos
+ * @version 1.0
+ * @see Aluno
+ * @see Instrutor
+ */
+
 import java.time.LocalDate;
 
 public abstract class Pessoa {

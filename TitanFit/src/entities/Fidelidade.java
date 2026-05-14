@@ -1,5 +1,18 @@
 package entities;
 
+/**
+ * Representa um contrato de fidelidade associado a um {@link Plano}.
+ *
+ * <p>Define o periodo de vigencia minima do plano. Um aluno que contrata
+ * um plano com fidelidade assume o compromisso de permanencia ate a data
+ * registrada em {@code periodo}.</p>
+ *
+ * @author Lucas Felix
+ * @version 1.0
+ * @see Plano
+ * @see repositoryDB.FidelidadeDB
+ */
+
 import java.time.LocalDate;
 
 public class Fidelidade {

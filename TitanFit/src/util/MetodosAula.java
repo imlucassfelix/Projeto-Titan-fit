@@ -1,5 +1,16 @@
 package util;
 
+/**
+ * Metodos de negocio para o modulo de Aulas do Titan Fit.
+ *
+ * <p>Gerencia as operacoes de cadastro, listagem, edicao e
+ * exclusao de aulas, com chamadas a {@link repositoryDB.AulaDB}.</p>
+ *
+ * @author Ryan Vinicius
+ * @version 1.0
+ * @see interfaceMenu.AulaMenu
+ */
+
 import entities.Aula;
 import java.util.Scanner;
 

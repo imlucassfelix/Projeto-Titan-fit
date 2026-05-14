@@ -1,5 +1,17 @@
 package entities;
 
+/**
+ * Registra o vinculo entre um {@link Aluno} e um {@link Plano}.
+ *
+ * <p>O campo {@code planoAtivo} indica se o plano esta em vigencia.
+ * A verificacao real de vencimento e feita em {@code MetodosInscricao}
+ * comparando {@code dataMatricula + duracaoMeses} com a data atual.</p>
+ *
+ * @author Mateus Santos
+ * @version 1.0
+ * @see repositoryDB.StatusDB
+ */
+
 public class Status {
 	private int codStatus;
 	private String cpfAluno;
