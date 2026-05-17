@@ -11,18 +11,27 @@ import connection.ConexaoBancoDados;
  * Realiza operacoes CRUD na tabela 'aula' do MySQL.
  * Implementa Persistivel para padronizacao dos repositorios.
  *
+ * <p>Alteracao v2.0: cod_aula agora e gerado automaticamente
+ * via {@link #proximoCodigo()}, eliminando risco de duplicidade
+ * por entrada manual do usuario.</p>
+ *
  * @author Ryan Vinicius
- * @version 1.0
+ * @version 2.0
  */
 public class AulaDB implements Persistivel<Aula, Integer> {
 
 	/**
 	 * Insere uma nova aula no banco de dados.
+	 * O codigo da aula e gerado automaticamente — nao e necessario
+	 * informar o cod_aula no objeto; ele sera sobrescrito pelo
+	 * proximo codigo disponivel antes da insercao.
 	 *
 	 * @param aula Objeto Aula com os dados a inserir
 	 */
 	@Override
 	public void inserir(Aula aula) {
+		aula.setCodAula(proximoCodigo());
+
 		String sql = "INSERT INTO aula (cod_aula, nome_aula, descricao_aula, capacidade_maxima, modalidade, cpf_instrutor) VALUES (?, ?, ?, ?, ?, ?)";
 
 		try (Connection conn = ConexaoBancoDados.conectar();
@@ -37,6 +46,7 @@ public class AulaDB implements Persistivel<Aula, Integer> {
 
 			stmt.executeUpdate();
 			System.out.println("***    Aula inserida com sucesso no TitanFit!   ***");
+			System.out.println("***    Codigo gerado: " + aula.getCodAula() + "                    ***");
 
 		} catch (SQLException e) {
 			System.out.println("***       Erro ao inserir aula no banco:        ***" + e.getMessage());
@@ -165,5 +175,23 @@ public class AulaDB implements Persistivel<Aula, Integer> {
 		} catch (SQLException e) {
 			System.out.println("***           Erro ao deletar aula:             ***" + e.getMessage());
 		}
+	}
+
+	/**
+	 * Retorna o proximo codigo de aula disponivel (max + 1).
+	 * Usado para auto-incremento no cadastro de aulas.
+	 *
+	 * @return Proximo codigo disponivel (1 se tabela vazia)
+	 */
+	public int proximoCodigo() {
+		String sql = "SELECT COALESCE(MAX(cod_aula), 0) + 1 FROM aula";
+		try (Connection conn = ConexaoBancoDados.conectar();
+		     PreparedStatement stmt = conn.prepareStatement(sql);
+		     ResultSet rs = stmt.executeQuery()) {
+			if (rs.next()) return rs.getInt(1);
+		} catch (SQLException e) {
+			System.out.println("***     Erro ao obter proximo codigo de aula:   ***" + e.getMessage());
+		}
+		return 1;
 	}
 }

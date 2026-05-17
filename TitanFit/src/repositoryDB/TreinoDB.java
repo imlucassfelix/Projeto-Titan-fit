@@ -11,13 +11,25 @@ import connection.ConexaoBancoDados;
  * Realiza operacoes CRUD na tabela 'treino' do MySQL.
  * Implementa Persistivel para padronizacao dos repositorios.
  *
+ * <p>Alteracao v2.0: cod_treino agora e gerado automaticamente
+ * via {@link #proximoCodigo()}, eliminando risco de duplicidade
+ * por entrada manual do usuario.</p>
+ *
  * @author Ryan Vinicius
- * @version 1.0
+ * @version 2.0
  */
 public class TreinoDB implements Persistivel<Treino, Integer> {
 
+	/**
+	 * Insere um novo treino no banco de dados.
+	 * O codigo do treino e gerado automaticamente.
+	 *
+	 * @param treino Objeto Treino com os dados a inserir
+	 */
 	@Override
 	public void inserir(Treino treino) {
+		treino.setCodTreino(proximoCodigo());
+
 		String sql = "INSERT INTO treino (cod_treino, cod_aula, series, grupo_muscular, exercicio) VALUES (?, ?, ?, ?, ?)";
 
 		try (Connection conn = ConexaoBancoDados.conectar();
@@ -31,12 +43,19 @@ public class TreinoDB implements Persistivel<Treino, Integer> {
 
 			stmt.executeUpdate();
 			System.out.println("***    Treino inserido com sucesso no TitanFit!   ***");
+			System.out.println("***    Codigo gerado: " + treino.getCodTreino() + "                  ***");
 
 		} catch (SQLException e) {
 			System.out.println("***       Erro ao inserir treino no banco:        ***" + e.getMessage());
 		}
 	}
 
+	/**
+	 * Busca um treino pelo codigo.
+	 *
+	 * @param codTreino Codigo do treino
+	 * @return Treino encontrado, ou null se nao existir
+	 */
 	@Override
 	public Treino buscarPorId(Integer codTreino) {
 		String sql = "SELECT * FROM treino WHERE cod_treino = ?";
@@ -63,6 +82,11 @@ public class TreinoDB implements Persistivel<Treino, Integer> {
 		return null;
 	}
 
+	/**
+	 * Lista todos os treinos cadastrados no banco de dados.
+	 *
+	 * @return Lista de treinos (vazia se nao houver registros)
+	 */
 	@Override
 	public List<Treino> listarTodos() {
 		String sql = "SELECT * FROM treino";
@@ -89,6 +113,11 @@ public class TreinoDB implements Persistivel<Treino, Integer> {
 		return listaTreinos;
 	}
 
+	/**
+	 * Atualiza os dados de um treino existente no banco.
+	 *
+	 * @param treino Objeto Treino com os dados atualizados
+	 */
 	@Override
 	public void atualizar(Treino treino) {
 		String sql = "UPDATE treino SET " +
@@ -114,6 +143,11 @@ public class TreinoDB implements Persistivel<Treino, Integer> {
 		}
 	}
 
+	/**
+	 * Remove um treino do banco de dados pelo codigo.
+	 *
+	 * @param codTreino Codigo do treino a ser removido
+	 */
 	@Override
 	public void deletar(Integer codTreino) {
 		String sql = "DELETE FROM treino WHERE cod_treino = ?";
@@ -134,5 +168,23 @@ public class TreinoDB implements Persistivel<Treino, Integer> {
 		} catch (SQLException e) {
 			System.out.println("***           Erro ao deletar treino:             ***" + e.getMessage());
 		}
+	}
+
+	/**
+	 * Retorna o proximo codigo de treino disponivel (max + 1).
+	 * Usado para auto-incremento no cadastro de treinos.
+	 *
+	 * @return Proximo codigo disponivel (1 se tabela vazia)
+	 */
+	public int proximoCodigo() {
+		String sql = "SELECT COALESCE(MAX(cod_treino), 0) + 1 FROM treino";
+		try (Connection conn = ConexaoBancoDados.conectar();
+		     PreparedStatement stmt = conn.prepareStatement(sql);
+		     ResultSet rs = stmt.executeQuery()) {
+			if (rs.next()) return rs.getInt(1);
+		} catch (SQLException e) {
+			System.out.println("***   Erro ao obter proximo codigo de treino:   ***" + e.getMessage());
+		}
+		return 1;
 	}
 }

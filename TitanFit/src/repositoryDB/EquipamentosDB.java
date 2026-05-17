@@ -11,13 +11,25 @@ import connection.ConexaoBancoDados;
  * Realiza operacoes CRUD na tabela 'equipamentos' do MySQL.
  * Implementa Persistivel para padronizacao dos repositorios.
  *
+ * <p>Alteracao v2.0: cod_maquina agora e gerado automaticamente
+ * via {@link #proximoCodigo()}, eliminando risco de duplicidade
+ * por entrada manual do usuario.</p>
+ *
  * @author Mateus Santos
- * @version 1.0
+ * @version 2.0
  */
 public class EquipamentosDB implements Persistivel<Equipamentos, Integer> {
 
+	/**
+	 * Insere um novo equipamento no banco de dados.
+	 * O codigo da maquina e gerado automaticamente.
+	 *
+	 * @param equipamento Objeto Equipamentos com os dados a inserir
+	 */
 	@Override
 	public void inserir(Equipamentos equipamento) {
+		equipamento.setCodMaquina(proximoCodigo());
+
 		String sql = "INSERT INTO equipamentos (cod_maquina, nome_equipamento, modelo, estado, data_aquisicao) VALUES (?, ?, ?, ?, ?)";
 
 		try (Connection conn = ConexaoBancoDados.conectar();
@@ -31,12 +43,19 @@ public class EquipamentosDB implements Persistivel<Equipamentos, Integer> {
 
 			stmt.executeUpdate();
 			System.out.println("*** Equipamento inserido com sucesso no TitanFit! ***");
+			System.out.println("*** Codigo gerado: " + equipamento.getCodMaquina() + "                  ***");
 
 		} catch (SQLException e) {
 			System.out.println("***    Erro ao inserir equipamento no banco:      ***" + e.getMessage());
 		}
 	}
 
+	/**
+	 * Busca um equipamento pelo codigo.
+	 *
+	 * @param codMaquina Codigo da maquina
+	 * @return Equipamentos encontrado, ou null se nao existir
+	 */
 	@Override
 	public Equipamentos buscarPorId(Integer codMaquina) {
 		String sql = "SELECT * FROM equipamentos WHERE cod_maquina = ?";
@@ -63,6 +82,11 @@ public class EquipamentosDB implements Persistivel<Equipamentos, Integer> {
 		return null;
 	}
 
+	/**
+	 * Lista todos os equipamentos cadastrados no banco de dados.
+	 *
+	 * @return Lista de equipamentos (vazia se nao houver registros)
+	 */
 	@Override
 	public List<Equipamentos> listarTodos() {
 		String sql = "SELECT * FROM equipamentos";
@@ -89,6 +113,11 @@ public class EquipamentosDB implements Persistivel<Equipamentos, Integer> {
 		return listaEquipamentos;
 	}
 
+	/**
+	 * Atualiza os dados de um equipamento existente no banco.
+	 *
+	 * @param equipamento Objeto Equipamentos com os dados atualizados
+	 */
 	@Override
 	public void atualizar(Equipamentos equipamento) {
 		String sql = "UPDATE equipamentos SET " +
@@ -114,6 +143,11 @@ public class EquipamentosDB implements Persistivel<Equipamentos, Integer> {
 		}
 	}
 
+	/**
+	 * Remove um equipamento do banco de dados pelo codigo.
+	 *
+	 * @param codMaquina Codigo da maquina a ser removida
+	 */
 	@Override
 	public void deletar(Integer codMaquina) {
 		String sql = "DELETE FROM equipamentos WHERE cod_maquina = ?";
@@ -134,5 +168,23 @@ public class EquipamentosDB implements Persistivel<Equipamentos, Integer> {
 		} catch (SQLException e) {
 			System.out.println("***         Erro ao deletar equipamento:          ***" + e.getMessage());
 		}
+	}
+
+	/**
+	 * Retorna o proximo codigo de maquina disponivel (max + 1).
+	 * Usado para auto-incremento no cadastro de equipamentos.
+	 *
+	 * @return Proximo codigo disponivel (1 se tabela vazia)
+	 */
+	public int proximoCodigo() {
+		String sql = "SELECT COALESCE(MAX(cod_maquina), 0) + 1 FROM equipamentos";
+		try (Connection conn = ConexaoBancoDados.conectar();
+		     PreparedStatement stmt = conn.prepareStatement(sql);
+		     ResultSet rs = stmt.executeQuery()) {
+			if (rs.next()) return rs.getInt(1);
+		} catch (SQLException e) {
+			System.out.println("*** Erro ao obter proximo codigo de maquina:      ***" + e.getMessage());
+		}
+		return 1;
 	}
 }

@@ -6,8 +6,12 @@ package util;
  * <p>Gerencia as operacoes de cadastro, listagem, atualizacao
  * de estado e remocao de equipamentos.</p>
  *
+ * <p>Alteracao v2.0: o campo cod_maquina foi removido do formulario
+ * de cadastro. O codigo e gerado automaticamente por
+ * {@link repositoryDB.EquipamentosDB#proximoCodigo()}.</p>
+ *
  * @author Mateus Santos
- * @version 1.0
+ * @version 2.0
  * @see interfaceMenu.EquipamentosMenu
  */
 
@@ -20,71 +24,69 @@ import java.util.Scanner;
 
 public class MetodosEquipamentos {
 
-    public static void cadastrarEquipamentos(Scanner sc){
+    public static void cadastrarEquipamentos(Scanner sc) {
         System.out.println("==================================================");
-        System.out.println("*** CADASTRAR EQUIPAMENTO             ***");
+        System.out.println("***         CADASTRAR EQUIPAMENTO              ***");
         System.out.println("==================================================");
         try {
-            System.out.print("*** Código da Máquina:            ***\n");
-            int codMaquina = sc.nextInt(); sc.nextLine();
-
-            System.out.print("*** Nome do Equipamento:            ***\n");
+            System.out.print("*** Nome do Equipamento:                       ***\n");
             String nomeEquipamento = sc.nextLine();
             Validador.campoObrigatorio(nomeEquipamento, "Nome do equipamento");
 
-            System.out.print("*** Modelo:                   ***\n");
+            System.out.print("*** Modelo:                                    ***\n");
             String modelo = sc.nextLine();
             Validador.campoObrigatorio(modelo, "Modelo");
 
-            System.out.print("*** Estado (Bom/Regular/Ruim):        ***\n");
+            System.out.print("*** Estado (Bom/Regular/Ruim):                 ***\n");
             String estado = sc.nextLine();
             Validador.campoObrigatorio(estado, "Estado");
 
-            System.out.print("*** Data de Aquisição (dd/mm/aaaa):    ***\n");
+            System.out.print("*** Data de Aquisicao (dd/mm/aaaa):            ***\n");
             String dataAquisStr = sc.nextLine();
             Validador.validarData(dataAquisStr);
             LocalDate dataAquisicao = LocalDate.parse(dataAquisStr, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 
-            Equipamentos novoEquipamento = new Equipamentos(codMaquina, nomeEquipamento, modelo, estado, dataAquisicao);
+            // cod_maquina = 0 aqui — sera sobrescrito por proximoCodigo() dentro de EquipamentosDB.inserir()
+            Equipamentos novoEquipamento = new Equipamentos(0, nomeEquipamento, modelo, estado, dataAquisicao);
             new EquipamentosDB().inserir(novoEquipamento);
         } catch (DadoInvalidoExcecao e) {
-            System.out.println("*** Erro de validação: " + e.getMessage() + " ***");
+            System.out.println("*** Erro de validacao: " + e.getMessage() + " ***");
         }
     }
 
-    public static void listarEquipamentos(Scanner sc){
+    public static void listarEquipamentos(Scanner sc) {
         System.out.println("==================================================");
-        System.out.println("*** LISTA DE EQUIPAMENTOS             ***");
+        System.out.println("***         LISTA DE EQUIPAMENTOS              ***");
         System.out.println("==================================================");
         var lista = new EquipamentosDB().listarTodos();
 
         if (lista.isEmpty()) {
-            System.out.println("*** Nenhum equipamento cadastrado.      ***");
+            System.out.println("***      Nenhum equipamento cadastrado.        ***");
         } else {
             for (Equipamentos e : lista) {
-                System.out.println("Código: " + e.getCodMaquina());
+                System.out.println("Codigo: " + e.getCodMaquina());
                 System.out.println("Nome: " + e.getNome());
                 System.out.println("Modelo: " + e.getModelo());
                 System.out.println("Estado: " + e.getEstado());
-                System.out.println("Data Aquisição: " + e.getDataAquisicao());
+                System.out.println("Data Aquisicao: " + e.getDataAquisicao());
                 System.out.println("--------------------------------------------------");
             }
         }
     }
 
-    public static void gerenciarEquipamentos(Scanner sc){
+    public static void gerenciarEquipamentos(Scanner sc) {
         System.out.println("==================================================");
-        System.out.println("*** ATUALIZAR EQUIPAMENTO              ***");
+        System.out.println("***         ATUALIZAR EQUIPAMENTO              ***");
         System.out.println("==================================================");
         try {
-            System.out.print("*** Digite o Código do Equipamento para editar:***\n");
+            System.out.print("*** Digite o Codigo do Equipamento para editar:***\n");
             int codBusca = sc.nextInt(); sc.nextLine();
 
             EquipamentosDB db = new EquipamentosDB();
             Equipamentos equipamento = db.buscarPorId(codBusca);
 
             if (equipamento == null) {
-                System.out.println("Erro: Equipamento com código " + codBusca + " não encontrado!");
+                System.out.println("Erro: Equipamento com codigo " + codBusca + " nao encontrado!");
                 return;
             }
 
@@ -99,15 +101,15 @@ public class MetodosEquipamentos {
 
             db.atualizar(equipamento);
         } catch (DadoInvalidoExcecao e) {
-            System.out.println("*** Erro de validação: " + e.getMessage() + " ***");
+            System.out.println("*** Erro de validacao: " + e.getMessage() + " ***");
         }
     }
 
-    public static void removerEquipamentos(Scanner sc){
+    public static void removerEquipamentos(Scanner sc) {
         System.out.println("==================================================");
-        System.out.println("*** REMOVER EQUIPAMENTO              ***");
+        System.out.println("***          REMOVER EQUIPAMENTO               ***");
         System.out.println("==================================================");
-        System.out.print("*** Digite o Código do Equipamento para remover:***\n");
+        System.out.print("*** Digite o Codigo do Equipamento para remover:***\n");
         int codRemover = sc.nextInt(); sc.nextLine();
         new EquipamentosDB().deletar(codRemover);
     }

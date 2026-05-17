@@ -11,13 +11,25 @@ import connection.ConexaoBancoDados;
  * Realiza operacoes CRUD na tabela 'inscricao_aula' do MySQL.
  * Implementa Persistivel para padronizacao dos repositorios.
  *
+ * <p>Alteracao v2.0: cod_inscricao agora e gerado automaticamente
+ * via {@link #proximoCodigo()}, eliminando risco de duplicidade
+ * por entrada manual do usuario.</p>
+ *
  * @author Lucas Rodrigues
- * @version 1.0
+ * @version 2.0
  */
 public class InscricaoAulaDB implements Persistivel<InscricaoAula, Integer> {
 
+    /**
+     * Insere uma nova inscricao no banco de dados.
+     * O codigo da inscricao e gerado automaticamente.
+     *
+     * @param inscricao Objeto InscricaoAula com os dados a inserir
+     */
     @Override
     public void inserir(InscricaoAula inscricao) {
+        inscricao.setCodInscricao(proximoCodigo());
+
         String sql = "INSERT INTO inscricao_aula (cod_inscricao, cod_aula, cpf_aluno, horario) VALUES (?, ?, ?, ?)";
 
         try (Connection conn = ConexaoBancoDados.conectar();
@@ -33,12 +45,19 @@ public class InscricaoAulaDB implements Persistivel<InscricaoAula, Integer> {
 
             stmt.executeUpdate();
             System.out.println("***  Inscricao inserida com sucesso no TitanFit!  ***");
+            System.out.println("***  Codigo gerado: " + inscricao.getCodInscricao() + "                   ***");
 
         } catch (SQLException e) {
             System.out.println("***     Erro ao inserir inscricao no banco:       ***" + e.getMessage());
         }
     }
 
+    /**
+     * Busca uma inscricao pelo codigo.
+     *
+     * @param codInscricao Codigo da inscricao
+     * @return InscricaoAula encontrada, ou null se nao existir
+     */
     @Override
     public InscricaoAula buscarPorId(Integer codInscricao) {
         String sql = "SELECT * FROM inscricao_aula WHERE cod_inscricao = ?";
@@ -64,6 +83,11 @@ public class InscricaoAulaDB implements Persistivel<InscricaoAula, Integer> {
         return null;
     }
 
+    /**
+     * Lista todas as inscricoes cadastradas no banco de dados.
+     *
+     * @return Lista de inscricoes (vazia se nao houver registros)
+     */
     @Override
     public List<InscricaoAula> listarTodos() {
         String sql = "SELECT * FROM inscricao_aula";
@@ -89,6 +113,11 @@ public class InscricaoAulaDB implements Persistivel<InscricaoAula, Integer> {
         return listaInscricoes;
     }
 
+    /**
+     * Atualiza os dados de uma inscricao existente no banco.
+     *
+     * @param inscricao Objeto InscricaoAula com os dados atualizados
+     */
     @Override
     public void atualizar(InscricaoAula inscricao) {
         String sql = "UPDATE inscricao_aula SET " +
@@ -115,6 +144,11 @@ public class InscricaoAulaDB implements Persistivel<InscricaoAula, Integer> {
         }
     }
 
+    /**
+     * Remove uma inscricao do banco de dados pelo codigo.
+     *
+     * @param codInscricao Codigo da inscricao a ser removida
+     */
     @Override
     public void deletar(Integer codInscricao) {
         String sql = "DELETE FROM inscricao_aula WHERE cod_inscricao = ?";
@@ -208,5 +242,23 @@ public class InscricaoAulaDB implements Persistivel<InscricaoAula, Integer> {
             System.out.println("***   Erro ao contar inscricoes do aluno:         ***" + e.getMessage());
         }
         return 0;
+    }
+
+    /**
+     * Retorna o proximo codigo de inscricao disponivel (max + 1).
+     * Usado para auto-incremento no cadastro de inscricoes.
+     *
+     * @return Proximo codigo disponivel (1 se tabela vazia)
+     */
+    public int proximoCodigo() {
+        String sql = "SELECT COALESCE(MAX(cod_inscricao), 0) + 1 FROM inscricao_aula";
+        try (Connection conn = ConexaoBancoDados.conectar();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+            if (rs.next()) return rs.getInt(1);
+        } catch (SQLException e) {
+            System.out.println("*** Erro ao obter proximo codigo de inscricao:    ***" + e.getMessage());
+        }
+        return 1;
     }
 }
