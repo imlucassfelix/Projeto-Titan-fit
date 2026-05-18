@@ -21,6 +21,7 @@ public class StatusDB implements Persistivel<Status, Integer> {
 
     @Override
     public void inserir(Status status) {
+        status.setCodStatus(proximoCodigo());
         String sql = "INSERT INTO status_aluno (cod_status, cpf_aluno, cod_plano, plano_ativo, cod_fidelidade) VALUES (?, ?, ?, ?, ?)";
 
         try (Connection conn = ConexaoBancoDados.conectar();

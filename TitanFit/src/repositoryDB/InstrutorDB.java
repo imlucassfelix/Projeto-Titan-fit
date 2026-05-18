@@ -28,7 +28,9 @@ public class InstrutorDB implements Persistivel<Instrutor, String> {
 		try (Connection conn = ConexaoBancoDados.conectar();
 		     PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-			stmt.setString(1, instrutor.getCpfInstrutor());
+			String cpfLimpo = instrutor.getCpfInstrutor() != null
+					? instrutor.getCpfInstrutor().replace(".", "").replace("-", "") : null;
+			stmt.setString(1, cpfLimpo);
 			stmt.setString(2, instrutor.getNomeInstrutor());
 			stmt.setString(3, instrutor.getEmailInstrutor());
 			stmt.setDate(4, Date.valueOf(instrutor.getDataNascimento()));
@@ -57,7 +59,9 @@ public class InstrutorDB implements Persistivel<Instrutor, String> {
 		try (Connection conn = ConexaoBancoDados.conectar();
 		     PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-			stmt.setString(1, cpfInstrutor);
+			String cpfLimpo = cpfInstrutor != null
+					? cpfInstrutor.replace(".", "").replace("-", "") : null;
+			stmt.setString(1, cpfLimpo);
 
 			try (var rs = stmt.executeQuery()) {
 				if (rs.next()) {
@@ -130,7 +134,9 @@ public class InstrutorDB implements Persistivel<Instrutor, String> {
 		try (Connection conn = ConexaoBancoDados.conectar();
 		     PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-			stmt.setString(1, instrutor.getNomeInstrutor());
+			String cpfLimpo = instrutor.getCpfInstrutor() != null
+					? instrutor.getCpfInstrutor().replace(".", "").replace("-", "") : null;
+			stmt.setString(1, cpfLimpo);
 			stmt.setString(2, instrutor.getEmailInstrutor());
 			stmt.setDate(3, Date.valueOf(instrutor.getDataNascimento()));
 			stmt.setString(4, instrutor.getSexo());
@@ -157,7 +163,9 @@ public class InstrutorDB implements Persistivel<Instrutor, String> {
 		try (Connection conn = ConexaoBancoDados.conectar();
 		     PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-			stmt.setString(1, cpfInstrutor);
+			String cpfLimpo = cpfInstrutor != null
+					? cpfInstrutor.replace(".", "").replace("-", "") : null;
+			stmt.setString(1, cpfLimpo);
 
 			int linhasAfetadas = stmt.executeUpdate();
 

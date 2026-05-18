@@ -25,7 +25,7 @@ public class ConexaoBancoDados {
     private static final String DB_NAME = System.getProperty("titanfit.db.name", "titanfit");
     private static final String URL = "jdbc:mysql://localhost:3306/" + DB_NAME + "?useTimezone=true&serverTimezone=UTC";
     private static final String USUARIO = "root";
-    private static final String SENHA = "";
+    private static final String SENHA = "Geovanna9640@";
 
     public static Connection conectar() {
         Connection conexao = null;

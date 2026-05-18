@@ -28,7 +28,9 @@ public class AlunoDB implements Persistivel<Aluno, String> {
 		try (Connection conn = ConexaoBancoDados.conectar();
 		     PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-			stmt.setString(1, aluno.getCpfAluno());
+			String cpfLimpo = aluno.getCpfAluno() != null
+					? aluno.getCpfAluno().replace(".", "").replace("-", "") : null;
+			stmt.setString(1, cpfLimpo);
 			stmt.setString(2, aluno.getNomeAluno());
 			stmt.setString(3, aluno.getEmailAluno());
 			stmt.setString(4, aluno.getTelefoneAluno());
@@ -55,13 +57,15 @@ public class AlunoDB implements Persistivel<Aluno, String> {
 		String sql = "SELECT * FROM aluno WHERE cpf_aluno = ?";
 
 		try (Connection conn = ConexaoBancoDados.conectar();
-		     PreparedStatement stmt = conn.prepareStatement(sql)) {
+			 PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-			stmt.setString(1, cpfAluno);
+			String cpfLimpo = cpfAluno != null
+					? cpfAluno.replace(".", "").replace("-", "") : null;
+			stmt.setString(1, cpfLimpo);
 
 			try (var rs = stmt.executeQuery()) {
 				if (rs.next()) {
-					Aluno aluno = new Aluno();
+					Aluno aluno = new Aluno();  // ← declarar aqui dentro
 					aluno.setCpfAluno(rs.getString("cpf_aluno"));
 					aluno.setNomeAluno(rs.getString("nome_aluno"));
 					aluno.setEmailAluno(rs.getString("email_aluno"));
@@ -73,7 +77,7 @@ public class AlunoDB implements Persistivel<Aluno, String> {
 				}
 			}
 		} catch (SQLException e) {
-			System.out.println("***           Erro ao buscar aluno:            ***" + e.getMessage());
+			System.out.println("*** Erro ao buscar aluno: ***" + e.getMessage());
 		}
 		return null;
 	}
@@ -134,7 +138,9 @@ public class AlunoDB implements Persistivel<Aluno, String> {
 			stmt.setString(3, aluno.getTelefoneAluno());
 			stmt.setDate(4, Date.valueOf(aluno.getDataNascimento()));
 			stmt.setString(5, aluno.getSexo());
-			stmt.setString(6, aluno.getCpfAluno());
+			String cpfLimpo = aluno.getCpfAluno() != null
+					? aluno.getCpfAluno().replace(".", "").replace("-", "") : null;
+			stmt.setString(6, cpfLimpo);
 
 			stmt.executeUpdate();
 			System.out.println("*** Dados atualizados com sucesso no TitanFit! ***");
@@ -155,7 +161,10 @@ public class AlunoDB implements Persistivel<Aluno, String> {
 		try (Connection conn = ConexaoBancoDados.conectar();
 		     PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-			stmt.setString(1, cpfAluno);
+			// CORRETO — usar o parâmetro String cpfAluno que já existe
+			String cpfLimpo = cpfAluno != null
+					? cpfAluno.replace(".", "").replace("-", "") : null;
+			stmt.setString(1, cpfLimpo);
 
 			int linhasAfetadas = stmt.executeUpdate();
 

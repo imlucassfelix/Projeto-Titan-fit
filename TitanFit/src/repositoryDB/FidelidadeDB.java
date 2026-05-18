@@ -21,6 +21,7 @@ public class FidelidadeDB implements Persistivel<Fidelidade, Integer> {
 
 	@Override
 	public void inserir(Fidelidade fidelidade) {
+		fidelidade.setCodFidelidade(proximoCodigo());
 		String sql = "INSERT INTO fidelidade (cod_fidelidade, descricao, periodo, valor_desconto) VALUES (?, ?, ?, ?)";
 
 		try (Connection conn = ConexaoBancoDados.conectar();
@@ -37,6 +38,18 @@ public class FidelidadeDB implements Persistivel<Fidelidade, Integer> {
 		} catch (SQLException e) {
 			System.out.println("***    Erro ao inserir fidelidade no banco:        ***" + e.getMessage());
 		}
+	}
+
+	public int proximoCodigo() {
+		String sql = "SELECT COALESCE(MAX(cod_fidelidade), 0) + 1 FROM fidelidade";
+		try (Connection conn = ConexaoBancoDados.conectar();
+			 PreparedStatement stmt = conn.prepareStatement(sql);
+			 ResultSet rs = stmt.executeQuery()) {
+			if (rs.next()) return rs.getInt(1);
+		} catch (SQLException e) {
+			System.out.println("Erro ao gerar codigo: " + e.getMessage());
+		}
+		return 1;
 	}
 
 	@Override

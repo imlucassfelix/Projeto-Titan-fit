@@ -22,6 +22,7 @@ public class PlanoDB implements Persistivel<Plano, Integer> {
 
     @Override
     public void inserir(Plano plano) {
+        plano.setCodPlano(proximoCodigo());
         String sql = "INSERT INTO plano (cod_plano, categoria, valor, beneficios, duracao_meses) VALUES (?, ?, ?, ?, ?)";
 
         try (Connection conn = ConexaoBancoDados.conectar();
@@ -41,6 +42,18 @@ public class PlanoDB implements Persistivel<Plano, Integer> {
         } catch (SQLException e) {
             System.out.println("***       Erro ao inserir plano no banco:         ***" + e.getMessage());
         }
+    }
+
+    public int proximoCodigo() {
+        String sql = "SELECT COALESCE(MAX(cod_plano), 0) + 1 FROM plano";
+        try (Connection conn = ConexaoBancoDados.conectar();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+            if (rs.next()) return rs.getInt(1);
+        } catch (SQLException e) {
+            System.out.println("Erro ao gerar codigo: " + e.getMessage());
+        }
+        return 1;
     }
 
     @Override

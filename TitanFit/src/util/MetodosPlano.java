@@ -28,10 +28,6 @@ public class MetodosPlano {
         System.out.println("***             CADASTRAR PLANO                ***");
         System.out.println("==================================================");
         try {
-            System.out.print("***              Codigo do Plano:              ***\n");
-            int codPlano = sc.nextInt();
-            sc.nextLine();
-
             System.out.print("***         Categoria do Plano:                ***\n");
             String categoria = sc.nextLine();
             Validador.campoObrigatorio(categoria, "Categoria");
@@ -63,7 +59,7 @@ public class MetodosPlano {
                 throw new DadoInvalidoExcecao("Duracao deve ser maior que zero.");
             }
 
-            Plano novoPlano = new Plano(codPlano, categoria, valor, beneficios, duracaoMeses);
+            Plano novoPlano = new Plano(0, categoria, valor, beneficios, duracaoMeses);
             new PlanoDB().inserir(novoPlano);
             System.out.println("***       Plano cadastrado com sucesso!        ***");
         } catch (DadoInvalidoExcecao e) {
