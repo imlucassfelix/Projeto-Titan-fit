@@ -1,0 +1,6 @@
+# Copie este arquivo para db.properties e ajuste para sua maquina
+db.host=localhost
+db.port=3306
+db.name=titanfit
+db.user=root
+db.password=SUA_SENHA_AQUI

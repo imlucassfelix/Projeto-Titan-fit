@@ -9,3 +9,5 @@ TitanFit/.settings/org.eclipse.core.resources.prefs
 *.xml
 .idea/
 *.iml
+# Configuracao local do banco — nao subir para o repositorio
+db.properties
