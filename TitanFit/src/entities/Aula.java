@@ -7,9 +7,8 @@ package entities;
  * incluindo sua identificação, descrição, modalidade, capacidade
  * e o instrutor responsável.</p>
  *
- * @author Seu Nome
+ * @author Mateus Santos
  * @version 1.0
- * @since 1.0
  */
 
 public class Aula {
