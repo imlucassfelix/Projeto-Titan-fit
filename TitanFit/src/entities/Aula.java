@@ -1,5 +1,17 @@
 package entities;
 
+/**
+ * Representa uma aula oferecida na plataforma.
+ *
+ * <p>Esta entidade armazena as informações básicas de uma aula,
+ * incluindo sua identificação, descrição, modalidade, capacidade
+ * e o instrutor responsável.</p>
+ *
+ * @author Seu Nome
+ * @version 1.0
+ * @since 1.0
+ */
+
 public class Aula {
 	private int codAula;           // Identificador único da aula
 	private String nomeAula;
