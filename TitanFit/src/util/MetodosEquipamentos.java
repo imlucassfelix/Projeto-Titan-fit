@@ -25,23 +25,23 @@ import java.util.Scanner;
 public class MetodosEquipamentos {
 
     public static void cadastrarEquipamentos(Scanner sc) {
-        System.out.println("==================================================");
-        System.out.println("***         CADASTRAR EQUIPAMENTO              ***");
-        System.out.println("==================================================");
+        System.out.println("=======================================================");
+        System.out.println("***              CADASTRAR EQUIPAMENTO              ***");
+        System.out.println("=======================================================");
         try {
-            System.out.print("*** Nome do Equipamento:                       ***\n");
+            System.out.print("***      Nome do Equipamento:                       ***\n");
             String nomeEquipamento = sc.nextLine();
             Validador.campoObrigatorio(nomeEquipamento, "Nome do equipamento");
 
-            System.out.print("*** Modelo:                                    ***\n");
+            System.out.print("***      Modelo:                                    ***\n");
             String modelo = sc.nextLine();
             Validador.campoObrigatorio(modelo, "Modelo");
 
-            System.out.print("*** Estado (Bom/Regular/Ruim):                 ***\n");
+            System.out.print("***      Estado (Bom/Regular/Ruim):                 ***\n");
             String estado = sc.nextLine();
             Validador.campoObrigatorio(estado, "Estado");
 
-            System.out.print("*** Data de Aquisicao (dd/mm/aaaa):            ***\n");
+            System.out.print("***      Data de Aquisicao (dd/mm/aaaa):            ***\n");
             String dataAquisStr = sc.nextLine();
             Validador.validarData(dataAquisStr);
             LocalDate dataAquisicao = LocalDate.parse(dataAquisStr, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
@@ -50,18 +50,18 @@ public class MetodosEquipamentos {
             Equipamentos novoEquipamento = new Equipamentos(0, nomeEquipamento, modelo, estado, dataAquisicao);
             new EquipamentosDB().inserir(novoEquipamento);
         } catch (DadoInvalidoExcecao e) {
-            System.out.println("*** Erro de validacao: " + e.getMessage() + " ***");
+            System.out.println("Erro de validacao: " + e.getMessage() + " ");
         }
     }
 
     public static void listarEquipamentos(Scanner sc) {
-        System.out.println("==================================================");
-        System.out.println("***         LISTA DE EQUIPAMENTOS              ***");
-        System.out.println("==================================================");
+        System.out.println("=======================================================");
+        System.out.println("***              LISTA DE EQUIPAMENTOS              ***");
+        System.out.println("=======================================================");
         var lista = new EquipamentosDB().listarTodos();
 
         if (lista.isEmpty()) {
-            System.out.println("***      Nenhum equipamento cadastrado.        ***");
+            System.out.println("***           Nenhum equipamento cadastrado.        ***");
         } else {
             for (Equipamentos e : lista) {
                 System.out.println("Codigo: " + e.getCodMaquina());
@@ -75,11 +75,11 @@ public class MetodosEquipamentos {
     }
 
     public static void gerenciarEquipamentos(Scanner sc) {
-        System.out.println("==================================================");
-        System.out.println("***         ATUALIZAR EQUIPAMENTO              ***");
-        System.out.println("==================================================");
+        System.out.println("=======================================================");
+        System.out.println("***              ATUALIZAR EQUIPAMENTO              ***");
+        System.out.println("=======================================================");
         try {
-            System.out.print("*** Digite o Codigo do Equipamento para editar:***\n");
+            System.out.print("***      Digite o Codigo do Equipamento para editar:***\n");
             int codBusca = sc.nextInt(); sc.nextLine();
 
             EquipamentosDB db = new EquipamentosDB();
@@ -92,7 +92,7 @@ public class MetodosEquipamentos {
 
             System.out.println("Editando Equipamento: " + equipamento.getNome());
 
-            System.out.print("*** Novo Estado (Bom/Regular/Ruim) (Enter para manter): ***\n");
+            System.out.print("***      Novo Estado (Bom/Regular/Ruim) (Enter para manter): ***\n");
             String novoEstado = sc.nextLine();
             if (!novoEstado.isEmpty()) {
                 Validador.campoObrigatorio(novoEstado, "Estado");
@@ -101,15 +101,15 @@ public class MetodosEquipamentos {
 
             db.atualizar(equipamento);
         } catch (DadoInvalidoExcecao e) {
-            System.out.println("*** Erro de validacao: " + e.getMessage() + " ***");
+            System.out.println(" Erro de validacao: " + e.getMessage() + "");
         }
     }
 
     public static void removerEquipamentos(Scanner sc) {
-        System.out.println("==================================================");
-        System.out.println("***          REMOVER EQUIPAMENTO               ***");
-        System.out.println("==================================================");
-        System.out.print("*** Digite o Codigo do Equipamento para remover:***\n");
+        System.out.println("=======================================================");
+        System.out.println("***               REMOVER EQUIPAMENTO               ***");
+        System.out.println("=======================================================");
+        System.out.print("***      Digite o Codigo do Equipamento para remover:***\n");
         int codRemover = sc.nextInt(); sc.nextLine();
         new EquipamentosDB().deletar(codRemover);
     }

@@ -107,22 +107,22 @@ public class MetodosPlano {
 
             System.out.println("Editando plano: " + plano.getCategoria());
 
-            System.out.print("*** Nova Categoria (Enter para manter):        ***\n");
+            System.out.print("***      Nova Categoria (Enter para manter):        ***\n");
             String novaCategoria = sc.nextLine();
             if (!novaCategoria.isEmpty()) {
                 Validador.campoObrigatorio(novaCategoria, "Categoria");
                 plano.setCategoria(novaCategoria);
             }
 
-            System.out.print("*** Novo Valor (0 para manter): R$             ***\n");
+            System.out.print("***      Novo Valor (0 para manter): R$             ***\n");
             double novoValor = sc.nextDouble();
             sc.nextLine();
             if (novoValor > 0) plano.setValor(novoValor);
 
-            System.out.print("*** Alterar beneficios? (S/N):                 ***\n");
+            System.out.print("***      Alterar beneficios? (S/N):                 ***\n");
             String alterarBeneficios = sc.nextLine();
             if (alterarBeneficios.equalsIgnoreCase("S")) {
-                System.out.print("*** Quantos beneficios deseja adicionar?       ***\n");
+                System.out.print("***      Quantos beneficios deseja adicionar?       ***\n");
                 int qtd = sc.nextInt();
                 sc.nextLine();
                 List<String> novosBeneficios = new ArrayList<>();
@@ -139,30 +139,30 @@ public class MetodosPlano {
                 plano.setBeneficios(novosBeneficios);
             }
 
-            System.out.print("*** Nova Duracao em meses (0 para manter):     ***\n");
+            System.out.print("***      Nova Duracao em meses (0 para manter):     ***\n");
             int novaDuracao = sc.nextInt();
             sc.nextLine();
             if (novaDuracao > 0) plano.setDuracaoMeses(novaDuracao);
 
             new PlanoDB().atualizar(plano);
-            System.out.println("***       Plano atualizado com sucesso!        ***");
+            System.out.println("***         Plano atualizado com sucesso!           ***");
         } catch (DadoInvalidoExcecao e) {
-            System.out.println("*** Erro de validacao: " + e.getMessage() + " ***");
+            System.out.println("Erro de validacao: " + e.getMessage() + "");
         }
     }
 
     public static void removerPlano(Scanner sc) {
-        System.out.println("==================================================");
-        System.out.println("***             REMOVER PLANO                  ***");
-        System.out.println("==================================================");
+        System.out.println("=======================================================");
+        System.out.println("***                  REMOVER PLANO                  ***");
+        System.out.println("=======================================================");
 
-        System.out.print("*** Codigo do plano que deseja remover:        ***\n");
+        System.out.print("***      Codigo do plano que deseja remover:        ***\n");
         int codPlano = sc.nextInt();
         sc.nextLine();
 
         Plano plano = new PlanoDB().buscarPorId(codPlano);
         if (plano == null) {
-            System.out.println("*** Erro: Plano com codigo " + codPlano + " nao encontrado. ***");
+            System.out.println("Erro: Plano com codigo " + codPlano + " nao encontrado.");
             return;
         }
 
@@ -174,7 +174,7 @@ public class MetodosPlano {
         if (confirmacao.equalsIgnoreCase("S")) {
             new PlanoDB().deletar(codPlano);
         } else {
-            System.out.println("***           Remocao cancelada.               ***");
+            System.out.println("***              Remocao cancelada.                 ***");
         }
     }
 }

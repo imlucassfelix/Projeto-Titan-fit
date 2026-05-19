@@ -20,16 +20,17 @@ public class InscricaoMenu {
     public void exibirMenu() {
         int opcao;
         do {
-            System.out.println("==================================================");
-            System.out.println("***          INSCRICOES e MATRICULAS           ***");
-            System.out.println("[1] - Realizar Nova Inscrição                  ***");
-            System.out.println("[2] - Listar Turmas                            ***");
-            System.out.println("[3] - Alterar Turma/Horario                    ***");
-            System.out.println("[4] - Remover Matrícula                        ***");
-            System.out.println("[0] - Voltar                                   ***");
-            System.out.println("==================================================");
+            System.out.println("=======================================================");
+            System.out.println("***             INSCRICOES e MATRICULAS             ***");
+            System.out.println("=======================================================");
+            System.out.println("[1] - Realizar Nova Inscrição                       ***");
+            System.out.println("[2] - Listar Turmas                                 ***");
+            System.out.println("[3] - Alterar Turma/Horario                         ***");
+            System.out.println("[4] - Remover Matrícula                             ***");
+            System.out.println("[0] - Voltar                                        ***");
+            System.out.println("=======================================================");
             System.out.print("Escolha uma opção: \n");
-            System.out.println("==================================================");
+            System.out.println("=======================================================");
             opcao = sc.nextInt();
             sc.nextLine();
 

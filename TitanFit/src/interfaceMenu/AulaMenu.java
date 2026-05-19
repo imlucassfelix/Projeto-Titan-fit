@@ -21,17 +21,17 @@ public class AulaMenu {
 	        int opcao;
 	        do {
 				System.out.println("");
-	            System.out.println("========================================");
-	            System.out.println("***       TITANFIT - AULAS           ***");
-	            System.out.println("========================================");
-	            System.out.println("[1] - Cadastrar Aula                 ***");
-	            System.out.println("[2] - Listar Aulas                   ***");
-	            System.out.println("[3] - Editar Aula/Treinos            ***");
-	            System.out.println("[4] - Excluir Aula/Treinos           ***");
-	            System.out.println("[0] - Voltar                         ***");
-	            System.out.println("========================================");
+	            System.out.println("=======================================================");
+	            System.out.println("***                TITANFIT - AULAS                 ***");
+	            System.out.println("=======================================================");
+	            System.out.println("[1] - Cadastrar Aula                                ***");
+	            System.out.println("[2] - Listar Aulas                                  ***");
+	            System.out.println("[3] - Editar Aula/Treinos                           ***");
+	            System.out.println("[4] - Excluir Aula/Treinos                          ***");
+	            System.out.println("[0] - Voltar                                        ***");
+	            System.out.println("=======================================================");
 	            System.out.print("Escolha uma opção: \n");
-	            System.out.println("========================================");
+	            System.out.println("=======================================================");
 	            
 	            opcao = sc.nextInt(); sc.nextLine();
 

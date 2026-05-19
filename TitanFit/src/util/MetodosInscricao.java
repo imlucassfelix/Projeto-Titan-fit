@@ -35,18 +35,18 @@ import java.util.Scanner;
 public class MetodosInscricao {
 
     public static void novaInscricao(Scanner sc) {
-        System.out.println("==================================================");
-        System.out.println("***           NOVA INSCRICAO                   ***");
-        System.out.println("==================================================");
+        System.out.println("=======================================================");
+        System.out.println("***                NOVA INSCRICAO                   ***");
+        System.out.println("=======================================================");
         try {
-            System.out.print("*** Codigo da Aula:                            ***\n");
+            System.out.print("***      Codigo da Aula:                            ***\n");
             int codAula = sc.nextInt(); sc.nextLine();
 
-            System.out.print("*** Digite o CPF do aluno (11 digitos):        ***\n");
+            System.out.print("***      Digite o CPF do aluno (11 digitos):        ***\n");
             String cpfAluno = sc.nextLine();
             Validador.validarCpf(cpfAluno);
 
-            System.out.print("*** Horario (HH:mm):                           ***\n");
+            System.out.print("***      Horario (HH:mm):                           ***\n");
             String horario = sc.nextLine();
             Validador.validarHorario(horario);
 
@@ -57,8 +57,8 @@ public class MetodosInscricao {
             Status status = statusDB.buscarPorCpf(cpfAluno);
 
             if (status == null) {
-                System.out.println("** Erro: Aluno nao possui plano vinculado.     **");
-                System.out.println("** Cadastre um status/plano antes de inscrever.**");
+                System.out.println("Erro: Aluno nao possui plano vinculado.     ");
+                System.out.println("Cadastre um status/plano antes de inscrever.");
                 return;
             }
 
@@ -66,22 +66,22 @@ public class MetodosInscricao {
             Plano plano = planoDB.buscarPorId(status.getCodPlano());
 
             if (plano == null) {
-                System.out.println("** Erro: Plano vinculado ao aluno nao encontrado.**");
+                System.out.println("Erro: Plano vinculado ao aluno nao encontrado.");
                 return;
             }
 
             repositoryDB.AlunoDB alunoDB = new repositoryDB.AlunoDB();
             entities.Aluno aluno = alunoDB.buscarPorId(cpfAluno);
             if (aluno == null) {
-                System.out.println("** Erro: Aluno com CPF informado nao encontrado.**");
+                System.out.println("Erro: Aluno com CPF informado nao encontrado.");
                 return;
             }
 
             LocalDate dataVencimento = aluno.getDataMatricula().plusMonths(plano.getDuracaoMeses());
             if (LocalDate.now().isAfter(dataVencimento)) {
-                System.out.println("** Erro: Plano do aluno esta VENCIDO!          **");
-                System.out.println("** Data de vencimento: " + dataVencimento + "       **");
-                System.out.println("** Renove o plano antes de realizar a inscricao.**");
+                System.out.println("Erro: Plano do aluno esta VENCIDO!");
+                System.out.println("Data de vencimento: " + dataVencimento + "");
+                System.out.println("Renove o plano antes de realizar a inscricao.");
                 return;
             }
 
@@ -92,7 +92,7 @@ public class MetodosInscricao {
             Aula aula = aulaDB.buscarPorId(codAula);
 
             if (aula == null) {
-                System.out.println("** Erro: Aula com codigo " + codAula + " nao encontrada.**");
+                System.out.println("Erro: Aula com codigo " + codAula + " nao encontrada.");
                 return;
             }
 
@@ -100,8 +100,8 @@ public class MetodosInscricao {
             int totalInscritos = inscricaoAulaDB.contarInscritosPorAula(codAula);
 
             if (totalInscritos >= aula.getCapacidadeMaxima()) {
-                System.out.println("** Erro: Aula atingiu a capacidade maxima!     **");
-                System.out.printf("** Capacidade: %d/%d alunos.%n", totalInscritos, aula.getCapacidadeMaxima());
+                System.out.println("Erro: Aula atingiu a capacidade maxima!");
+                System.out.printf("Capacidade: %d/%d alunos.%n", totalInscritos, aula.getCapacidadeMaxima());
                 return;
             }
 
@@ -111,9 +111,9 @@ public class MetodosInscricao {
             List<InscricaoAula> inscricoesDoAluno = inscricaoAulaDB.listarPorCpf(cpfAluno);
             for (InscricaoAula i : inscricoesDoAluno) {
                 if (horario.equals(i.getHorario()) && i.getCodAula() != codAula) {
-                    System.out.println("** Erro: Conflito de horario detectado!        **");
-                    System.out.println("** O aluno ja esta inscrito em outra aula      **");
-                    System.out.println("** no horario " + horario + " (Aula cod.: " + i.getCodAula() + ").  **");
+                    System.out.println("Erro: Conflito de horario detectado! ");
+                    System.out.println("O aluno ja esta inscrito em outra aula");
+                    System.out.println("no horario " + horario + " (Aula cod.: " + i.getCodAula() + ").");
                     return;
                 }
             }
@@ -125,18 +125,18 @@ public class MetodosInscricao {
             InscricaoAula novaInscricao = new InscricaoAula(0, codAula, cpfAluno, horario);
             inscricaoAulaDB.inserir(novaInscricao);
         } catch (DadoInvalidoExcecao e) {
-            System.out.println("*** Erro de validacao: " + e.getMessage() + " ***");
+            System.out.println("Erro de validacao: " + e.getMessage() + " ");
         }
     }
 
     public static void listarTurma(Scanner sc) {
-        System.out.println("==================================================");
-        System.out.println("***         LISTA DE INSCRICOES                ***");
-        System.out.println("==================================================");
+        System.out.println("=======================================================");
+        System.out.println("***              LISTA DE INSCRICOES                ***");
+        System.out.println("=======================================================");
 
         var lista = new InscricaoAulaDB().listarTodos();
         if (lista.isEmpty()) {
-            System.out.println("***     Nenhuma inscricao registrada.          ***");
+            System.out.println("***          Nenhuma inscricao registrada.          ***");
         } else {
             for (InscricaoAula i : lista) {
                 System.out.println("Cod. Inscricao: " + i.getCodInscricao());
@@ -149,11 +149,11 @@ public class MetodosInscricao {
     }
 
     public static void alterarTurma(Scanner sc) {
-        System.out.println("==================================================");
-        System.out.println("***         ALTERAR TURMA/HORARIO              ***");
-        System.out.println("==================================================");
+        System.out.println("=======================================================");
+        System.out.println("***              ALTERAR TURMA/HORARIO              ***");
+        System.out.println("=======================================================");
         try {
-            System.out.print("*** Digite o Codigo da Inscricao para editar:  ***\n");
+            System.out.print("***      Digite o Codigo da Inscricao para editar:  ***\n");
             int codBusca = sc.nextInt(); sc.nextLine();
 
             InscricaoAulaDB db = new InscricaoAulaDB();
@@ -164,7 +164,7 @@ public class MetodosInscricao {
                 return;
             }
 
-            System.out.print("*** Novo Horario HH:mm (Enter para manter):    ***\n");
+            System.out.print("***      Novo Horario HH:mm (Enter para manter):    ***\n");
             String novoHorario = sc.nextLine();
             if (!novoHorario.isEmpty()) {
                 Validador.validarHorario(novoHorario);
@@ -173,15 +173,15 @@ public class MetodosInscricao {
 
             db.atualizar(inscricao);
         } catch (DadoInvalidoExcecao e) {
-            System.out.println("*** Erro de validacao: " + e.getMessage() + " ***");
+            System.out.println("Erro de validacao: " + e.getMessage() + " ");
         }
     }
 
     public static void removerTurma(Scanner sc) {
-        System.out.println("==================================================");
-        System.out.println("***          REMOVER MATRICULA                 ***");
-        System.out.println("==================================================");
-        System.out.print("*** Digite o Codigo da Inscricao para remover: ***\n");
+        System.out.println("=======================================================");
+        System.out.println("***               REMOVER MATRICULA                 ***");
+        System.out.println("=======================================================");
+        System.out.print("***      Digite o Codigo da Inscricao para remover: ***\n");
         int codRemover = sc.nextInt(); sc.nextLine();
         new InscricaoAulaDB().deletar(codRemover);
     }
